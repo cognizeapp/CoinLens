@@ -19,3 +19,7 @@
 # Shell / gradle wrappers must stay LF and executable.
 gradlew text eol=lf
 *.sh text eol=lf
+
+# Windows batch files must stay CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
