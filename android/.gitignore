@@ -1,11 +1,12 @@
-gradle-wrapper.jar
 /.gradle
 /captures/
-/gradlew
-/gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
 .cxx/
+
+# The Gradle wrapper (gradlew, gradlew.bat, gradle/wrapper/*) IS committed so
+# CI (Codemagic) has a pinned Gradle to run. Flutter can regenerate it, but
+# committing it removes that dependency.
 
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/to/reference-keystore
