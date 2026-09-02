@@ -66,6 +66,10 @@ app.*.map.json
 # Web
 /web/flutter_service_worker.js
 
+# Local archives / bundles — never commit
+*.zip
+*.tar.gz
+
 # ─── Secrets — never commit ───────────────────────────────────────────────
 # Copy .env.example -> .env and fill in locally. No provider/API keys belong
 # in the client; they live on the backend.

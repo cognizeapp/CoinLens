@@ -1,0 +1,102 @@
+# Codemagic CI/CD — CoinLens
+# Docs: https://docs.codemagic.io/yaml/yaml-getting-started/
+#
+# Two workflows that work immediately with NO Apple/Google account or signing
+# set up — they run `flutter analyze` + `flutter test` and then a release
+# *compile* of each platform:
+#
+#   • ios-workflow      → unsigned .app  (verifies the iOS build compiles)
+#   • android-workflow  → release .apk + .aab (debug-signed, for testing)
+#
+# When you have an Apple Developer account and have added the App Store Connect
+# integration in the Codemagic UI, uncomment the "SIGNED / TESTFLIGHT" blocks
+# in ios-workflow to produce a real .ipa and publish to TestFlight.
+
+workflows:
+  # ─────────────────────────────────────────────────────────────────────────
+  ios-workflow:
+    name: iOS build & test
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: 3.29.3          # the version CoinLens was developed/tested on; "stable" also works
+      xcode: latest
+      cocoapods: default
+    # --- SIGNED / TESTFLIGHT: uncomment once App Store Connect is connected ---
+    # integrations:
+    #   app_store_connect: CodemagicAppStoreKey   # name of the key you add in the UI
+    # environment:
+    #   ios_signing:
+    #     distribution_type: app_store
+    #     bundle_identifier: app.coinlens.coinlens
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Analyze
+        script: flutter analyze
+
+      - name: Unit tests
+        script: |
+          mkdir -p test-results
+          flutter test --machine --coverage > test-results/flutter.json
+        test_report: test-results/flutter.json
+
+      # `flutter build ios` generates the Podfile and runs `pod install` itself,
+      # so no separate CocoaPods step is needed.
+      - name: Build unsigned iOS
+        script: flutter build ios --release --no-codesign
+
+      # --- SIGNED / TESTFLIGHT: replace the step above with these two ---
+      # - name: Set up signing
+      #   script: xcode-project use-profiles
+      # - name: Build signed IPA
+      #   script: |
+      #     flutter build ipa --release \
+      #       --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/iphoneos/*.app
+      # - build/ios/ipa/*.ipa            # produced by the signed build
+      - coverage/lcov.info
+    # publishing:
+    #   app_store_connect:
+    #     auth: integration
+    #     submit_to_testflight: true
+
+  # ─────────────────────────────────────────────────────────────────────────
+  android-workflow:
+    name: Android build & test
+    max_build_duration: 45
+    instance_type: linux_x2
+    environment:
+      flutter: 3.29.3          # "stable" also works
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Analyze
+        script: flutter analyze
+
+      - name: Unit tests
+        script: |
+          mkdir -p test-results
+          flutter test --machine --coverage > test-results/flutter.json
+        test_report: test-results/flutter.json
+
+      # NOTE: release builds are currently debug-signed (see
+      # android/app/build.gradle.kts). Add a real keystore + the
+      # `android_signing` reference here before shipping to Google Play.
+      - name: Build APK
+        script: flutter build apk --release
+
+      - name: Build App Bundle
+        script: flutter build appbundle --release
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+      - build/app/outputs/bundle/release/*.aab
+      - build/app/outputs/mapping/release/mapping.txt
+      - coverage/lcov.info
+    # publishing:
+    #   google_play:
+    #     credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+    #     track: internal
