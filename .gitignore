@@ -1,0 +1,82 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+Thumbs.db
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code (uncomment if you don't want to share launch configs)
+#.vscode/
+
+# Flutter / Dart / Pub
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+# NOTE: pubspec.lock IS committed for applications.
+
+# Symbolication / obfuscation
+app.*.symbols
+app.*.map.json
+
+# Android
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/.gradle/
+/android/captures/
+/android/local.properties
+/android/key.properties
+/android/**/GeneratedPluginRegistrant.java
+/android/.kotlin/
+**/*.keystore
+**/*.jks
+
+# iOS / macOS
+/ios/Pods/
+/ios/.symlinks/
+/ios/Flutter/Flutter.framework
+/ios/Flutter/Flutter.podspec
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/ephemeral/
+/ios/Flutter/flutter_export_environment.sh
+/ios/Flutter/App.framework
+/ios/Runner/GeneratedPluginRegistrant.*
+/ios/Podfile.lock
+**/xcuserdata/
+**/DerivedData/
+
+# Web
+/web/flutter_service_worker.js
+
+# ─── Secrets — never commit ───────────────────────────────────────────────
+# Copy .env.example -> .env and fill in locally. No provider/API keys belong
+# in the client; they live on the backend.
+.env
+.env.*
+!.env.example
+lib/firebase_options.dart
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+lib/firebase_app_id_file.json
+**/*.p8
+**/*.p12
+**/*.mobileprovision

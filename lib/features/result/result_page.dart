@@ -1,0 +1,395 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../core/constants/app_constants.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_spacing.dart';
+import '../../core/theme/app_typography.dart';
+import '../../core/utils/formatters.dart';
+import '../../core/utils/money_provider.dart';
+import '../../core/widgets/state_views.dart';
+import '../coin/domain/coin_models.dart';
+import '../coin/presentation/coin_providers.dart';
+import '../coin/presentation/widgets/coin_widgets.dart';
+import '../../services/analytics/analytics_service.dart';
+import '../../services/subscription/subscription_service.dart';
+import 'widgets/locked_premium_section.dart';
+import 'widgets/premium_analysis_section.dart';
+
+class ResultPage extends ConsumerWidget {
+  const ResultPage({super.key, required this.scanId});
+  final String scanId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scan = ref.watch(scanByIdProvider(scanId));
+    final money = ref.watch(moneyFormatterProvider);
+    final isPremium = ref.watch(isPremiumProvider);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Coin result')),
+      body: scan.when(
+        loading: () => const LoadingView(message: 'Loading result…'),
+        error: (_, __) => ErrorStateView(
+          message: 'We could not open this result.',
+          onRetry: () => ref.refresh(scanByIdProvider(scanId)),
+        ),
+        data: (record) {
+          final id = record.identification;
+          ref.listen(scanByIdProvider(scanId), (_, __) {});
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ref
+                .read(analyticsServiceProvider)
+                .logEvent(AnalyticsEvent.valueResultViewed);
+          });
+
+          return ListView(
+            padding: const EdgeInsets.all(AppSpacing.screen),
+            children: [
+              const Center(child: CoinThumb(size: 96)),
+              const SizedBox(height: AppSpacing.lg),
+              Center(
+                child: Text(id.coinName,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium),
+              ),
+              const SizedBox(height: 4),
+              Center(
+                child: Text(
+                  '${id.country}${id.year != null ? ' • ${id.year}' : ''}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Center(child: ConfidenceBadge(confidence: id.confidence)),
+              const SizedBox(height: AppSpacing.xl),
+
+              if (!id.isConfident) _LowConfidence(id: id),
+
+              _ValueCard(id: id, money: money),
+              if (id.value.factors.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.lg),
+                _ValueFactors(
+                  factors: id.value.factors,
+                  showAll: isPremium,
+                  onUnlock: () => context.push('/paywall'),
+                ),
+              ],
+              const SizedBox(height: AppSpacing.lg),
+              _DetailsCard(id: id),
+              const SizedBox(height: AppSpacing.xl),
+
+              _SaveToCollectionButton(record: record),
+              const SizedBox(height: AppSpacing.xl),
+
+              if (isPremium)
+                PremiumAnalysisSection(record: record)
+              else
+                LockedPremiumSection(
+                  onUnlock: () {
+                    ref
+                        .read(analyticsServiceProvider)
+                        .logEvent(AnalyticsEvent.premiumPreviewViewed);
+                    context.push('/paywall');
+                  },
+                ),
+
+              const SizedBox(height: AppSpacing.xl),
+              Text(AppConstants.valueDisclaimer,
+                  style: Theme.of(context).textTheme.labelSmall),
+              const SizedBox(height: AppSpacing.sm),
+              Text(AppConstants.gradingDisclaimer,
+                  style: Theme.of(context).textTheme.labelSmall),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _SaveToCollectionButton extends ConsumerStatefulWidget {
+  const _SaveToCollectionButton({required this.record});
+  final ScanRecord record;
+
+  @override
+  ConsumerState<_SaveToCollectionButton> createState() =>
+      _SaveToCollectionButtonState();
+}
+
+class _SaveToCollectionButtonState
+    extends ConsumerState<_SaveToCollectionButton> {
+  late bool _saved = widget.record.savedToCollection;
+  bool _busy = false;
+
+  Future<void> _toggle() async {
+    setState(() => _busy = true);
+    final repo = ref.read(scanRepositoryProvider);
+    final result = _saved
+        ? await repo.removeFromCollection(widget.record.id)
+        : await repo.addToCollection(widget.record.id);
+    if (!mounted) return;
+    result.when(
+      ok: (_) {
+        setState(() {
+          _saved = !_saved;
+          _busy = false;
+        });
+        ref.invalidate(collectionProvider);
+        ref.invalidate(recentScansProvider);
+        ref.invalidate(scanByIdProvider(widget.record.id));
+        if (_saved) {
+          ref
+              .read(analyticsServiceProvider)
+              .logEvent(AnalyticsEvent.collectionItemSaved);
+        }
+      },
+      err: (f) {
+        setState(() => _busy = false);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(f.message)));
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _saved
+        ? OutlinedButton.icon(
+            onPressed: _busy ? null : _toggle,
+            icon: const Icon(Icons.check_rounded, color: AppColors.success),
+            label: const Text('Saved to your collection'),
+          )
+        : FilledButton.icon(
+            onPressed: _busy ? null : _toggle,
+            icon: const Icon(Icons.add_rounded),
+            label: const Text('Save to Collection'),
+          );
+  }
+}
+
+class _LowConfidence extends StatelessWidget {
+  const _LowConfidence({required this.id});
+  final CoinIdentification id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.warning.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.warning.withValues(alpha: 0.4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            const Icon(Icons.help_outline_rounded,
+                color: AppColors.warning, size: 18),
+            const SizedBox(width: AppSpacing.sm),
+            Text('Not a confident match',
+                style: Theme.of(context).textTheme.titleMedium),
+          ]),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            'We could not identify this coin with high confidence. Possible matches:',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          for (final m in id.alternativeMatches)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Text(m.name)),
+                  Text('${(m.confidence * 100).round()}%',
+                      style: const TextStyle(color: AppColors.textSecondary)),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ValueCard extends StatelessWidget {
+  const _ValueCard({required this.id, required this.money});
+  final CoinIdentification id;
+  final MoneyFormatter money;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.35)),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF1E1B10), AppColors.card],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Column(
+        children: [
+          Text('ESTIMATED MARKET VALUE',
+              style: Theme.of(context).textTheme.labelSmall),
+          const SizedBox(height: AppSpacing.sm),
+          Text(money.range(id.value.min, id.value.max),
+              style: AppTypography.valueHero),
+          const SizedBox(height: AppSpacing.xs),
+          Text('Typical estimate ${money.single(id.value.typical)}',
+              style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ),
+    );
+  }
+}
+
+class _ValueFactors extends StatelessWidget {
+  const _ValueFactors({
+    required this.factors,
+    required this.showAll,
+    required this.onUnlock,
+  });
+
+  final List<ValueFactor> factors;
+  final bool showAll;
+  final VoidCallback onUnlock;
+
+  IconData _icon(ValueImpact i) => switch (i) {
+        ValueImpact.positive => Icons.trending_up_rounded,
+        ValueImpact.negative => Icons.trending_down_rounded,
+        ValueImpact.neutral => Icons.remove_rounded,
+      };
+
+  Color _color(ValueImpact i) => switch (i) {
+        ValueImpact.positive => AppColors.success,
+        ValueImpact.negative => AppColors.danger,
+        ValueImpact.neutral => AppColors.textTertiary,
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final visible = showAll ? factors : factors.take(2).toList();
+    final hidden = factors.length - visible.length;
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('What affects this value',
+              style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppSpacing.sm),
+          for (final f in visible)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(_icon(f.impact), size: 16, color: _color(f.impact)),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        children: [
+                          TextSpan(
+                            text: '${f.label}. ',
+                            style: const TextStyle(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          TextSpan(text: f.detail),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (!showAll && hidden > 0) ...[
+            const SizedBox(height: AppSpacing.sm),
+            InkWell(
+              onTap: onUnlock,
+              child: Row(
+                children: [
+                  const Icon(Icons.lock_outline_rounded,
+                      size: 15, color: AppColors.gold),
+                  const SizedBox(width: 6),
+                  Text('+$hidden more in the full value analysis',
+                      style: const TextStyle(
+                          color: AppColors.gold,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600)),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailsCard extends StatelessWidget {
+  const _DetailsCard({required this.id});
+  final CoinIdentification id;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = <(String, String)>[
+      ('Country', id.country),
+      if (id.year != null) ('Year', '${id.year}'),
+      ('Denomination', id.denomination),
+      ('Material', id.material),
+      if (id.mint != null) ('Mint', id.mint!),
+      if (id.diameterMm != null) ('Diameter', '${id.diameterMm} mm'),
+      if (id.weightG != null) ('Weight', '${id.weightG} g'),
+      ('Condition (est.)', id.condition.label),
+    ];
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        children: [
+          for (final (k, v) in rows)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 7),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(k, style: Theme.of(context).textTheme.bodyMedium),
+                  Text(v, style: Theme.of(context).textTheme.titleMedium),
+                ],
+              ),
+            ),
+          const SizedBox(height: 4),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Rarity (est.)',
+                  style: Theme.of(context).textTheme.bodyMedium),
+              RarityChip(rarity: id.rarity),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
