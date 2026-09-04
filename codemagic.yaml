@@ -1,34 +1,91 @@
-# Codemagic CI/CD — Coinsight
+# Codemagic CI/CD — Coinsights
 # Docs: https://docs.codemagic.io/yaml/yaml-getting-started/
 #
-# Two workflows that work immediately with NO Apple/Google account or signing
-# set up — they run `flutter analyze` + `flutter test` and then a release
-# *compile* of each platform:
+#   • ios-release      → SIGNED .ipa, uploaded to App Store Connect / TestFlight
+#   • ios-workflow     → unsigned .app  (fast PR check: analyze + test + compile)
+#   • android-workflow → release .apk + .aab (debug-signed, for testing only)
 #
-#   • ios-workflow      → unsigned .app  (verifies the iOS build compiles)
-#   • android-workflow  → release .apk + .aab (debug-signed, for testing)
+# ─────────────────────────────────────────────────────────────────────────────
+# ONE-TIME SETUP for ios-release (all in the Codemagic UI + Apple, ~10 min):
 #
-# When you have an Apple Developer account and have added the App Store Connect
-# integration in the Codemagic UI, uncomment the "SIGNED / TESTFLIGHT" blocks
-# in ios-workflow to produce a real .ipa and publish to TestFlight.
+# 1. App Store Connect → Users and Access → Integrations → App Store Connect API
+#    → generate a team key with the "App Manager" role. Download the .p8 once.
+#    Note the Issuer ID and the Key ID.
+#
+# 2. Codemagic → (top-right avatar) Team/Personal settings → Integrations →
+#    App Store Connect → Connect. Paste Issuer ID, Key ID, and the .p8.
+#    Give the integration the name:  AppStoreConnect
+#    (must match `integrations.app_store_connect` below — change both if you
+#    name it differently).
+#
+# 3. Apple Developer → Certificates, Identifiers & Profiles → Identifiers:
+#    confirm the App ID  com.cognizeapp.coinsights  exists (it does if the app
+#    is already in App Store Connect). Codemagic creates the distribution
+#    certificate + provisioning profile automatically from the API key.
+#
+# 4. Push this file, then in Codemagic start a build on the "iOS release
+#    (TestFlight)" workflow. The build appears in App Store Connect →
+#    TestFlight in ~15 min (first processing can take up to an hour).
+# ─────────────────────────────────────────────────────────────────────────────
 
 workflows:
   # ─────────────────────────────────────────────────────────────────────────
+  ios-release:
+    name: iOS release (TestFlight)
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: AppStoreConnect      # the integration name from step 2
+    environment:
+      flutter: 3.29.3
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.cognizeapp.coinsights
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Analyze
+        script: flutter analyze
+
+      - name: Unit tests
+        script: |
+          mkdir -p test-results
+          flutter test --machine > test-results/flutter.json
+        test_report: test-results/flutter.json
+
+      - name: Set up code signing
+        script: xcode-project use-profiles
+
+      - name: Build signed IPA
+        script: |
+          # $BUILD_NUMBER is Codemagic's per-workflow incrementing counter —
+          # every TestFlight upload needs a higher build number than the last.
+          flutter build ipa --release \
+            --build-name=1.0.0 \
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - flutter_drive.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # Fill these in once you want App Store review submitted automatically:
+        # submit_to_app_store: false
+
+  # ─────────────────────────────────────────────────────────────────────────
   ios-workflow:
-    name: iOS build & test
+    name: iOS build & test (unsigned)
     max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
-      flutter: 3.29.3          # the version Coinsight was developed/tested on; "stable" also works
+      flutter: 3.29.3
       xcode: latest
       cocoapods: default
-    # --- SIGNED / TESTFLIGHT: uncomment once App Store Connect is connected ---
-    # integrations:
-    #   app_store_connect: CodemagicAppStoreKey   # name of the key you add in the UI
-    # environment:
-    #   ios_signing:
-    #     distribution_type: app_store
-    #     bundle_identifier: com.cognizeapp.coinsights
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
@@ -42,26 +99,11 @@ workflows:
           flutter test --machine --coverage > test-results/flutter.json
         test_report: test-results/flutter.json
 
-      # `flutter build ios` generates the Podfile and runs `pod install` itself,
-      # so no separate CocoaPods step is needed.
       - name: Build unsigned iOS
         script: flutter build ios --release --no-codesign
-
-      # --- SIGNED / TESTFLIGHT: replace the step above with these two ---
-      # - name: Set up signing
-      #   script: xcode-project use-profiles
-      # - name: Build signed IPA
-      #   script: |
-      #     flutter build ipa --release \
-      #       --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/iphoneos/*.app
-      # - build/ios/ipa/*.ipa            # produced by the signed build
       - coverage/lcov.info
-    # publishing:
-    #   app_store_connect:
-    #     auth: integration
-    #     submit_to_testflight: true
 
   # ─────────────────────────────────────────────────────────────────────────
   android-workflow:
@@ -69,7 +111,7 @@ workflows:
     max_build_duration: 45
     instance_type: linux_x2
     environment:
-      flutter: 3.29.3          # "stable" also works
+      flutter: 3.29.3
     scripts:
       - name: Get Flutter packages
         script: flutter pub get

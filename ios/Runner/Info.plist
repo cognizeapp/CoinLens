@@ -53,5 +53,9 @@
 		<string>Coinsights can save coin photos you capture to your photo library.</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<!-- Coinsights only uses standard HTTPS (exempt encryption); this skips
+		     the export-compliance prompt on every App Store Connect build. -->
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
 	</dict>
 </plist>
