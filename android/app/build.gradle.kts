@@ -23,7 +23,9 @@ if (hasReleaseSigning) {
 android {
     namespace = "com.cognizeapp.coinsights"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // Newer plugins (Firebase, RevenueCat, google_sign_in, sign_in_with_apple,
+    // sqflite) require a higher NDK than Flutter's own default.
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
