@@ -1,6 +1,6 @@
 {
-    "name": "CoinLens",
-    "short_name": "CoinLens",
+    "name": "Coinsight",
+    "short_name": "Coinsight",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0B0D12",

@@ -5,7 +5,7 @@ import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
 
-/// The single source of truth for CoinLens' Material theme. The app is
+/// The single source of truth for Coinsight' Material theme. The app is
 /// dark-only by design (see the product spec, "Visual identity").
 abstract final class AppTheme {
   static ThemeData get dark {

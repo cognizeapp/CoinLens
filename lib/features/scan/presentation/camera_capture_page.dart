@@ -163,7 +163,7 @@ class _CameraCapturePageState extends ConsumerState<CameraCapturePage>
         icon: Icons.no_photography_rounded,
         title: 'Camera access is off',
         message:
-            'Enable camera access for CoinLens in your device Settings, then '
+            'Enable camera access for Coinsight in your device Settings, then '
             'come back to scan. You can also upload a photo instead.',
         actionLabel: 'Use a photo instead',
         onAction: () => Navigator.of(context).pop(),

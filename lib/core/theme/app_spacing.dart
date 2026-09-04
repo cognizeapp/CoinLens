@@ -1,4 +1,4 @@
-/// 4-point spacing scale used across CoinLens.
+/// 4-point spacing scale used across Coinsight.
 abstract final class AppSpacing {
   static const double xxs = 2;
   static const double xs = 4;

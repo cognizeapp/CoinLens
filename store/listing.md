@@ -1,7 +1,7 @@
-# Store listing copy — CoinLens
+# Store listing copy — Coinsight
 
 ## Name
-CoinLens — Coin Identifier & Value
+Coinsight — Coin Identifier & Value
 
 ## Subtitle / short description (≤ 30 / 80 chars)
 Scan. Identify. Discover value.
@@ -11,7 +11,7 @@ Identify coins from a photo and see what they could be worth.
 
 Found an old coin and wondered if it's worth anything? Point your camera at it.
 
-CoinLens identifies coins from a photo and gives you an estimated market value in
+Coinsight identifies coins from a photo and gives you an estimated market value in
 seconds — using a structured coin catalog and a transparent, factor-by-factor
 value model, not guesswork.
 
@@ -31,7 +31,7 @@ PREMIUM — AI Coin Intelligence
 • An AI assistant that already knows the coin you're looking at
 • Advanced collection statistics
 
-CoinLens gives estimates based on available data. Values vary with condition,
+Coinsight gives estimates based on available data. Values vary with condition,
 authenticity and market demand. It is not a professional grading or
 authentication service and does not provide financial advice.
 

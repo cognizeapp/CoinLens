@@ -1,4 +1,4 @@
-# Codemagic CI/CD — CoinLens
+# Codemagic CI/CD — Coinsight
 # Docs: https://docs.codemagic.io/yaml/yaml-getting-started/
 #
 # Two workflows that work immediately with NO Apple/Google account or signing
@@ -19,7 +19,7 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
-      flutter: 3.29.3          # the version CoinLens was developed/tested on; "stable" also works
+      flutter: 3.29.3          # the version Coinsight was developed/tested on; "stable" also works
       xcode: latest
       cocoapods: default
     # --- SIGNED / TESTFLIGHT: uncomment once App Store Connect is connected ---
@@ -28,7 +28,7 @@ workflows:
     # environment:
     #   ios_signing:
     #     distribution_type: app_store
-    #     bundle_identifier: app.coinlens.coinlens
+    #     bundle_identifier: com.cognize.coinsight
     scripts:
       - name: Get Flutter packages
         script: flutter pub get

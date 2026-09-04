@@ -1,4 +1,4 @@
-package app.coinlens.coinlens
+package com.cognize.coinsight
 
 import io.flutter.embedding.android.FlutterActivity
 

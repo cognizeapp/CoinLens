@@ -1,5 +1,5 @@
-import 'package:coinlens/core/utils/formatters.dart';
-import 'package:coinlens/features/coin/domain/coin_models.dart';
+import 'package:coinsight/core/utils/formatters.dart';
+import 'package:coinsight/features/coin/domain/coin_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

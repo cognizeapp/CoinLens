@@ -61,7 +61,7 @@ class ProfilePage extends ConsumerWidget {
               status.isPremium ? Icons.workspace_premium_rounded : Icons.lock_open_rounded,
               color: AppColors.gold,
             ),
-            title: Text(status.isPremium ? 'CoinLens Premium' : 'Free plan'),
+            title: Text(status.isPremium ? 'Coinsight Premium' : 'Free plan'),
             subtitle: Text(status.isPremium
                 ? (status.expiresAt != null
                     ? 'Renews ${status.expiresAt!.toLocal().toString().split(' ').first}'

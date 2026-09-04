@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Coinlens</string>
+	<string>Coinsight</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>coinlens</string>
+	<string>coinsight</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -46,10 +46,10 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>CoinLens uses the camera to photograph your coins so they can be identified.</string>
+	<string>Coinsight uses the camera to photograph your coins so they can be identified.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>CoinLens needs access to your photos so you can upload an existing picture of a coin.</string>
+	<string>Coinsight needs access to your photos so you can upload an existing picture of a coin.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>CoinLens can save coin photos you capture to your photo library.</string>
+	<string>Coinsight can save coin photos you capture to your photo library.</string>
 </dict>
 </plist>

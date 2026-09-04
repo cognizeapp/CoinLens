@@ -20,7 +20,7 @@ class MockSubscriptionService implements SubscriptionService {
   SubscriptionStatus _premiumStatus() => SubscriptionStatus(
         tier: SubscriptionTier.premium,
         expiresAt: DateTime.now().add(const Duration(days: 30)),
-        productId: 'coinlens_premium_monthly',
+        productId: 'coinsight_premium_monthly',
       );
 
   @override
@@ -35,7 +35,7 @@ class MockSubscriptionService implements SubscriptionService {
   @override
   Future<List<SubscriptionPlan>> plans() async => const [
         SubscriptionPlan(
-          id: 'coinlens_premium_yearly',
+          id: 'coinsight_premium_yearly',
           title: 'Yearly',
           priceLabel: '€29.99',
           period: 'per year',
@@ -43,7 +43,7 @@ class MockSubscriptionService implements SubscriptionService {
           trialLabel: '7-day free trial',
         ),
         SubscriptionPlan(
-          id: 'coinlens_premium_monthly',
+          id: 'coinsight_premium_monthly',
           title: 'Monthly',
           priceLabel: '€4.99',
           period: 'per month',

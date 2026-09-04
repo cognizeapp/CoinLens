@@ -1,4 +1,4 @@
-# CoinLens
+# Coinsight
 
 **Discover what your coins are really worth.** Scan. Identify. Discover value.
 

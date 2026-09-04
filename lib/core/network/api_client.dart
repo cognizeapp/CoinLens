@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../error/failure.dart';
 
-/// Thin JSON/multipart client for the CoinLens backend (Cloud Functions / API
+/// Thin JSON/multipart client for the Coinsight backend (Cloud Functions / API
 /// gateway). The backend holds every secret — AI provider keys, catalog and
 /// pricing data sources — so the client only ever sends images and structured
 /// data and receives structured results.

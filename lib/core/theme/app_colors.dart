@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// CoinLens visual identity — a sophisticated dark palette where gold signals
+/// Coinsight visual identity — a sophisticated dark palette where gold signals
 /// value, rarity and Premium.
 abstract final class AppColors {
   // Backgrounds

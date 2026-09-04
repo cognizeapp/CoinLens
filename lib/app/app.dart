@@ -5,8 +5,8 @@ import '../core/constants/app_constants.dart';
 import '../core/theme/app_theme.dart';
 import 'router.dart';
 
-class CoinLensApp extends ConsumerWidget {
-  const CoinLensApp({super.key});
+class CoinsightApp extends ConsumerWidget {
+  const CoinsightApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

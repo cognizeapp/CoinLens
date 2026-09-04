@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:coinlens/features/scan/data/heuristic_image_quality_analyzer.dart';
-import 'package:coinlens/features/scan/domain/image_quality.dart';
+import 'package:coinsight/features/scan/data/heuristic_image_quality_analyzer.dart';
+import 'package:coinsight/features/scan/domain/image_quality.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

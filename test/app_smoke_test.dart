@@ -1,14 +1,14 @@
-import 'package:coinlens/app/app.dart';
-import 'package:coinlens/bootstrap.dart';
-import 'package:coinlens/core/config/app_config.dart';
-import 'package:coinlens/features/auth/data/mock_auth_repository.dart';
-import 'package:coinlens/features/auth/presentation/auth_providers.dart';
-import 'package:coinlens/features/coin/data/mock_scan_repository.dart';
-import 'package:coinlens/features/coin/presentation/coin_providers.dart';
-import 'package:coinlens/services/analytics/analytics_service.dart';
-import 'package:coinlens/services/preferences/app_preferences.dart';
-import 'package:coinlens/services/subscription/mock_subscription_service.dart';
-import 'package:coinlens/services/subscription/subscription_service.dart';
+import 'package:coinsight/app/app.dart';
+import 'package:coinsight/bootstrap.dart';
+import 'package:coinsight/core/config/app_config.dart';
+import 'package:coinsight/features/auth/data/mock_auth_repository.dart';
+import 'package:coinsight/features/auth/presentation/auth_providers.dart';
+import 'package:coinsight/features/coin/data/mock_scan_repository.dart';
+import 'package:coinsight/features/coin/presentation/coin_providers.dart';
+import 'package:coinsight/services/analytics/analytics_service.dart';
+import 'package:coinsight/services/preferences/app_preferences.dart';
+import 'package:coinsight/services/subscription/mock_subscription_service.dart';
+import 'package:coinsight/services/subscription/subscription_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
@@ -34,7 +34,7 @@ void main() {
             .overrideWithValue(MockSubscriptionService(prefs)),
         scanRepositoryProvider.overrideWithValue(MockScanRepository()),
       ],
-      child: const CoinLensApp(),
+      child: const CoinsightApp(),
     ));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

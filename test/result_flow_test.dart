@@ -1,9 +1,9 @@
-import 'package:coinlens/core/theme/app_theme.dart';
-import 'package:coinlens/features/result/result_page.dart';
-import 'package:coinlens/services/analytics/analytics_service.dart';
-import 'package:coinlens/services/preferences/app_preferences.dart';
-import 'package:coinlens/services/subscription/mock_subscription_service.dart';
-import 'package:coinlens/services/subscription/subscription_service.dart';
+import 'package:coinsight/core/theme/app_theme.dart';
+import 'package:coinsight/features/result/result_page.dart';
+import 'package:coinsight/services/analytics/analytics_service.dart';
+import 'package:coinsight/services/preferences/app_preferences.dart';
+import 'package:coinsight/services/subscription/mock_subscription_service.dart';
+import 'package:coinsight/services/subscription/subscription_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

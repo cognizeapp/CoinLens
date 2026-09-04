@@ -1,6 +1,6 @@
-import 'package:coinlens/features/coin/data/catalog_value_estimator.dart';
-import 'package:coinlens/features/coin/domain/catalog_entry.dart';
-import 'package:coinlens/features/coin/domain/coin_models.dart';
+import 'package:coinsight/features/coin/data/catalog_value_estimator.dart';
+import 'package:coinsight/features/coin/domain/catalog_entry.dart';
+import 'package:coinsight/features/coin/domain/coin_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _entry = CatalogEntry(

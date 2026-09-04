@@ -72,5 +72,5 @@ Future<void> bootstrap() async {
     'mock_backend': config.useMockBackend,
   });
 
-  runApp(ProviderScope(overrides: overrides, child: const CoinLensApp()));
+  runApp(ProviderScope(overrides: overrides, child: const CoinsightApp()));
 }

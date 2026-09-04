@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:coinlens/features/coin/data/catalog_value_estimator.dart';
-import 'package:coinlens/features/coin/data/coin_catalog.dart';
-import 'package:coinlens/features/coin/data/pipeline_identification_service.dart';
-import 'package:coinlens/features/coin/domain/catalog_entry.dart';
-import 'package:coinlens/features/coin/domain/coin_models.dart';
-import 'package:coinlens/features/coin/domain/condition_estimator.dart';
-import 'package:coinlens/features/coin/domain/ocr_service.dart';
+import 'package:coinsight/features/coin/data/catalog_value_estimator.dart';
+import 'package:coinsight/features/coin/data/coin_catalog.dart';
+import 'package:coinsight/features/coin/data/pipeline_identification_service.dart';
+import 'package:coinsight/features/coin/domain/catalog_entry.dart';
+import 'package:coinsight/features/coin/domain/coin_models.dart';
+import 'package:coinsight/features/coin/domain/condition_estimator.dart';
+import 'package:coinsight/features/coin/domain/ocr_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
