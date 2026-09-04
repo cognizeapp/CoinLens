@@ -57,7 +57,18 @@ workflows:
         test_report: test-results/flutter.json
 
       - name: Set up code signing
-        script: xcode-project use-profiles
+        script: |
+          set -e
+          keychain initialize
+          # Registers the App ID if missing, creates an iOS Distribution
+          # certificate if the team has none, and creates the App Store
+          # provisioning profile — then installs them for the build.
+          # Needs the API key role to be "App Manager" or "Admin".
+          app-store-connect fetch-signing-files "com.cognizeapp.coinsights" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
 
       - name: Build signed IPA
         script: |
