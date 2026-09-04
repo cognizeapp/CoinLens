@@ -53,31 +53,31 @@ workflows:
           flutter test --machine > test-results/flutter.json
         test_report: test-results/flutter.json
 
-      - name: Set up code signing
+      - name: "Signing 1/4 — init keychain"
+        script: keychain initialize
+
+      - name: "Signing 2/4 — generate certificate private key"
         script: |
           set -ex
-          keychain initialize
-          KEY="$CM_BUILD_DIR/cert_key"
+          ssh-keygen -t rsa -b 2048 -m PEM -f "$CM_BUILD_DIR/cert_key" -q -N ""
+          ls -l "$CM_BUILD_DIR/cert_key"
 
-          # Private key backing the iOS Distribution certificate.
-          ssh-keygen -t rsa -b 2048 -m PEM -f "$KEY" -q -N ""
-
-          # Create the iOS Distribution certificate (ignored if the account
-          # already has the max of 3 — then delete an unused one in the Apple
-          # Developer portal and re-run).
-          app-store-connect create-certificate \
-            --type IOS_DISTRIBUTION \
-            --certificate-key "@file:$KEY" \
-            --save || true
-
-          # Register the App ID if missing and create the App Store
-          # provisioning profile for it. Needs the API key role to be
-          # "App Manager" or "Admin".
+      - name: "Signing 3/4 — create cert + App ID + App Store profile"
+        script: |
+          set -ex
+          # --create makes the App ID, the Apple Distribution certificate (from
+          # the key generated above) and the App Store provisioning profile if
+          # they don't exist. Requires the API key role App Manager or Admin.
           app-store-connect fetch-signing-files "com.cognizeapp.coinsights" \
             --type IOS_APP_STORE \
-            --certificate-key "@file:$KEY" \
-            --create
+            --platform IOS \
+            --certificate-key "@file:$CM_BUILD_DIR/cert_key" \
+            --create \
+            --verbose
 
+      - name: "Signing 4/4 — install cert + wire profile into Xcode"
+        script: |
+          set -ex
           keychain add-certificates
           xcode-project use-profiles
 
