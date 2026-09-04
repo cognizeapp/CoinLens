@@ -15,7 +15,7 @@
 #
 # 2. Codemagic → (top-right avatar) Team/Personal settings → Integrations →
 #    App Store Connect → Connect. Paste Issuer ID, Key ID, and the .p8.
-#    Name the integration exactly:  AppStoreConnect
+#    Name of the key as saved in Codemagic > Settings > Integrations:  CoinSights
 #    (must match `integrations.app_store_connect` below).
 #
 # 3. Push, then start a build on "iOS release (TestFlight)". The "Set up code
@@ -35,7 +35,7 @@ workflows:
     max_build_duration: 90
     instance_type: mac_mini_m2
     integrations:
-      app_store_connect: AppStoreConnect      # the integration name from step 2
+      app_store_connect: CoinSights      # name of the key in Codemagic > Settings > Integrations > Developer Portal
     environment:
       flutter: 3.29.3
       xcode: latest
