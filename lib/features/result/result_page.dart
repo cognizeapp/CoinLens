@@ -67,7 +67,16 @@ class ResultPage extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.all(AppSpacing.screen),
             children: [
-              const Center(child: CoinThumb(size: 96)),
+              Center(
+                child: CoinThumb(
+                  size: 112,
+                  imagePath: record.frontImagePath,
+                  material: id.material,
+                  rarity: id.rarity,
+                  label: shortDenomination(id.denomination),
+                  seed: id.coinName,
+                ),
+              ),
               const SizedBox(height: AppSpacing.lg),
               Center(
                 child: Text(id.coinName,

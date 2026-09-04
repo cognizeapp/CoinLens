@@ -141,7 +141,13 @@ class _RankRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                const CoinThumb(size: 40),
+                CoinThumb(
+                  size: 40,
+                  material: entry.material,
+                  rarity: entry.baseRarity,
+                  label: shortDenomination(entry.denomination),
+                  seed: entry.id,
+                ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(

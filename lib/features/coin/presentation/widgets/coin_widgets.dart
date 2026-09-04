@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -5,6 +7,16 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/utils/l10n_extensions.dart';
 import '../../domain/coin_models.dart';
+import 'coin_mockup.dart';
+
+/// Shortens a denomination string ("20 Dollars", "1 Lira") to a compact
+/// engraving glyph ("20", "1") for the generated coin mockup.
+String shortDenomination(String denomination) {
+  final match = RegExp(r'^[\p{Sc}]?\s*[\d.,/]+', unicode: true)
+      .firstMatch(denomination);
+  final token = (match?.group(0) ?? denomination).trim();
+  return token.length > 5 ? token.substring(0, 5) : token;
+}
 
 Color rarityColor(CoinRarity r) => switch (r) {
       CoinRarity.common => AppColors.rarityCommon,
@@ -62,13 +74,48 @@ class ConfidenceBadge extends StatelessWidget {
   }
 }
 
+/// A coin's visual: the user's own photo framed as a coin when we have one,
+/// otherwise a generated metallic mockup from [material]/[rarity], otherwise
+/// (neither available) a plain placeholder disc.
 class CoinThumb extends StatelessWidget {
-  const CoinThumb({super.key, this.imagePath, this.size = 52});
+  const CoinThumb({
+    super.key,
+    this.imagePath,
+    this.material,
+    this.rarity,
+    this.label,
+    this.seed = '',
+    this.size = 52,
+  });
+
   final String? imagePath;
+  final String? material;
+  final CoinRarity? rarity;
+  final String? label;
+  final String seed;
   final double size;
 
   @override
   Widget build(BuildContext context) {
+    if (imagePath != null && imagePath!.isNotEmpty) {
+      final file = File(imagePath!);
+      if (file.existsSync()) {
+        return CoinPhotoMockup(
+          image: FileImage(file),
+          rarity: rarity,
+          size: size,
+        );
+      }
+    }
+    if (material != null && rarity != null) {
+      return CoinMockup(
+        material: material!,
+        rarity: rarity!,
+        label: label,
+        seed: seed,
+        size: size,
+      );
+    }
     return Container(
       width: size,
       height: size,
@@ -105,7 +152,13 @@ class ScanListTile extends StatelessWidget {
       onTap: onTap,
       contentPadding:
           const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 6),
-      leading: CoinThumb(imagePath: record.frontImagePath),
+      leading: CoinThumb(
+        imagePath: record.frontImagePath,
+        material: id.material,
+        rarity: id.rarity,
+        label: shortDenomination(id.denomination),
+        seed: id.coinName,
+      ),
       title: Text(id.coinName,
           maxLines: 1, overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.titleMedium),

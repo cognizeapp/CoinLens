@@ -60,7 +60,13 @@ class _Sheet extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const CoinThumb(size: 52),
+                CoinThumb(
+                  size: 72,
+                  material: entry.material,
+                  rarity: entry.baseRarity,
+                  label: shortDenomination(entry.denomination),
+                  seed: entry.id,
+                ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(

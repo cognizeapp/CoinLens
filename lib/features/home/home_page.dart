@@ -172,6 +172,14 @@ class _RankingsPreview extends ConsumerWidget {
                                 style: const TextStyle(
                                     color: AppColors.gold,
                                     fontWeight: FontWeight.w700)),
+                            const SizedBox(width: AppSpacing.sm),
+                            CoinThumb(
+                              size: 32,
+                              material: entries[i].material,
+                              rarity: entries[i].baseRarity,
+                              label: shortDenomination(entries[i].denomination),
+                              seed: entries[i].id,
+                            ),
                             const SizedBox(width: AppSpacing.md),
                             Expanded(
                               child: Text(entries[i].name,
