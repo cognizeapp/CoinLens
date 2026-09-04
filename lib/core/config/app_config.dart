@@ -30,10 +30,13 @@ class AppConfig {
         (f) => f.name == flavorStr,
         orElse: () => AppFlavor.dev,
       ),
+      // Both default to on now that the Coinsights Firebase project and
+      // RevenueCat app exist; RevenueCat still no-ops to the mock service if
+      // no platform API key is supplied (see bootstrap()).
       enableFirebase:
-          const bool.fromEnvironment('ENABLE_FIREBASE', defaultValue: false),
+          const bool.fromEnvironment('ENABLE_FIREBASE', defaultValue: true),
       enableRevenueCat:
-          const bool.fromEnvironment('ENABLE_REVENUECAT', defaultValue: false),
+          const bool.fromEnvironment('ENABLE_REVENUECAT', defaultValue: true),
       apiBaseUrl: const String.fromEnvironment('API_BASE_URL'),
       revenueCatKeyIos: const String.fromEnvironment('REVENUECAT_API_KEY_IOS'),
       revenueCatKeyAndroid:

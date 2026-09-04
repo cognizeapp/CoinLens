@@ -40,7 +40,13 @@ workflows:
       flutter: 3.29.3
       xcode: latest
       cocoapods: default
+      groups:
+        - coinsights_secrets   # REVENUECAT_API_KEY_IOS/ANDROID, GOOGLE(SERVICE)_*_BASE64
     scripts:
+      - name: Set up Firebase config
+        script: |
+          echo "$GOOGLESERVICE_INFO_PLIST_BASE64" | base64 --decode > ios/Runner/GoogleService-Info.plist
+
       - name: Get Flutter packages
         script: flutter pub get
 
@@ -88,7 +94,10 @@ workflows:
           flutter build ipa --release \
             --build-name=1.0.0 \
             --build-number=$BUILD_NUMBER \
-            --export-options-plist=/Users/builder/export_options.plist
+            --export-options-plist=/Users/builder/export_options.plist \
+            --dart-define=ENABLE_FIREBASE=true \
+            --dart-define=ENABLE_REVENUECAT=true \
+            --dart-define=REVENUECAT_API_KEY_IOS=$REVENUECAT_API_KEY_IOS
     artifacts:
       - build/ios/ipa/*.ipa
       - flutter_drive.log
@@ -134,7 +143,13 @@ workflows:
     instance_type: linux_x2
     environment:
       flutter: 3.29.3
+      groups:
+        - coinsights_secrets
     scripts:
+      - name: Set up Firebase config
+        script: |
+          echo "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > android/app/google-services.json
+
       - name: Get Flutter packages
         script: flutter pub get
 
@@ -147,14 +162,22 @@ workflows:
           flutter test --machine --coverage > test-results/flutter.json
         test_report: test-results/flutter.json
 
-      # NOTE: release builds are currently debug-signed (see
-      # android/app/build.gradle.kts). Add a real keystore + the
-      # `android_signing` reference here before shipping to Google Play.
+      # NOTE: release builds are currently debug-signed unless android/key.properties
+      # is supplied (it's gitignored — see android/app/build.gradle.kts). Add it as a
+      # secure env var / encrypted file here before shipping to Google Play.
       - name: Build APK
-        script: flutter build apk --release
+        script: |
+          flutter build apk --release \
+            --dart-define=ENABLE_FIREBASE=true \
+            --dart-define=ENABLE_REVENUECAT=true \
+            --dart-define=REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID
 
       - name: Build App Bundle
-        script: flutter build appbundle --release
+        script: |
+          flutter build appbundle --release \
+            --dart-define=ENABLE_FIREBASE=true \
+            --dart-define=ENABLE_REVENUECAT=true \
+            --dart-define=REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
       - build/app/outputs/bundle/release/*.aab

@@ -57,5 +57,18 @@
 		     the export-compliance prompt on every App Store Connect build. -->
 		<key>ITSAppUsesNonExemptEncryption</key>
 		<false/>
+		<!-- Google Sign-In redirect URL scheme — REVERSED_CLIENT_ID from
+		     ios/Runner/GoogleService-Info.plist (Firebase project
+		     coinsights-eabc4). Update this if the app is ever re-added to
+		     Firebase with a new OAuth client. -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.776787264875-3edg7sk8pkb9sjd3m2nd3s67nd80das8</string>
+				</array>
+			</dict>
+		</array>
 	</dict>
 </plist>
