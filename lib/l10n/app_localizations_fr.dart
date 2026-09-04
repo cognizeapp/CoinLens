@@ -48,6 +48,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navProfile => 'Profil';
 
   @override
+  String get actionShare => 'Partager';
+
+  @override
+  String shareCoinText(String coin, String value) {
+    return '$coin — valeur estimée $value. Identifiée avec Coinsight.';
+  }
+
+  @override
   String get offlineBanner => 'Hors ligne — les scans enregistrés fonctionnent';
 
   @override

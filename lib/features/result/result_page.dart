@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
@@ -27,9 +29,26 @@ class ResultPage extends ConsumerWidget {
     final scan = ref.watch(scanByIdProvider(scanId));
     final money = ref.watch(moneyFormatterProvider);
     final isPremium = ref.watch(isPremiumProvider);
+    final loaded = scan.valueOrNull;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.resultTitle)),
+      appBar: AppBar(
+        title: Text(l.resultTitle),
+        actions: [
+          if (loaded != null)
+            IconButton(
+              icon: const Icon(Icons.ios_share_rounded),
+              tooltip: l.actionShare,
+              onPressed: () {
+                final id = loaded.identification;
+                Share.share(l.shareCoinText(
+                  id.coinName,
+                  money.range(id.value.min, id.value.max),
+                ));
+              },
+            ),
+        ],
+      ),
       body: scan.when(
         loading: () => LoadingView(message: l.loadingResult),
         error: (_, __) => ErrorStateView(
@@ -133,6 +152,7 @@ class _SaveToCollectionButtonState
     if (!mounted) return;
     result.when(
       ok: (_) {
+        HapticFeedback.selectionClick();
         setState(() {
           _saved = !_saved;
           _busy = false;

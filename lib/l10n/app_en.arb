@@ -1,6 +1,5 @@
 {
   "@@locale": "en",
-
   "appTagline": "Discover what your coins are really worth.",
   "actionContinue": "Continue",
   "actionSkip": "Skip",
@@ -9,14 +8,24 @@
   "actionDelete": "Delete",
   "actionClose": "Close",
   "wordOr": "or",
-
   "navHome": "Home",
   "navCollection": "Collection",
   "navScan": "Scan",
   "navHistory": "History",
   "navProfile": "Profile",
+  "actionShare": "Share",
+  "shareCoinText": "{coin} — estimated value {value}. Identified with Coinsight.",
+  "@shareCoinText": {
+    "placeholders": {
+      "coin": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "offlineBanner": "Offline — cached scans still work",
-
   "onboard1Title": "Discover Your Coins",
   "onboard1Body": "Scan any coin and instantly discover what it is.",
   "onboard2Title": "Find Out What It's Worth",
@@ -24,7 +33,6 @@
   "onboard3Title": "Unlock AI Coin Intelligence",
   "onboard3Body": "Discover the story, rarity and selling potential of your coins.",
   "onboardStart": "Start Scanning",
-
   "authSubtitle": "Sign in to sync your collection across devices.",
   "authEmail": "Email",
   "authPassword": "Password",
@@ -43,17 +51,27 @@
   "authNoAccountForEmail": "No account found for that email.",
   "authTerms": "By continuing you agree to the Coinsight Terms of Service and Privacy Policy.",
   "authCreateSyncHint": "Create an account to sync your collection",
-
   "valEmailEmpty": "Enter your email",
   "valEmailInvalid": "Enter a valid email address",
   "valPasswordEmpty": "Enter a password",
   "valPasswordShort": "Use at least 8 characters",
   "valFieldRequired": "{field} is required",
-  "@valFieldRequired": { "placeholders": { "field": { "type": "String" } } },
-
+  "@valFieldRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
   "homeWelcome": "Welcome",
   "homeWelcomeNamed": "Welcome, {name}",
-  "@homeWelcomeNamed": { "placeholders": { "name": { "type": "String" } } },
+  "@homeWelcomeNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "howItWorks": "How it works",
   "howItWorksScan": "Scan",
   "howItWorksScanBody": "Photograph the front and back of your coin.",
@@ -68,7 +86,6 @@
   "noScansYetBody": "Your scanned coins will appear here.",
   "unlockBannerTitle": "Unlock AI Coin Intelligence",
   "unlockBannerBody": "History, rarity, condition and how to sell it.",
-
   "scanTitle": "Scan a Coin",
   "scanReset": "Reset",
   "scanFront": "Scan the front",
@@ -85,8 +102,13 @@
   "uploadFromLibrary": "Upload from library",
   "couldNotOpenImage": "Could not open that image. Check photo permissions in Settings.",
   "tapToRetakeWith": "Tap to retake · {issue}",
-  "@tapToRetakeWith": { "placeholders": { "issue": { "type": "String" } } },
-
+  "@tapToRetakeWith": {
+    "placeholders": {
+      "issue": {
+        "type": "String"
+      }
+    }
+  },
   "cameraPromptFront": "Scan the front of your coin",
   "cameraPromptBack": "Scan the back of your coin",
   "cameraHint": "Fill the circle · plain background · steady hands",
@@ -97,7 +119,6 @@
   "cameraNoneBody": "This device has no usable camera. Upload a photo instead.",
   "cameraUploadPhoto": "Upload a photo",
   "cameraCaptureFailed": "Could not take the photo. Try again.",
-
   "qualityRetakeNeeded": "Retake needed",
   "qualityCouldBeBetter": "This photo could be better",
   "qualityRetake": "Retake",
@@ -118,25 +139,41 @@
   "issueCoinSmallFull": "Move closer so the coin fills most of the circle.",
   "issueMultipleShort": "Multiple objects",
   "issueMultipleFull": "We detected more than one object. Scan a single coin at a time.",
-
   "analyzingCoin": "Analyzing coin…",
   "stageDetectingText": "Detecting text",
   "stageIdentifyingCountry": "Identifying country",
   "stageDetectingYear": "Detecting year",
   "stageSearchingDatabase": "Searching coin database",
   "stageCalculatingValue": "Calculating value",
-
   "resultTitle": "Coin result",
   "loadingResult": "Loading result…",
   "resultOpenError": "We could not open this result.",
   "confidenceValue": "{percent} confidence",
-  "@confidenceValue": { "placeholders": { "percent": { "type": "String" } } },
+  "@confidenceValue": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "estimatedMarketValue": "ESTIMATED MARKET VALUE",
   "typicalEstimate": "Typical estimate {value}",
-  "@typicalEstimate": { "placeholders": { "value": { "type": "String" } } },
+  "@typicalEstimate": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "whatAffectsValue": "What affects this value",
   "moreInFullAnalysis": "+{count} more in the full value analysis",
-  "@moreInFullAnalysis": { "placeholders": { "count": { "type": "int" } } },
+  "@moreInFullAnalysis": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notConfidentMatch": "Not a confident match",
   "notConfidentBody": "We could not identify this coin with high confidence. Possible matches:",
   "detailCountry": "Country",
@@ -157,7 +194,6 @@
   "aiFeatCondition": "Condition insights",
   "aiFeatSelling": "How to sell it",
   "unlockPremium": "Unlock Premium",
-
   "aiCoinIntelligence": "AI Coin Intelligence",
   "generateAiAnalysis": "Generate AI analysis",
   "askAiAssistant": "Ask the AI assistant",
@@ -179,10 +215,15 @@
   "whereToSell": "Where to sell",
   "auctionSuitable": "Auction suitable?",
   "professionalAppraisal": "Professional appraisal",
-
   "aiAssistantTitle": "AI coin assistant",
   "aiTalkingAbout": "Talking about: {coin}",
-  "@aiTalkingAbout": { "placeholders": { "coin": { "type": "String" } } },
+  "@aiTalkingAbout": {
+    "placeholders": {
+      "coin": {
+        "type": "String"
+      }
+    }
+  },
   "aiAskHint": "Ask about this coin…",
   "aiAssistantIntro": "Ask the assistant anything about this coin",
   "aiCouldNotOpen": "Could not open this coin.",
@@ -191,7 +232,6 @@
   "qWhereSell": "Where should I sell it?",
   "qAuthenticate": "Should I get this coin authenticated?",
   "qHowMuchList": "How much should I list it for?",
-
   "paywallHeadline": "Unlock the Full Story Behind Every Coin",
   "paywallSubheadline": "Discover the history, rarity and best way to sell your coins.",
   "featAiAnalysis": "Detailed AI analysis",
@@ -211,7 +251,6 @@
   "paywallLegal": "Subscription renews automatically until cancelled. Manage or cancel anytime in your store account.",
   "paywallLoadError": "Could not load subscription options.",
   "restorePurchases": "Restore purchases",
-
   "collectionTitle": "Collection",
   "collectionEmpty": "Your collection is empty",
   "collectionEmptyBody": "Save a scanned coin to add it here.",
@@ -230,21 +269,34 @@
   "statEstValue": "Est. value",
   "statMostValuable": "Most valuable",
   "rarestLabel": "Rarest: {name} ({rarity})",
-  "@rarestLabel": { "placeholders": { "name": { "type": "String" }, "rarity": { "type": "String" } } },
+  "@rarestLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "rarity": {
+        "type": "String"
+      }
+    }
+  },
   "collectionLoadError": "Could not load your collection.",
-
   "historyTitle": "History",
   "historyEmpty": "Nothing scanned yet",
   "historyEmptyBody": "Scan a coin to start building your history.",
   "historyLoadError": "Could not load your scan history.",
-
   "profileTitle": "Profile",
   "profileGuest": "Guest",
   "sectionSubscription": "Subscription",
   "coinsightPremium": "Coinsight Premium",
   "freePlan": "Free plan",
   "renewsOn": "Renews {date}",
-  "@renewsOn": { "placeholders": { "date": { "type": "String" } } },
+  "@renewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "subActive": "Active",
   "manageSubscription": "Manage subscription",
   "manageSubscriptionBody": "Opens your App Store / Play Store settings",
@@ -263,8 +315,13 @@
   "deleteAccountTitle": "Delete account?",
   "deleteAccountBody": "This permanently deletes your account, scans and images. This cannot be undone.",
   "appVersion": "Coinsight • v{version}",
-  "@appVersion": { "placeholders": { "version": { "type": "String" } } },
-
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "rankingsTitle": "Coin rankings",
   "rankMostValuable": "Most valuable",
   "rankRarest": "Rarest",
@@ -278,26 +335,46 @@
   "rankYears": "Years",
   "rankKeyDatesLabel": "Key dates",
   "yearBc": "{year} BC",
-  "@yearBc": { "placeholders": { "year": { "type": "int" } } },
-
+  "@yearBc": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "errNetwork": "No internet connection. Check your network and try again.",
   "errServer": "Something went wrong on our side. Please try again shortly.",
   "errUnknown": "Unexpected error. Please try again.",
   "errNotFound": "We couldn't find what you were looking for.",
   "errAuth": "Authentication failed. Please try again.",
   "errScanNotFound": "That scan could not be found.",
-
   "justNow": "Just now",
   "minutesAgo": "{m}m ago",
-  "@minutesAgo": { "placeholders": { "m": { "type": "int" } } },
+  "@minutesAgo": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
   "hoursAgo": "{h}h ago",
-  "@hoursAgo": { "placeholders": { "h": { "type": "int" } } },
+  "@hoursAgo": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      }
+    }
+  },
   "daysAgo": "{d}d ago",
-  "@daysAgo": { "placeholders": { "d": { "type": "int" } } },
-
+  "@daysAgo": {
+    "placeholders": {
+      "d": {
+        "type": "int"
+      }
+    }
+  },
   "valueDisclaimer": "Coin values are estimates based on available data and may vary depending on condition, authenticity and market demand.",
   "gradingDisclaimer": "This app does not provide professional numismatic authentication or financial advice. Condition estimates are approximate.",
-
   "condPoor": "Poor",
   "condFair": "Fair",
   "condGood": "Good",

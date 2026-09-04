@@ -183,6 +183,18 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get navProfile;
 
+  /// No description provided for @actionShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get actionShare;
+
+  /// No description provided for @shareCoinText.
+  ///
+  /// In en, this message translates to:
+  /// **'{coin} — estimated value {value}. Identified with Coinsight.'**
+  String shareCoinText(String coin, String value);
+
   /// No description provided for @offlineBanner.
   ///
   /// In en, this message translates to:

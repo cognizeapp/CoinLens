@@ -1,6 +1,5 @@
 {
   "@@locale": "es",
-
   "appTagline": "Descubre cuánto valen realmente tus monedas.",
   "actionContinue": "Continuar",
   "actionSkip": "Omitir",
@@ -9,14 +8,14 @@
   "actionDelete": "Eliminar",
   "actionClose": "Cerrar",
   "wordOr": "o",
-
   "navHome": "Inicio",
   "navCollection": "Colección",
   "navScan": "Escanear",
   "navHistory": "Historial",
   "navProfile": "Perfil",
+  "actionShare": "Compartir",
+  "shareCoinText": "{coin} — valor estimado {value}. Identificada con Coinsight.",
   "offlineBanner": "Sin conexión — los escaneos guardados funcionan",
-
   "onboard1Title": "Descubre tus monedas",
   "onboard1Body": "Escanea cualquier moneda y descubre al instante de qué se trata.",
   "onboard2Title": "Descubre cuánto vale",
@@ -24,7 +23,6 @@
   "onboard3Title": "Desbloquea la IA Coin Intelligence",
   "onboard3Body": "Descubre la historia, la rareza y el potencial de venta de tus monedas.",
   "onboardStart": "Empezar a escanear",
-
   "authSubtitle": "Inicia sesión para sincronizar tu colección en todos tus dispositivos.",
   "authEmail": "Correo electrónico",
   "authPassword": "Contraseña",
@@ -43,13 +41,11 @@
   "authNoAccountForEmail": "No se encontró ninguna cuenta con ese correo.",
   "authTerms": "Al continuar aceptas los Términos de servicio y la Política de privacidad de Coinsight.",
   "authCreateSyncHint": "Crea una cuenta para sincronizar tu colección",
-
   "valEmailEmpty": "Introduce tu correo electrónico",
   "valEmailInvalid": "Introduce un correo electrónico válido",
   "valPasswordEmpty": "Introduce una contraseña",
   "valPasswordShort": "Usa al menos 8 caracteres",
   "valFieldRequired": "{field} es obligatorio",
-
   "homeWelcome": "Bienvenido",
   "homeWelcomeNamed": "Bienvenido, {name}",
   "howItWorks": "Cómo funciona",
@@ -66,7 +62,6 @@
   "noScansYetBody": "Tus monedas escaneadas aparecerán aquí.",
   "unlockBannerTitle": "Desbloquea la IA Coin Intelligence",
   "unlockBannerBody": "Historia, rareza, estado y cómo venderla.",
-
   "scanTitle": "Escanear una moneda",
   "scanReset": "Restablecer",
   "scanFront": "Escanea el anverso",
@@ -83,7 +78,6 @@
   "uploadFromLibrary": "Subir desde la galería",
   "couldNotOpenImage": "No se pudo abrir esa imagen. Comprueba los permisos de fotos en Ajustes.",
   "tapToRetakeWith": "Toca para repetir · {issue}",
-
   "cameraPromptFront": "Escanea el anverso de la moneda",
   "cameraPromptBack": "Escanea el reverso de la moneda",
   "cameraHint": "Llena el círculo · fondo liso · pulso firme",
@@ -94,7 +88,6 @@
   "cameraNoneBody": "Este dispositivo no tiene una cámara utilizable. Sube una foto.",
   "cameraUploadPhoto": "Subir una foto",
   "cameraCaptureFailed": "No se pudo hacer la foto. Inténtalo de nuevo.",
-
   "qualityRetakeNeeded": "Hay que repetir la foto",
   "qualityCouldBeBetter": "Esta foto podría ser mejor",
   "qualityRetake": "Repetir",
@@ -115,14 +108,12 @@
   "issueCoinSmallFull": "Acércate para que la moneda ocupe la mayor parte del círculo.",
   "issueMultipleShort": "Varios objetos",
   "issueMultipleFull": "Hemos detectado más de un objeto. Escanea una sola moneda cada vez.",
-
   "analyzingCoin": "Analizando la moneda…",
   "stageDetectingText": "Detectando el texto",
   "stageIdentifyingCountry": "Identificando el país",
   "stageDetectingYear": "Detectando el año",
   "stageSearchingDatabase": "Buscando en la base de datos numismática",
   "stageCalculatingValue": "Calculando el valor",
-
   "resultTitle": "Resultado de la moneda",
   "loadingResult": "Cargando el resultado…",
   "resultOpenError": "No se pudo abrir este resultado.",
@@ -151,7 +142,6 @@
   "aiFeatCondition": "Análisis del estado",
   "aiFeatSelling": "Cómo venderla",
   "unlockPremium": "Desbloquear Premium",
-
   "aiCoinIntelligence": "IA Coin Intelligence",
   "generateAiAnalysis": "Generar análisis con IA",
   "askAiAssistant": "Pregunta al asistente de IA",
@@ -173,7 +163,6 @@
   "whereToSell": "Dónde vender",
   "auctionSuitable": "¿Apta para subasta?",
   "professionalAppraisal": "Tasación profesional",
-
   "aiAssistantTitle": "Asistente de IA para monedas",
   "aiTalkingAbout": "Hablando de: {coin}",
   "aiAskHint": "Pregunta sobre esta moneda…",
@@ -184,7 +173,6 @@
   "qWhereSell": "¿Dónde debería venderla?",
   "qAuthenticate": "¿Debería autenticar esta moneda?",
   "qHowMuchList": "¿A qué precio debería publicarla?",
-
   "paywallHeadline": "Desbloquea toda la historia detrás de cada moneda",
   "paywallSubheadline": "Descubre la historia, la rareza y la mejor forma de vender tus monedas.",
   "featAiAnalysis": "Análisis detallado con IA",
@@ -204,7 +192,6 @@
   "paywallLegal": "La suscripción se renueva automáticamente hasta que se cancele. Puedes gestionarla o cancelarla en cualquier momento desde tu cuenta de la tienda.",
   "paywallLoadError": "No se pudieron cargar las opciones de suscripción.",
   "restorePurchases": "Restaurar compras",
-
   "collectionTitle": "Colección",
   "collectionEmpty": "Tu colección está vacía",
   "collectionEmptyBody": "Guarda una moneda escaneada para añadirla aquí.",
@@ -224,12 +211,10 @@
   "statMostValuable": "Más valiosa",
   "rarestLabel": "Más rara: {name} ({rarity})",
   "collectionLoadError": "No se pudo cargar tu colección.",
-
   "historyTitle": "Historial",
   "historyEmpty": "Aún no has escaneado nada",
   "historyEmptyBody": "Escanea una moneda para empezar a crear tu historial.",
   "historyLoadError": "No se pudo cargar el historial de escaneos.",
-
   "profileTitle": "Perfil",
   "profileGuest": "Invitado",
   "sectionSubscription": "Suscripción",
@@ -254,7 +239,6 @@
   "deleteAccountTitle": "¿Eliminar la cuenta?",
   "deleteAccountBody": "Esto elimina permanentemente tu cuenta, tus escaneos y tus imágenes. No se puede deshacer.",
   "appVersion": "Coinsight • v{version}",
-
   "rankingsTitle": "Rankings de monedas",
   "rankMostValuable": "Más valiosas",
   "rankRarest": "Más raras",
@@ -268,22 +252,18 @@
   "rankYears": "Años",
   "rankKeyDatesLabel": "Fechas clave",
   "yearBc": "{year} a. C.",
-
   "errNetwork": "Sin conexión a Internet. Comprueba tu red e inténtalo de nuevo.",
   "errServer": "Algo ha ido mal por nuestra parte. Inténtalo de nuevo en un momento.",
   "errUnknown": "Error inesperado. Inténtalo de nuevo.",
   "errNotFound": "No hemos encontrado lo que buscabas.",
   "errAuth": "Error de autenticación. Inténtalo de nuevo.",
   "errScanNotFound": "No se pudo encontrar ese escaneo.",
-
   "justNow": "Ahora mismo",
   "minutesAgo": "hace {m} min",
   "hoursAgo": "hace {h} h",
   "daysAgo": "hace {d} d",
-
   "valueDisclaimer": "Los valores de las monedas son estimaciones basadas en los datos disponibles y pueden variar según el estado, la autenticidad y la demanda del mercado.",
   "gradingDisclaimer": "Esta aplicación no ofrece autenticación numismática profesional ni asesoramiento financiero. Las estimaciones del estado son aproximadas.",
-
   "condPoor": "Malo",
   "condFair": "Regular",
   "condGood": "Bueno",

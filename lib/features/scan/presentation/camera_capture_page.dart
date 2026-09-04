@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -108,6 +111,7 @@ class _CameraCapturePageState extends ConsumerState<CameraCapturePage>
     setState(() => _busy = true);
     try {
       final shot = await controller.takePicture();
+      unawaited(HapticFeedback.lightImpact());
       final bytes = await shot.readAsBytes();
       final report =
           await ref.read(scanControllerProvider.notifier).inspect(bytes);

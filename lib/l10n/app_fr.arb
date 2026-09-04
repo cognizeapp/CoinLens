@@ -1,6 +1,5 @@
 {
   "@@locale": "fr",
-
   "appTagline": "Découvrez ce que valent vraiment vos pièces.",
   "actionContinue": "Continuer",
   "actionSkip": "Passer",
@@ -9,14 +8,14 @@
   "actionDelete": "Supprimer",
   "actionClose": "Fermer",
   "wordOr": "ou",
-
   "navHome": "Accueil",
   "navCollection": "Collection",
   "navScan": "Scanner",
   "navHistory": "Historique",
   "navProfile": "Profil",
+  "actionShare": "Partager",
+  "shareCoinText": "{coin} — valeur estimée {value}. Identifiée avec Coinsight.",
   "offlineBanner": "Hors ligne — les scans enregistrés fonctionnent",
-
   "onboard1Title": "Découvrez vos pièces",
   "onboard1Body": "Scannez n'importe quelle pièce et découvrez immédiatement de quoi il s'agit.",
   "onboard2Title": "Découvrez sa valeur",
@@ -24,7 +23,6 @@
   "onboard3Title": "Débloquez l'AI Coin Intelligence",
   "onboard3Body": "Découvrez l'histoire, la rareté et le potentiel de vente de vos pièces.",
   "onboardStart": "Commencer à scanner",
-
   "authSubtitle": "Connectez-vous pour synchroniser votre collection sur tous vos appareils.",
   "authEmail": "E-mail",
   "authPassword": "Mot de passe",
@@ -43,13 +41,11 @@
   "authNoAccountForEmail": "Aucun compte trouvé pour cet e-mail.",
   "authTerms": "En continuant, vous acceptez les Conditions d'utilisation et la Politique de confidentialité de Coinsight.",
   "authCreateSyncHint": "Créez un compte pour synchroniser votre collection",
-
   "valEmailEmpty": "Saisissez votre e-mail",
   "valEmailInvalid": "Saisissez une adresse e-mail valide",
   "valPasswordEmpty": "Saisissez un mot de passe",
   "valPasswordShort": "Utilisez au moins 8 caractères",
   "valFieldRequired": "{field} est obligatoire",
-
   "homeWelcome": "Bienvenue",
   "homeWelcomeNamed": "Bienvenue, {name}",
   "howItWorks": "Comment ça marche",
@@ -66,7 +62,6 @@
   "noScansYetBody": "Vos pièces scannées apparaîtront ici.",
   "unlockBannerTitle": "Débloquez l'AI Coin Intelligence",
   "unlockBannerBody": "Histoire, rareté, état et comment la vendre.",
-
   "scanTitle": "Scanner une pièce",
   "scanReset": "Réinitialiser",
   "scanFront": "Scannez l'avers",
@@ -83,7 +78,6 @@
   "uploadFromLibrary": "Importer depuis la galerie",
   "couldNotOpenImage": "Impossible d'ouvrir cette image. Vérifiez les autorisations photo dans les Réglages.",
   "tapToRetakeWith": "Touchez pour refaire · {issue}",
-
   "cameraPromptFront": "Scannez l'avers de votre pièce",
   "cameraPromptBack": "Scannez le revers de votre pièce",
   "cameraHint": "Remplissez le cercle · fond uni · mains stables",
@@ -94,7 +88,6 @@
   "cameraNoneBody": "Cet appareil n'a pas d'appareil photo utilisable. Importez une photo.",
   "cameraUploadPhoto": "Importer une photo",
   "cameraCaptureFailed": "Impossible de prendre la photo. Réessayez.",
-
   "qualityRetakeNeeded": "Photo à refaire",
   "qualityCouldBeBetter": "Cette photo pourrait être meilleure",
   "qualityRetake": "Refaire",
@@ -115,14 +108,12 @@
   "issueCoinSmallFull": "Rapprochez-vous pour que la pièce remplisse la majeure partie du cercle.",
   "issueMultipleShort": "Plusieurs objets",
   "issueMultipleFull": "Nous avons détecté plus d'un objet. Scannez une seule pièce à la fois.",
-
   "analyzingCoin": "Analyse de la pièce…",
   "stageDetectingText": "Détection du texte",
   "stageIdentifyingCountry": "Identification du pays",
   "stageDetectingYear": "Détection de l'année",
   "stageSearchingDatabase": "Recherche dans la base numismatique",
   "stageCalculatingValue": "Calcul de la valeur",
-
   "resultTitle": "Résultat de la pièce",
   "loadingResult": "Chargement du résultat…",
   "resultOpenError": "Impossible d'ouvrir ce résultat.",
@@ -151,7 +142,6 @@
   "aiFeatCondition": "Analyse de l'état",
   "aiFeatSelling": "Comment la vendre",
   "unlockPremium": "Débloquer Premium",
-
   "aiCoinIntelligence": "AI Coin Intelligence",
   "generateAiAnalysis": "Générer l'analyse IA",
   "askAiAssistant": "Demander à l'assistant IA",
@@ -173,7 +163,6 @@
   "whereToSell": "Où vendre",
   "auctionSuitable": "Adaptée à une vente aux enchères ?",
   "professionalAppraisal": "Expertise professionnelle",
-
   "aiAssistantTitle": "Assistant IA pour pièces",
   "aiTalkingAbout": "Sujet : {coin}",
   "aiAskHint": "Posez une question sur cette pièce…",
@@ -184,7 +173,6 @@
   "qWhereSell": "Où devrais-je la vendre ?",
   "qAuthenticate": "Devrais-je faire authentifier cette pièce ?",
   "qHowMuchList": "À quel prix devrais-je la mettre en vente ?",
-
   "paywallHeadline": "Débloquez toute l'histoire derrière chaque pièce",
   "paywallSubheadline": "Découvrez l'histoire, la rareté et la meilleure façon de vendre vos pièces.",
   "featAiAnalysis": "Analyse IA détaillée",
@@ -204,7 +192,6 @@
   "paywallLegal": "L'abonnement se renouvelle automatiquement jusqu'à son annulation. Vous pouvez le gérer ou l'annuler à tout moment depuis le compte de votre boutique.",
   "paywallLoadError": "Impossible de charger les options d'abonnement.",
   "restorePurchases": "Restaurer les achats",
-
   "collectionTitle": "Collection",
   "collectionEmpty": "Votre collection est vide",
   "collectionEmptyBody": "Enregistrez une pièce scannée pour l'ajouter ici.",
@@ -224,12 +211,10 @@
   "statMostValuable": "La plus précieuse",
   "rarestLabel": "La plus rare : {name} ({rarity})",
   "collectionLoadError": "Impossible de charger votre collection.",
-
   "historyTitle": "Historique",
   "historyEmpty": "Rien de scanné pour l'instant",
   "historyEmptyBody": "Scannez une pièce pour commencer votre historique.",
   "historyLoadError": "Impossible de charger l'historique des scans.",
-
   "profileTitle": "Profil",
   "profileGuest": "Invité",
   "sectionSubscription": "Abonnement",
@@ -254,7 +239,6 @@
   "deleteAccountTitle": "Supprimer le compte ?",
   "deleteAccountBody": "Cette action supprime définitivement votre compte, vos scans et vos images. Elle est irréversible.",
   "appVersion": "Coinsight • v{version}",
-
   "rankingsTitle": "Classements des pièces",
   "rankMostValuable": "Les plus précieuses",
   "rankRarest": "Les plus rares",
@@ -268,22 +252,18 @@
   "rankYears": "Années",
   "rankKeyDatesLabel": "Dates clés",
   "yearBc": "{year} av. J.-C.",
-
   "errNetwork": "Pas de connexion Internet. Vérifiez votre réseau et réessayez.",
   "errServer": "Un problème est survenu de notre côté. Réessayez dans un instant.",
   "errUnknown": "Erreur inattendue. Réessayez.",
   "errNotFound": "Nous n'avons pas trouvé ce que vous cherchiez.",
   "errAuth": "Échec de l'authentification. Réessayez.",
   "errScanNotFound": "Ce scan est introuvable.",
-
   "justNow": "À l'instant",
   "minutesAgo": "il y a {m} min",
   "hoursAgo": "il y a {h} h",
   "daysAgo": "il y a {d} j",
-
   "valueDisclaimer": "Les valeurs des pièces sont des estimations basées sur les données disponibles et peuvent varier selon l'état, l'authenticité et la demande du marché.",
   "gradingDisclaimer": "Cette application ne fournit pas d'authentification numismatique professionnelle ni de conseil financier. Les estimations d'état sont approximatives.",
-
   "condPoor": "Médiocre (Méd.)",
   "condFair": "Beau (B)",
   "condGood": "Très Beau (TB)",
