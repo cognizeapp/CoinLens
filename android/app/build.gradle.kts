@@ -38,7 +38,8 @@ android {
 
     defaultConfig {
         applicationId = "com.cognizeapp.coinsights"
-        minSdk = flutter.minSdkVersion
+        // firebase-auth requires >= 23; Flutter's own default (21) is too low.
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
