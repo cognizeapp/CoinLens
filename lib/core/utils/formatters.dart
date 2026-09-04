@@ -27,6 +27,26 @@ class MoneyFormatter {
 
   /// e.g. "€25 – €60"
   String range(num min, num max) => '${single(min)} – ${single(max)}';
+
+  /// Compact form for large figures used in rankings: "€16.5M", "€900K", "€180".
+  String compact(num amount) {
+    final symbol = _symbols[currencyCode] ?? '$currencyCode ';
+    final a = amount.abs();
+    if (a >= 1000000) {
+      final v = amount / 1000000;
+      return '$symbol${_trim(v)}M';
+    }
+    if (a >= 10000) {
+      final v = amount / 1000;
+      return '$symbol${_trim(v)}K';
+    }
+    return single(amount);
+  }
+
+  String _trim(num v) {
+    final s = v.toStringAsFixed(1);
+    return s.endsWith('.0') ? s.substring(0, s.length - 2) : s;
+  }
 }
 
 String formatScanDate(DateTime date) {

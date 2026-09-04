@@ -12,6 +12,7 @@ import '../features/home/home_page.dart';
 import '../features/onboarding/onboarding_page.dart';
 import '../features/paywall/paywall_page.dart';
 import '../features/profile/profile_page.dart';
+import '../features/rankings/rankings_page.dart';
 import '../features/result/result_page.dart';
 import '../features/scan/scan_page.dart';
 import '../features/shell/app_shell.dart';
@@ -64,6 +65,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/paywall',
         parentNavigatorKey: _rootKey,
         builder: (_, __) => const PaywallPage(),
+      ),
+      GoRoute(
+        path: '/rankings',
+        parentNavigatorKey: _rootKey,
+        builder: (_, __) => const RankingsPage(),
       ),
       GoRoute(
         path: '/result/:id',

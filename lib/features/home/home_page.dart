@@ -11,6 +11,8 @@ import '../../core/widgets/state_views.dart';
 import '../../features/auth/presentation/auth_providers.dart';
 import '../../features/coin/presentation/coin_providers.dart';
 import '../../features/coin/presentation/widgets/coin_widgets.dart';
+import '../../features/rankings/rankings_providers.dart';
+import '../../features/rankings/widgets/ranking_detail_sheet.dart';
 import '../../services/subscription/subscription_service.dart';
 
 class HomePage extends ConsumerWidget {
@@ -45,6 +47,8 @@ class HomePage extends ConsumerWidget {
               GradientScanButton(onPressed: () => context.go('/scan')),
               const SizedBox(height: AppSpacing.xl),
               const _HowItWorks(),
+              const SizedBox(height: AppSpacing.xl),
+              const _RankingsPreview(),
               if (!isPremium) ...[
                 const SizedBox(height: AppSpacing.xl),
                 _PremiumBanner(onTap: () => context.push('/paywall')),
@@ -107,6 +111,87 @@ class HomePage extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _RankingsPreview extends ConsumerWidget {
+  const _RankingsPreview();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final top = ref.watch(rankingProvider(RankingCategory.mostValuable));
+    final money = ref.watch(moneyFormatterProvider);
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(children: [
+                  const Icon(Icons.emoji_events_rounded,
+                      color: AppColors.gold, size: 20),
+                  const SizedBox(width: AppSpacing.sm),
+                  Text('Most valuable coins',
+                      style: Theme.of(context).textTheme.titleMedium),
+                ]),
+                TextButton(
+                  onPressed: () => context.push('/rankings'),
+                  child: const Text('See all'),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            top.when(
+              loading: () => const Padding(
+                padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
+                child: ShimmerBox(height: 40, radius: 8),
+              ),
+              error: (_, __) => const SizedBox.shrink(),
+              data: (entries) => Column(
+                children: [
+                  for (var i = 0; i < entries.take(3).length; i++)
+                    InkWell(
+                      onTap: () =>
+                          showRankingDetailSheet(context, entries[i]),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                        child: Row(
+                          children: [
+                            Text('${i + 1}',
+                                style: const TextStyle(
+                                    color: AppColors.gold,
+                                    fontWeight: FontWeight.w700)),
+                            const SizedBox(width: AppSpacing.md),
+                            Expanded(
+                              child: Text(entries[i].name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge),
+                            ),
+                            const SizedBox(width: AppSpacing.sm),
+                            Text(money.compact(entries[i].baseValueEur),
+                                style: const TextStyle(
+                                    color: AppColors.gold,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13)),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
