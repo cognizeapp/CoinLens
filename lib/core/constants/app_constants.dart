@@ -1,11 +1,11 @@
 abstract final class AppConstants {
-  static const String appName = 'Coinsight';
+  static const String appName = 'Coinsights';
   static const String tagline = 'Discover what your coins are really worth.';
 
   // Legal
-  static const String privacyPolicyUrl = 'https://coinsight.app/privacy';
-  static const String termsOfServiceUrl = 'https://coinsight.app/terms';
-  static const String supportEmail = 'support@coinsight.app';
+  static const String privacyPolicyUrl = 'https://coinsights.app/privacy';
+  static const String termsOfServiceUrl = 'https://coinsights.app/terms';
+  static const String supportEmail = 'support@coinsights.app';
 
   // Disclaimers surfaced across value / grading UI.
   static const String valueDisclaimer =

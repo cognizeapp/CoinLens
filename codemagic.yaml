@@ -28,7 +28,7 @@ workflows:
     # environment:
     #   ios_signing:
     #     distribution_type: app_store
-    #     bundle_identifier: com.cognize.coinsight
+    #     bundle_identifier: com.cognizeapp.coinsights
     scripts:
       - name: Get Flutter packages
         script: flutter pub get

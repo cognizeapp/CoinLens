@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Coinsight</string>
+		<string>Coinsights</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -46,11 +46,11 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>NSCameraUsageDescription</key>
-		<string>Coinsight uses the camera to photograph your coins so they can be identified.</string>
+		<string>Coinsights uses the camera to photograph your coins so they can be identified.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Coinsight needs access to your photos so you can upload an existing picture of a coin.</string>
+		<string>Coinsights needs access to your photos so you can upload an existing picture of a coin.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
-		<string>Coinsight can save coin photos you capture to your photo library.</string>
+		<string>Coinsights can save coin photos you capture to your photo library.</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>

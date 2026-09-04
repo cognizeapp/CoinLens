@@ -1,4 +1,4 @@
-package com.cognize.coinsight
+package com.cognizeapp.coinsights
 
 import io.flutter.embedding.android.FlutterActivity
 

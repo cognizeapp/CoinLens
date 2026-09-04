@@ -14,7 +14,7 @@
   "navHistory": "History",
   "navProfile": "Profile",
   "actionShare": "Share",
-  "shareCoinText": "{coin} — estimated value {value}. Identified with Coinsight.",
+  "shareCoinText": "{coin} — estimated value {value}. Identified with Coinsights.",
   "@shareCoinText": {
     "placeholders": {
       "coin": {
@@ -49,7 +49,7 @@
   "authCreateCta": "Create account",
   "authResetSent": "If that email has an account, a reset link is on its way.",
   "authNoAccountForEmail": "No account found for that email.",
-  "authTerms": "By continuing you agree to the Coinsight Terms of Service and Privacy Policy.",
+  "authTerms": "By continuing you agree to the Coinsights Terms of Service and Privacy Policy.",
   "authCreateSyncHint": "Create an account to sync your collection",
   "valEmailEmpty": "Enter your email",
   "valEmailInvalid": "Enter a valid email address",
@@ -113,7 +113,7 @@
   "cameraPromptBack": "Scan the back of your coin",
   "cameraHint": "Fill the circle · plain background · steady hands",
   "cameraAccessOffTitle": "Camera access is off",
-  "cameraAccessOffBody": "Enable camera access for Coinsight in your device Settings, then come back to scan. You can also upload a photo instead.",
+  "cameraAccessOffBody": "Enable camera access for Coinsights in your device Settings, then come back to scan. You can also upload a photo instead.",
   "cameraUsePhotoInstead": "Use a photo instead",
   "cameraNoneTitle": "No camera available",
   "cameraNoneBody": "This device has no usable camera. Upload a photo instead.",
@@ -287,7 +287,7 @@
   "profileTitle": "Profile",
   "profileGuest": "Guest",
   "sectionSubscription": "Subscription",
-  "coinsightPremium": "Coinsight Premium",
+  "coinsightPremium": "Coinsights Premium",
   "freePlan": "Free plan",
   "renewsOn": "Renews {date}",
   "@renewsOn": {
@@ -314,7 +314,7 @@
   "deleteAccount": "Delete account",
   "deleteAccountTitle": "Delete account?",
   "deleteAccountBody": "This permanently deletes your account, scans and images. This cannot be undone.",
-  "appVersion": "Coinsight • v{version}",
+  "appVersion": "Coinsights • v{version}",
   "@appVersion": {
     "placeholders": {
       "version": {

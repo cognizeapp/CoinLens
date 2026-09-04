@@ -192,7 +192,7 @@ abstract class AppLocalizations {
   /// No description provided for @shareCoinText.
   ///
   /// In en, this message translates to:
-  /// **'{coin} — estimated value {value}. Identified with Coinsight.'**
+  /// **'{coin} — estimated value {value}. Identified with Coinsights.'**
   String shareCoinText(String coin, String value);
 
   /// No description provided for @offlineBanner.
@@ -342,7 +342,7 @@ abstract class AppLocalizations {
   /// No description provided for @authTerms.
   ///
   /// In en, this message translates to:
-  /// **'By continuing you agree to the Coinsight Terms of Service and Privacy Policy.'**
+  /// **'By continuing you agree to the Coinsights Terms of Service and Privacy Policy.'**
   String get authTerms;
 
   /// No description provided for @authCreateSyncHint.
@@ -600,7 +600,7 @@ abstract class AppLocalizations {
   /// No description provided for @cameraAccessOffBody.
   ///
   /// In en, this message translates to:
-  /// **'Enable camera access for Coinsight in your device Settings, then come back to scan. You can also upload a photo instead.'**
+  /// **'Enable camera access for Coinsights in your device Settings, then come back to scan. You can also upload a photo instead.'**
   String get cameraAccessOffBody;
 
   /// No description provided for @cameraUsePhotoInstead.
@@ -1416,7 +1416,7 @@ abstract class AppLocalizations {
   /// No description provided for @coinsightPremium.
   ///
   /// In en, this message translates to:
-  /// **'Coinsight Premium'**
+  /// **'Coinsights Premium'**
   String get coinsightPremium;
 
   /// No description provided for @freePlan.
@@ -1536,7 +1536,7 @@ abstract class AppLocalizations {
   /// No description provided for @appVersion.
   ///
   /// In en, this message translates to:
-  /// **'Coinsight • v{version}'**
+  /// **'Coinsights • v{version}'**
   String appVersion(String version);
 
   /// No description provided for @rankingsTitle.

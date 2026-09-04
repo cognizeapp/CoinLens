@@ -52,7 +52,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String shareCoinText(String coin, String value) {
-    return '$coin — valor estimado $value. Identificada com a Coinsight.';
+    return '$coin — valor estimado $value. Identificada com a Coinsights.';
   }
 
   @override
@@ -128,7 +128,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get authNoAccountForEmail => 'Não foi encontrada nenhuma conta para esse e-mail.';
 
   @override
-  String get authTerms => 'Ao continuar, aceita os Termos de Serviço e a Política de Privacidade da Coinsight.';
+  String get authTerms => 'Ao continuar, aceita os Termos de Serviço e a Política de Privacidade da Coinsights.';
 
   @override
   String get authCreateSyncHint => 'Crie uma conta para sincronizar a sua coleção';
@@ -263,7 +263,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cameraAccessOffTitle => 'O acesso à câmara está desativado';
 
   @override
-  String get cameraAccessOffBody => 'Ative o acesso à câmara para a Coinsight nas Definições do dispositivo e volte para digitalizar. Também pode carregar uma foto.';
+  String get cameraAccessOffBody => 'Ative o acesso à câmara para a Coinsights nas Definições do dispositivo e volte para digitalizar. Também pode carregar uma foto.';
 
   @override
   String get cameraUsePhotoInstead => 'Usar uma foto';
@@ -681,7 +681,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sectionSubscription => 'Subscrição';
 
   @override
-  String get coinsightPremium => 'Coinsight Premium';
+  String get coinsightPremium => 'Coinsights Premium';
 
   @override
   String get freePlan => 'Plano gratuito';
@@ -744,7 +744,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String appVersion(String version) {
-    return 'Coinsight • v$version';
+    return 'Coinsights • v$version';
   }
 
   @override

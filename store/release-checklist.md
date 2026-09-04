@@ -20,7 +20,7 @@
 
 ## Subscriptions (Phase 5)
 - App Store Connect + Play Console products:
-  `coinsight_premium_monthly` (€4.99), `coinsight_premium_yearly` (€29.99),
+  `coinsights_premium_monthly` (€4.99), `coinsights_premium_yearly` (€29.99),
   7-day free trial on yearly.
 - RevenueCat project, entitlement `premium`, offering with both packages.
 - Set `ENABLE_REVENUECAT=true` + public SDK keys; swap the subscription
