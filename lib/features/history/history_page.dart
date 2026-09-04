@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_spacing.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
 import '../../core/widgets/state_views.dart';
 import '../coin/presentation/coin_providers.dart';
@@ -13,11 +14,12 @@ class HistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
     final scans = ref.watch(recentScansProvider);
     final money = ref.watch(moneyFormatterProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('History')),
+      appBar: AppBar(title: Text(l.historyTitle)),
       body: scans.when(
         loading: () => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
@@ -30,18 +32,18 @@ class HistoryPage extends ConsumerWidget {
           ),
         ),
         error: (_, __) => ErrorStateView(
-          message: 'Could not load your scan history.',
+          message: l.historyLoadError,
           onRetry: () => ref.refresh(recentScansProvider),
         ),
         data: (list) {
           if (list.isEmpty) {
             return EmptyStateView(
-              title: 'Nothing scanned yet',
-              subtitle: 'Scan a coin to start building your history.',
+              title: l.historyEmpty,
+              subtitle: l.historyEmptyBody,
               icon: Icons.history_rounded,
               action: FilledButton(
                 onPressed: () => context.go('/scan'),
-                child: const Text('Scan a Coin'),
+                child: Text(l.scanACoin),
               ),
             );
           }

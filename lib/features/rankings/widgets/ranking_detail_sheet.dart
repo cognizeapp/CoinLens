@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../../../core/utils/money_provider.dart';
 import '../../coin/domain/catalog_entry.dart';
 import '../../coin/presentation/widgets/coin_widgets.dart';
@@ -28,6 +28,7 @@ class _Sheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
     final money = ref.watch(moneyFormatterProvider);
     final base = entry.baseValueEur;
     // A representative spread around the Fine anchor (see CatalogValueEstimator).
@@ -35,18 +36,18 @@ class _Sheet extends ConsumerWidget {
     final high = money.compact(base * 3.0);
 
     final rows = <(String, String)>[
-      ('Country', entry.country),
+      (l.detailCountry, entry.country),
       (
-        'Years',
-        '${entry.yearFrom < 0 ? '${-entry.yearFrom} BC' : entry.yearFrom}'
+        l.rankYears,
+        '${entry.yearFrom < 0 ? l.yearBc(-entry.yearFrom) : entry.yearFrom}'
             '${entry.yearTo != entry.yearFrom ? ' – ${entry.yearTo}' : ''}'
       ),
-      ('Denomination', entry.denomination),
-      ('Material', entry.material),
-      if (entry.diameterMm != null) ('Diameter', '${entry.diameterMm} mm'),
-      if (entry.weightG != null) ('Weight', '${entry.weightG} g'),
+      (l.detailDenomination, entry.denomination),
+      (l.detailMaterial, entry.material),
+      if (entry.diameterMm != null) (l.detailDiameter, '${entry.diameterMm} mm'),
+      if (entry.weightG != null) (l.detailWeight, '${entry.weightG} g'),
       if (entry.keyDates.isNotEmpty)
-        ('Key dates', entry.keyDates.join(', ')),
+        (l.rankKeyDatesLabel, entry.keyDates.join(', ')),
     ];
 
     return SafeArea(
@@ -88,7 +89,7 @@ class _Sheet extends ConsumerWidget {
               ),
               child: Column(
                 children: [
-                  Text('TYPICAL RANGE',
+                  Text(l.typicalRange,
                       style: Theme.of(context).textTheme.labelSmall),
                   const SizedBox(height: 4),
                   Text('$low – $high',
@@ -127,10 +128,10 @@ class _Sheet extends ConsumerWidget {
                 context.go('/scan');
               },
               icon: const Icon(Icons.center_focus_strong_rounded),
-              label: const Text('Scan yours to check'),
+              label: Text(l.scanYoursToCheck),
             ),
             const SizedBox(height: AppSpacing.sm),
-            Text(AppConstants.valueDisclaimer,
+            Text(l.valueDisclaimer,
                 style: Theme.of(context).textTheme.labelSmall),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 
 /// The free-user upsell block on the result screen (product spec §13). Shows a
 /// blurred preview of the Premium value so the user sees what they'd unlock.
@@ -13,12 +14,13 @@ class LockedPremiumSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const features = [
-      ('🧠', 'The complete history'),
-      ('💎', 'Why collectors value it'),
-      ('📊', 'Rarity analysis'),
-      ('🔎', 'Condition insights'),
-      ('💰', 'How to sell it'),
+    final l = context.l10n;
+    final features = [
+      ('🧠', l.aiFeatHistory),
+      ('💎', l.aiFeatValue),
+      ('📊', l.aiFeatRarity),
+      ('🔎', l.aiFeatCondition),
+      ('💰', l.aiFeatSelling),
     ];
 
     return Container(
@@ -36,10 +38,9 @@ class LockedPremiumSection extends StatelessWidget {
               child: ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
                 child: Text(
-                  'This coin was issued during a period of post-war monetary '
-                  'reform, when the mint reintroduced silver circulation '
-                  'coinage for the first time in years. Collectors value it '
-                  'for…',
+                  '${l.coinStory} · ${l.whyItHasValue} · ${l.rarityAnalysis} '
+                  '· ${l.conditionEstimate} · ${l.sellingRecommendations} · '
+                  '${l.collectorInsights}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -54,7 +55,7 @@ class LockedPremiumSection extends StatelessWidget {
                   const Icon(Icons.auto_awesome_rounded,
                       color: AppColors.gold, size: 28),
                   const SizedBox(height: AppSpacing.sm),
-                  Text('Unlock AI Coin Intelligence',
+                  Text(l.unlockAiTitle,
                       style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: AppSpacing.md),
                   ...features.map((f) => Padding(
@@ -75,7 +76,7 @@ class LockedPremiumSection extends StatelessWidget {
                   const SizedBox(height: AppSpacing.lg),
                   FilledButton(
                     onPressed: onUnlock,
-                    child: const Text('Unlock Premium'),
+                    child: Text(l.unlockPremium),
                   ),
                 ],
               ),

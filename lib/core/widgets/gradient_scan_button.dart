@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../utils/l10n_extensions.dart';
 
 /// The visually dominant "Scan a Coin" call to action used on Home.
 class GradientScanButton extends StatelessWidget {
-  const GradientScanButton({super.key, required this.onPressed, this.label = 'Scan a Coin'});
+  const GradientScanButton({super.key, required this.onPressed, this.label});
 
   final VoidCallback onPressed;
-  final String label;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
+    final label = this.label ?? context.l10n.scanACoin;
     return Semantics(
       button: true,
       label: label,

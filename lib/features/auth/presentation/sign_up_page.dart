@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/constants/app_constants.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../../../core/utils/validators.dart';
 import '../../../services/analytics/analytics_service.dart';
 import 'auth_providers.dart';
@@ -48,13 +48,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final state = ref.watch(authControllerProvider);
     final busy = state.isLoading;
 
     ref.listen(authControllerProvider, (_, next) {
       if (next is AsyncError) {
         final e = next.error;
-        final message = e is Failure ? e.message : 'Something went wrong.';
+        final message =
+            e is Failure ? e.localized(context.l10n) : context.l10n.errUnknown;
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(SnackBar(content: Text(message)));
@@ -62,7 +64,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Create account')),
+      appBar: AppBar(title: Text(l.authCreateTitle)),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.screen),
@@ -74,22 +76,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 TextFormField(
                   controller: _name,
                   textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(hintText: 'Name (optional)'),
+                  decoration: InputDecoration(hintText: l.authName),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(hintText: 'Email'),
-                  validator: Validators.email,
+                  decoration: InputDecoration(hintText: l.authEmail),
+                  validator: (v) => Validators.email(v, l),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: _password,
                   obscureText: true,
-                  decoration:
-                      const InputDecoration(hintText: 'Password (8+ characters)'),
-                  validator: Validators.password,
+                  decoration: InputDecoration(hintText: l.authPassword8),
+                  validator: (v) => Validators.password(v, l),
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 FilledButton(
@@ -101,12 +102,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           child: CircularProgressIndicator(
                               strokeWidth: 2, color: Color(0xFF1A1400)),
                         )
-                      : const Text('Create account'),
+                      : Text(l.authCreateCta),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
-                  'By continuing you agree to the ${AppConstants.appName} '
-                  'Terms of Service and Privacy Policy.',
+                  l.authTerms,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),

@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+import '../../l10n/app_localizations.dart';
+
 /// Currency + date formatting. Currency code is user-configurable (Profile ›
 /// Currency settings); default is EUR to match the product examples.
 class MoneyFormatter {
@@ -49,14 +51,14 @@ class MoneyFormatter {
   }
 }
 
-String formatScanDate(DateTime date) {
+String formatScanDate(DateTime date, AppLocalizations l) {
   final now = DateTime.now();
   final diff = now.difference(date);
-  if (diff.inMinutes < 1) return 'Just now';
-  if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-  if (diff.inHours < 24) return '${diff.inHours}h ago';
-  if (diff.inDays < 7) return '${diff.inDays}d ago';
-  return DateFormat.yMMMd().format(date);
+  if (diff.inMinutes < 1) return l.justNow;
+  if (diff.inHours < 1) return l.minutesAgo(diff.inMinutes);
+  if (diff.inHours < 24) return l.hoursAgo(diff.inHours);
+  if (diff.inDays < 7) return l.daysAgo(diff.inDays);
+  return DateFormat.yMMMd(l.localeName).format(date);
 }
 
 String formatConfidence(double value) => '${(value * 100).round()}%';

@@ -3,6 +3,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../utils/l10n_extensions.dart';
 
 /// Reusable loading / error / empty states so every screen handles all three
 /// consistently (see product spec §33).
@@ -84,7 +85,7 @@ class ErrorStateView extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size(140, 44),
               ),
-              child: const Text('Try again'),
+              child: Text(context.l10n.actionRetry),
             ),
           ],
         ],

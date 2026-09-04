@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../../../core/widgets/state_views.dart';
 import '../../coin/domain/coin_models.dart';
 import '../../coin/presentation/coin_providers.dart';
@@ -14,13 +15,13 @@ class AiChatPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
     final scan = ref.watch(scanByIdProvider(scanId));
     return Scaffold(
-      appBar: AppBar(title: const Text('AI coin assistant')),
+      appBar: AppBar(title: Text(l.aiAssistantTitle)),
       body: scan.when(
         loading: () => const LoadingView(),
-        error: (_, __) =>
-            const ErrorStateView(message: 'Could not open this coin.'),
+        error: (_, __) => ErrorStateView(message: l.aiCouldNotOpen),
         data: (record) => _ChatView(
           coinName: record.identification.coinName,
           identification: record.identification,
@@ -74,7 +75,7 @@ class _ChatViewState extends ConsumerState<_ChatView> {
           color: AppColors.backgroundSecondary,
           padding: const EdgeInsets.all(AppSpacing.md),
           child: Text(
-            'Talking about: ${widget.coinName}',
+            context.l10n.aiTalkingAbout(widget.coinName),
             style: Theme.of(context).textTheme.labelSmall,
           ),
         ),
@@ -97,7 +98,7 @@ class _ChatViewState extends ConsumerState<_ChatView> {
         if (state.error != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-            child: Text(state.error!.message,
+            child: Text(state.error!.localized(context.l10n),
                 style: const TextStyle(color: AppColors.danger, fontSize: 12)),
           ),
         SafeArea(
@@ -113,7 +114,7 @@ class _ChatViewState extends ConsumerState<_ChatView> {
                     maxLines: 4,
                     textInputAction: TextInputAction.send,
                     decoration:
-                        const InputDecoration(hintText: 'Ask about this coin…'),
+                        InputDecoration(hintText: context.l10n.aiAskHint),
                     onSubmitted: _send,
                   ),
                 ),
@@ -146,10 +147,16 @@ class _Suggestions extends StatelessWidget {
       children: [
         const Icon(Icons.auto_awesome_rounded, color: AppColors.gold, size: 30),
         const SizedBox(height: AppSpacing.md),
-        Text('Ask the assistant anything about this coin',
+        Text(context.l10n.aiAssistantIntro,
             style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: AppSpacing.lg),
-        ...AiChatController.suggestedQuestions.map(
+        ...[
+          context.l10n.qWhyValuable,
+          context.l10n.qIsRare,
+          context.l10n.qWhereSell,
+          context.l10n.qAuthenticate,
+          context.l10n.qHowMuchList,
+        ].map(
           (q) => Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: OutlinedButton(

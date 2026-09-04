@@ -6,6 +6,7 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../../../core/utils/validators.dart';
 import '../../../services/analytics/analytics_service.dart';
 import '../domain/auth_repository.dart';
@@ -32,7 +33,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   }
 
   void _showError(Object error) {
-    final message = error is Failure ? error.message : 'Something went wrong.';
+    final message =
+        error is Failure ? error.localized(context.l10n) : context.l10n.errUnknown;
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(message)));
@@ -74,6 +76,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final state = ref.watch(authControllerProvider);
     final busy = state.isLoading;
 
@@ -102,7 +105,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Sign in to sync your collection across devices.',
+                  l.authSubtitle,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
@@ -110,16 +113,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
-                  decoration: const InputDecoration(hintText: 'Email'),
-                  validator: Validators.email,
+                  decoration: InputDecoration(hintText: l.authEmail),
+                  validator: (v) => Validators.email(v, l),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: _password,
                   obscureText: true,
                   autofillHints: const [AutofillHints.password],
-                  decoration: const InputDecoration(hintText: 'Password'),
-                  validator: Validators.password,
+                  decoration: InputDecoration(hintText: l.authPassword),
+                  validator: (v) => Validators.password(v, l),
                   onFieldSubmitted: (_) => _submit(),
                 ),
                 Align(
@@ -128,7 +131,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     onPressed: busy
                         ? null
                         : () async {
-                            final err = Validators.email(_email.text);
+                            final err = Validators.email(_email.text, l);
                             if (err != null) {
                               _showError(AuthFailure(err));
                               return;
@@ -138,13 +141,11 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 .resetPassword(_email.text);
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'If that email has an account, a reset link is on its way.')),
+                                SnackBar(content: Text(l.authResetSent)),
                               );
                             }
                           },
-                    child: const Text('Forgot password?'),
+                    child: Text(l.authForgot),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -157,7 +158,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           child: CircularProgressIndicator(
                               strokeWidth: 2, color: Color(0xFF1A1400)),
                         )
-                      : const Text('Sign In'),
+                      : Text(l.authSignIn),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(children: [
@@ -165,7 +166,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                    child: Text('or',
+                    child: Text(l.wordOr,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ),
                   const Expanded(child: Divider()),
@@ -175,17 +176,17 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 const SizedBox(height: AppSpacing.md),
                 TextButton(
                   onPressed: busy ? null : _guest,
-                  child: const Text('Explore without an account'),
+                  child: Text(l.authGuest),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('New here?',
+                    Text(l.authNewHere,
                         style: Theme.of(context).textTheme.bodyMedium),
                     TextButton(
                       onPressed: busy ? null : () => context.push('/sign-up'),
-                      child: const Text('Create an account'),
+                      child: Text(l.authCreate),
                     ),
                   ],
                 ),

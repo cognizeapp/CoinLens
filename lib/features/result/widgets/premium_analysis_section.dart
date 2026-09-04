@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../../coin/domain/coin_models.dart';
 import '../../ai/ai_providers.dart';
 import '../../ai/coin_intelligence.dart';
@@ -29,44 +30,45 @@ class PremiumAnalysisSection extends ConsumerWidget {
       );
     }
 
+    final l = context.l10n;
     final analysis = ref.watch(coinIntelligenceProvider(record.identification));
 
     return analysis.when(
       loading: () => const _GeneratingCard(),
       error: (_, __) => Column(
         children: [
-          Text('AI analysis is temporarily unavailable.',
+          Text(l.aiUnavailable,
               style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton(
             onPressed: () =>
                 ref.refresh(coinIntelligenceProvider(record.identification)),
-            child: const Text('Retry'),
+            child: Text(l.actionRetry),
           ),
         ],
       ),
       data: (ci) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Section(title: 'Coin Story', body: ci.historicalContext),
-          _Section(title: 'Why It Has Value', body: ci.valueAnalysis),
+          _Section(title: l.coinStory, body: ci.historicalContext),
+          _Section(title: l.whyItHasValue, body: ci.valueAnalysis),
           _Section(
-            title: 'Rarity Analysis',
+            title: l.rarityAnalysis,
             body: ci.rarityExplanation,
-            badge: record.identification.rarity.label,
+            badge: record.identification.rarity.localizedLabel(l),
           ),
           _Section(
-            title: 'Condition Estimate',
+            title: l.conditionEstimate,
             body: ci.conditionExplanation,
-            badge: record.identification.condition.label,
+            badge: record.identification.condition.localizedLabel(l),
           ),
           _SellingCard(strategy: ci.sellingStrategy),
-          _Section(title: 'Collector Insights', body: ci.collectorInsights),
+          _Section(title: l.collectorInsights, body: ci.collectorInsights),
           const SizedBox(height: AppSpacing.sm),
           FilledButton.icon(
             onPressed: () => context.push('/result/${record.id}/assistant'),
             icon: const Icon(Icons.chat_bubble_outline_rounded),
-            label: const Text('Ask the AI assistant'),
+            label: Text(l.askAiAssistant),
           ),
         ],
       ),
@@ -81,11 +83,12 @@ class _GenerateCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const bullets = [
-      ('📜', 'Coin story & historical context'),
-      ('💎', 'Why it has value, factor by factor'),
-      ('📊', 'Rarity & condition analysis'),
-      ('💰', 'Selling strategy & pricing'),
+    final l = context.l10n;
+    final bullets = [
+      ('📜', l.aiCtaHistory),
+      ('💎', l.aiCtaValue),
+      ('📊', l.aiCtaRarityCondition),
+      ('💰', l.aiCtaSelling),
     ];
     return Container(
       padding: const EdgeInsets.all(AppSpacing.xl),
@@ -102,7 +105,7 @@ class _GenerateCta extends StatelessWidget {
           Row(children: [
             const Icon(Icons.auto_awesome_rounded, color: AppColors.gold),
             const SizedBox(width: AppSpacing.sm),
-            Text('AI Coin Intelligence',
+            Text(l.aiCoinIntelligence,
                 style: Theme.of(context).textTheme.titleLarge),
           ]),
           const SizedBox(height: AppSpacing.md),
@@ -120,13 +123,13 @@ class _GenerateCta extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg),
           FilledButton(
             onPressed: onGenerate,
-            child: const Text('Generate AI analysis'),
+            child: Text(l.generateAiAnalysis),
           ),
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton.icon(
             onPressed: onAssistant,
             icon: const Icon(Icons.chat_bubble_outline_rounded),
-            label: const Text('Ask the AI assistant'),
+            label: Text(l.askAiAssistant),
           ),
         ],
       ),
@@ -155,7 +158,7 @@ class _GeneratingCard extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
-            child: Text('Generating your AI coin analysis…',
+            child: Text(context.l10n.generatingAnalysis,
                 style: Theme.of(context).textTheme.bodyLarge),
           ),
         ],
@@ -230,15 +233,20 @@ class _SellingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Selling Recommendations',
+          Text(context.l10n.sellingRecommendations,
               style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.md),
-          _kv(context, 'Estimated selling price', strategy.estimatedSaleRange),
-          _kv(context, 'Suggested listing price', strategy.suggestedListPrice),
-          _kv(context, 'Minimum reasonable price', strategy.minimumPrice),
-          _kv(context, 'Where to sell', strategy.recommendedPlatforms),
-          _kv(context, 'Auction suitable?', strategy.auctionAdvice),
-          _kv(context, 'Professional appraisal', strategy.appraisalAdvice),
+          _kv(context, context.l10n.estimatedSellingPrice,
+              strategy.estimatedSaleRange),
+          _kv(context, context.l10n.suggestedListingPrice,
+              strategy.suggestedListPrice),
+          _kv(context, context.l10n.minimumReasonablePrice,
+              strategy.minimumPrice),
+          _kv(context, context.l10n.whereToSell,
+              strategy.recommendedPlatforms),
+          _kv(context, context.l10n.auctionSuitable, strategy.auctionAdvice),
+          _kv(context, context.l10n.professionalAppraisal,
+              strategy.appraisalAdvice),
           const SizedBox(height: AppSpacing.md),
           Container(
             padding: const EdgeInsets.all(AppSpacing.md),

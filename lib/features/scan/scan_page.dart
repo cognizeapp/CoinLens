@@ -6,9 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/utils/l10n_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import 'domain/coin_face.dart';
 import 'domain/image_quality.dart';
 import 'presentation/camera_capture_page.dart';
@@ -65,15 +66,14 @@ class _ScanPageState extends ConsumerState<ScanPage> {
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text(
-                  'Could not open that image. Check photo permissions in Settings.')),
+          SnackBar(content: Text(context.l10n.couldNotOpenImage)),
         );
       }
     }
   }
 
   void _sourceSheet(CoinFace face) {
+    final l = context.l10n;
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.backgroundSecondary,
@@ -85,7 +85,7 @@ class _ScanPageState extends ConsumerState<ScanPage> {
               ListTile(
                 leading: const Icon(Icons.photo_camera_rounded,
                     color: AppColors.gold),
-                title: const Text('Take a photo'),
+                title: Text(l.takePhoto),
                 onTap: () {
                   Navigator.pop(context);
                   _fromCamera(face);
@@ -94,7 +94,7 @@ class _ScanPageState extends ConsumerState<ScanPage> {
             ListTile(
               leading: const Icon(Icons.photo_library_rounded,
                   color: AppColors.gold),
-              title: const Text('Upload from library'),
+              title: Text(l.uploadFromLibrary),
               onTap: () {
                 Navigator.pop(context);
                 _fromLibrary(face);
@@ -108,6 +108,7 @@ class _ScanPageState extends ConsumerState<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final state = ref.watch(scanControllerProvider);
 
     ref.listen(scanControllerProvider, (prev, next) {
@@ -117,19 +118,19 @@ class _ScanPageState extends ConsumerState<ScanPage> {
       }
       if (next.failure != null && next.failure != prev?.failure) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.failure!.message)),
+          SnackBar(content: Text(next.failure!.localized(l))),
         );
       }
     });
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan a Coin'),
+        title: Text(l.scanTitle),
         actions: [
           if (state.hasFront)
             TextButton(
               onPressed: () => ref.read(scanControllerProvider.notifier).reset(),
-              child: const Text('Reset'),
+              child: Text(l.scanReset),
             ),
         ],
       ),
@@ -139,20 +140,20 @@ class _ScanPageState extends ConsumerState<ScanPage> {
             padding: const EdgeInsets.all(AppSpacing.screen),
             children: [
               CoinCaptureTarget(
-                label: state.hasFront ? 'Front' : 'Scan the front',
+                label: state.hasFront ? l.scanFrontShort : l.scanFront,
                 captured: state.hasFront,
                 imagePath: state.frontImagePath,
-                warning: _warningFor(state.frontReport),
+                warning: _warningFor(state.frontReport, l),
                 onTap: () => _sourceSheet(CoinFace.front),
               ),
               const SizedBox(height: AppSpacing.lg),
               CoinCaptureTarget(
                 label: state.backImagePath != null
-                    ? 'Back'
-                    : 'Scan the back (optional)',
+                    ? l.scanBackShort
+                    : l.scanBack,
                 captured: state.backImagePath != null,
                 imagePath: state.backImagePath,
-                warning: _warningFor(state.backReport),
+                warning: _warningFor(state.backReport, l),
                 onTap: () => _sourceSheet(CoinFace.back),
               ),
               const SizedBox(height: AppSpacing.xl),
@@ -162,11 +163,11 @@ class _ScanPageState extends ConsumerState<ScanPage> {
                 onPressed: state.hasFront && !state.isAnalyzing
                     ? () => ref.read(scanControllerProvider.notifier).analyze()
                     : null,
-                child: const Text('Identify Coin'),
+                child: Text(l.identifyCoin),
               ),
               const SizedBox(height: AppSpacing.md),
               Text(
-                '${AppConstants.valueDisclaimer}\n\n${AppConstants.gradingDisclaimer}',
+                '${l.valueDisclaimer}\n\n${l.gradingDisclaimer}',
                 style: Theme.of(context).textTheme.labelSmall,
               ),
             ],
@@ -177,9 +178,9 @@ class _ScanPageState extends ConsumerState<ScanPage> {
     );
   }
 
-  String? _warningFor(ImageQualityReport? report) {
+  String? _warningFor(ImageQualityReport? report, AppLocalizations l) {
     if (report == null || report.passed) return null;
-    return report.primaryIssue?.shortLabel;
+    return report.primaryIssue?.localizedShort(l);
   }
 }
 
@@ -188,11 +189,12 @@ class _Tips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tips = [
-      'Place the coin on a plain background.',
-      'Make sure the entire coin is visible.',
-      'Use good, even lighting.',
-      'Avoid glare and reflections.',
+    final l = context.l10n;
+    final tips = [
+      l.tipPlainBackground,
+      l.tipWholeCoin,
+      l.tipLighting,
+      l.tipGlare,
     ];
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -204,7 +206,7 @@ class _Tips extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('For the best result',
+          Text(l.forBestResult,
               style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppSpacing.sm),
           for (final t in tips)

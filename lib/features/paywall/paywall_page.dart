@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../core/widgets/state_views.dart';
 import '../../services/analytics/analytics_service.dart';
 import '../../services/subscription/subscription_service.dart';
@@ -49,18 +49,19 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final service = ref.watch(subscriptionServiceProvider);
     final plansAsync = ref.watch(_plansProvider);
 
-    const features = [
-      'Detailed AI analysis',
-      'Coin history',
-      'Rarity insights',
-      'Condition analysis',
-      'Selling recommendations',
-      'Collector insights',
-      'AI coin assistant',
-      'Advanced collection statistics',
+    final features = [
+      l.featAiAnalysis,
+      l.featCoinHistory,
+      l.featRarityInsights,
+      l.featConditionAnalysis,
+      l.featSellingRecs,
+      l.featCollectorInsights,
+      l.featAiAssistant,
+      l.featAdvancedStats,
     ];
 
     return Scaffold(
@@ -74,7 +75,7 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
         child: plansAsync.when(
           loading: () => const LoadingView(),
           error: (_, __) => ErrorStateView(
-            message: 'Could not load subscription options.',
+            message: l.paywallLoadError,
             onRetry: () => ref.refresh(_plansProvider),
           ),
           data: (plans) {
@@ -89,11 +90,11 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                       const Icon(Icons.auto_awesome_rounded,
                           color: AppColors.gold, size: 36),
                       const SizedBox(height: AppSpacing.md),
-                      Text('Unlock the Full Story Behind Every Coin',
+                      Text(l.paywallHeadline,
                           style: Theme.of(context).textTheme.headlineMedium),
                       const SizedBox(height: AppSpacing.sm),
                       Text(
-                        'Discover the history, rarity and best way to sell your coins.',
+                        l.paywallSubheadline,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: AppSpacing.xl),
@@ -134,7 +135,7 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                                 child: CircularProgressIndicator(
                                     strokeWidth: 2, color: Color(0xFF1A1400)),
                               )
-                            : const Text('Continue'),
+                            : Text(l.actionContinue),
                       ),
                       TextButton(
                         onPressed: _busy
@@ -145,12 +146,10 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                                   context.pop();
                                 }
                               },
-                        child: const Text('Restore purchases'),
+                        child: Text(l.restorePurchases),
                       ),
                       Text(
-                        'Subscription renews automatically until cancelled. '
-                        'Manage or cancel anytime in your store account. '
-                        '${AppConstants.valueDisclaimer}',
+                        '${l.paywallLegal} ${l.valueDisclaimer}',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
@@ -179,6 +178,12 @@ class _PlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final yearly = plan.id.contains('year');
+    final title = yearly ? l.planYearly : l.planMonthly;
+    final period = yearly ? l.planPerYear : l.planPerMonth;
+    final badge = plan.badge != null ? l.bestValue : null;
+    final trial = plan.trialLabel != null ? l.trial7Days : null;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -207,9 +212,9 @@ class _PlanTile extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(plan.title,
+                      Text(title,
                           style: Theme.of(context).textTheme.titleMedium),
-                      if (plan.badge != null) ...[
+                      if (badge != null) ...[
                         const SizedBox(width: AppSpacing.sm),
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -218,7 +223,7 @@ class _PlanTile extends StatelessWidget {
                             color: AppColors.gold,
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
-                          child: Text(plan.badge!,
+                          child: Text(badge,
                               style: const TextStyle(
                                   color: Color(0xFF1A1400),
                                   fontSize: 10,
@@ -227,8 +232,8 @@ class _PlanTile extends StatelessWidget {
                       ],
                     ],
                   ),
-                  if (plan.trialLabel != null)
-                    Text(plan.trialLabel!,
+                  if (trial != null)
+                    Text(trial,
                         style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
@@ -238,7 +243,7 @@ class _PlanTile extends StatelessWidget {
               children: [
                 Text(plan.priceLabel,
                     style: Theme.of(context).textTheme.titleLarge),
-                Text(plan.period,
+                Text(period,
                     style: Theme.of(context).textTheme.labelSmall),
               ],
             ),

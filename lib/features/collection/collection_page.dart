@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/formatters.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
 import '../../core/widgets/state_views.dart';
+import '../../l10n/app_localizations.dart';
 import '../coin/domain/coin_models.dart';
 import '../coin/presentation/coin_providers.dart';
 import '../coin/presentation/widgets/coin_widgets.dart';
@@ -14,14 +16,13 @@ import '../../services/subscription/subscription_service.dart';
 
 enum _View { grid, list }
 
-enum _Sort {
-  recent('Recent'),
-  valueHigh('Value ↓'),
-  rarity('Rarity');
+enum _Sort { recent, valueHigh, rarity }
 
-  const _Sort(this.label);
-  final String label;
-}
+String _sortLabel(_Sort s, AppLocalizations l) => switch (s) {
+      _Sort.recent => l.sortRecent,
+      _Sort.valueHigh => l.sortValueHigh,
+      _Sort.rarity => l.sortRarity,
+    };
 
 final _collectionViewProvider = StateProvider<_View>((_) => _View.grid);
 final _collectionQueryProvider = StateProvider<String>((_) => '');
@@ -34,6 +35,7 @@ class CollectionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
     final collection = ref.watch(collectionProvider);
     final view = ref.watch(_collectionViewProvider);
     final query = ref.watch(_collectionQueryProvider).toLowerCase();
@@ -45,7 +47,7 @@ class CollectionPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Collection'),
+        title: Text(l.collectionTitle),
         actions: [
           IconButton(
             icon: Icon(view == _View.grid
@@ -59,7 +61,7 @@ class CollectionPage extends ConsumerWidget {
       body: collection.when(
         loading: () => const LoadingView(),
         error: (_, __) => ErrorStateView(
-          message: 'Could not load your collection.',
+          message: l.collectionLoadError,
           onRetry: () => ref.refresh(collectionProvider),
         ),
         data: (all) {
@@ -94,12 +96,12 @@ class CollectionPage extends ConsumerWidget {
 
           if (all.isEmpty) {
             return EmptyStateView(
-              title: 'Your collection is empty',
-              subtitle: 'Save a scanned coin to add it here.',
+              title: l.collectionEmpty,
+              subtitle: l.collectionEmptyBody,
               icon: Icons.grid_view_rounded,
               action: FilledButton(
                 onPressed: () => context.go('/scan'),
-                child: const Text('Scan a Coin'),
+                child: Text(l.scanACoin),
               ),
             );
           }
@@ -112,9 +114,9 @@ class CollectionPage extends ConsumerWidget {
                 child: TextField(
                   onChanged: (v) =>
                       ref.read(_collectionQueryProvider.notifier).state = v,
-                  decoration: const InputDecoration(
-                    hintText: 'Search by coin or country',
-                    prefixIcon: Icon(Icons.search_rounded),
+                  decoration: InputDecoration(
+                    hintText: l.searchCoinCountry,
+                    prefixIcon: const Icon(Icons.search_rounded),
                     isDense: true,
                   ),
                 ),
@@ -134,8 +136,8 @@ class CollectionPage extends ConsumerWidget {
               if (isPremium) _CollectionInsights(items: all, money: money),
               Expanded(
                 child: items.isEmpty
-                    ? const EmptyStateView(
-                        title: 'No coins match those filters',
+                    ? EmptyStateView(
+                        title: l.noMatchFilters,
                         icon: Icons.filter_alt_off_rounded,
                       )
                     : view == _View.grid
@@ -158,6 +160,7 @@ class _CollectionInsights extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
+    final l = context.l10n;
     final total = items.fold<double>(
         0, (sum, s) => sum + s.identification.value.typical);
     final mostValuable = items.reduce((a, b) =>
@@ -179,10 +182,10 @@ class _CollectionInsights extends StatelessWidget {
       child: Column(
         children: [
           Row(children: [
-            _Stat(label: 'Coins', value: '${items.length}'),
-            _Stat(label: 'Est. value', value: money.single(total)),
+            _Stat(label: l.statCoins, value: '${items.length}'),
+            _Stat(label: l.statEstValue, value: money.single(total)),
             _Stat(
-                label: 'Most valuable',
+                label: l.statMostValuable,
                 value:
                     money.single(mostValuable.identification.value.typical)),
           ]),
@@ -194,8 +197,8 @@ class _CollectionInsights extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
-                  'Rarest: ${rarest.identification.coinName} '
-                  '(${rarest.identification.rarity.label})',
+                  l.rarestLabel(rarest.identification.coinName,
+                      rarest.identification.rarity.localizedLabel(l)),
                   style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -230,6 +233,7 @@ class _FilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return SizedBox(
       height: 44,
       child: ListView(
@@ -240,7 +244,7 @@ class _FilterBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.sm),
               child: ChoiceChip(
-                label: Text(s.label),
+                label: Text(_sortLabel(s, l)),
                 selected: sort == s,
                 onSelected: (_) => onSort(s),
               ),
@@ -249,16 +253,16 @@ class _FilterBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.sm),
             child: FilterChip(
-              label: Text(rarity?.label ?? 'Rarity'),
+              label: Text(rarity?.localizedLabel(l) ?? l.filterRarity),
               selected: rarity != null,
               onSelected: (_) async {
                 final picked = await showModalBottomSheet<CoinRarity?>(
                   context: context,
                   backgroundColor: AppColors.backgroundSecondary,
                   builder: (_) => _PickerSheet<CoinRarity>(
-                    title: 'Filter by rarity',
+                    title: l.filterByRarity,
                     options: CoinRarity.values,
-                    labelOf: (r) => r.label,
+                    labelOf: (r) => r.localizedLabel(l),
                     current: rarity,
                   ),
                 );
@@ -270,14 +274,14 @@ class _FilterBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.sm),
               child: FilterChip(
-                label: Text(country ?? 'Country'),
+                label: Text(country ?? l.filterCountry),
                 selected: country != null,
                 onSelected: (_) async {
                   final picked = await showModalBottomSheet<String?>(
                     context: context,
                     backgroundColor: AppColors.backgroundSecondary,
                     builder: (_) => _PickerSheet<String>(
-                      title: 'Filter by country',
+                      title: l.filterByCountry,
                       options: countries,
                       labelOf: (c) => c,
                       current: country,
@@ -326,7 +330,7 @@ class _PickerSheet<T> extends StatelessWidget {
             child: Text(title, style: Theme.of(context).textTheme.titleMedium),
           ),
           ListTile(
-            title: const Text('All'),
+            title: Text(context.l10n.filterAll),
             trailing: current == null
                 ? const Icon(Icons.check_rounded, color: AppColors.gold)
                 : null,

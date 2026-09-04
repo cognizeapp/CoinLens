@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
 import '../../core/widgets/gradient_scan_button.dart';
 import '../../core/widgets/state_views.dart';
@@ -24,6 +24,7 @@ class HomePage extends ConsumerWidget {
     final isPremium = ref.watch(isPremiumProvider);
     final recent = ref.watch(recentScansProvider);
     final money = ref.watch(moneyFormatterProvider);
+    final l = context.l10n;
     final greetingName = (user?.displayName?.trim().isNotEmpty ?? false)
         ? user!.displayName!.split(' ').first
         : null;
@@ -37,11 +38,13 @@ class HomePage extends ConsumerWidget {
             padding: const EdgeInsets.all(AppSpacing.screen),
             children: [
               Text(
-                greetingName == null ? 'Welcome' : 'Welcome, $greetingName',
+                greetingName == null
+                    ? l.homeWelcome
+                    : l.homeWelcomeNamed(greetingName),
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
-              Text(AppConstants.tagline,
+              Text(l.appTagline,
                   style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: AppSpacing.xl),
               GradientScanButton(onPressed: () => context.go('/scan')),
@@ -57,11 +60,11 @@ class HomePage extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Recent scans',
+                  Text(l.recentScans,
                       style: Theme.of(context).textTheme.titleLarge),
                   TextButton(
                     onPressed: () => context.go('/history'),
-                    child: const Text('See all'),
+                    child: Text(l.seeAll),
                   ),
                 ],
               ),
@@ -77,14 +80,14 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 error: (_, __) => ErrorStateView(
-                  message: 'Could not load recent scans.',
+                  message: l.historyLoadError,
                   onRetry: () => ref.refresh(recentScansProvider),
                 ),
                 data: (scans) {
                   if (scans.isEmpty) {
-                    return const EmptyStateView(
-                      title: 'No scans yet',
-                      subtitle: 'Your scanned coins will appear here.',
+                    return EmptyStateView(
+                      title: l.noScansYet,
+                      subtitle: l.noScansYetBody,
                       icon: Icons.paid_outlined,
                     );
                   }
@@ -106,7 +109,7 @@ class HomePage extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.xl),
               Text(
-                AppConstants.valueDisclaimer,
+                l.valueDisclaimer,
                 style: Theme.of(context).textTheme.labelSmall,
               ),
             ],
@@ -138,12 +141,12 @@ class _RankingsPreview extends ConsumerWidget {
                   const Icon(Icons.emoji_events_rounded,
                       color: AppColors.gold, size: 20),
                   const SizedBox(width: AppSpacing.sm),
-                  Text('Most valuable coins',
+                  Text(context.l10n.mostValuableCoins,
                       style: Theme.of(context).textTheme.titleMedium),
                 ]),
                 TextButton(
                   onPressed: () => context.push('/rankings'),
-                  child: const Text('See all'),
+                  child: Text(context.l10n.seeAll),
                 ),
               ],
             ),
@@ -203,10 +206,11 @@ class _HowItWorks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const steps = [
-      ('1', 'Scan', 'Photograph the front and back of your coin.'),
-      ('2', 'Identify', 'We match it against coin databases.'),
-      ('3', 'Value', 'See an estimated market value range.'),
+    final l = context.l10n;
+    final steps = [
+      ('1', l.howItWorksScan, l.howItWorksScanBody),
+      ('2', l.howItWorksIdentify, l.howItWorksIdentifyBody),
+      ('3', l.howItWorksValue, l.howItWorksValueBody),
     ];
     return Card(
       child: Padding(
@@ -214,7 +218,7 @@ class _HowItWorks extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('How it works',
+            Text(l.howItWorks,
                 style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: AppSpacing.md),
             for (final (n, title, body) in steps)
@@ -283,9 +287,9 @@ class _PremiumBanner extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Unlock AI Coin Intelligence',
+                    Text(context.l10n.unlockBannerTitle,
                         style: Theme.of(context).textTheme.titleMedium),
-                    Text('History, rarity, condition and how to sell it.',
+                    Text(context.l10n.unlockBannerBody,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),

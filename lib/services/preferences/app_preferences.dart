@@ -25,11 +25,15 @@ class AppPreferences {
   Future<void> setCurrencyCode(String code) =>
       _prefs.setString(AppConstants.kCurrencyCode, code);
 
-  String get languageCode =>
-      _prefs.getString(AppConstants.kLanguageCode) ?? 'en';
+  /// The user's forced UI language, or `null` to follow the device language.
+  String? get languageOverride {
+    final v = _prefs.getString(AppConstants.kLanguageCode);
+    return (v == null || v.isEmpty) ? null : v;
+  }
 
-  Future<void> setLanguageCode(String code) =>
-      _prefs.setString(AppConstants.kLanguageCode, code);
+  Future<void> setLanguageOverride(String? code) => (code == null)
+      ? _prefs.remove(AppConstants.kLanguageCode)
+      : _prefs.setString(AppConstants.kLanguageCode, code);
 }
 
 final appPreferencesProvider = Provider<AppPreferences>(

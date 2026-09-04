@@ -38,14 +38,6 @@ class AiChatController extends StateNotifier<AiChatState> {
   final Ref _ref;
   final CoinIdentification _coin;
 
-  static const suggestedQuestions = [
-    'Why is this coin valuable?',
-    'Is this coin rare?',
-    'Where should I sell it?',
-    'Should I get this coin authenticated?',
-    'How much should I list it for?',
-  ];
-
   Future<void> send(String question) async {
     final q = question.trim();
     if (q.isEmpty || state.sending) return;

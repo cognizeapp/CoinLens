@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../../coin/domain/identification_service.dart';
 
 /// Full-screen "Analyzing coin…" animation (product spec §19). Reveals each
@@ -32,13 +33,13 @@ class AnalysisOverlay extends StatelessWidget {
               const _ScanningCoin(),
               const SizedBox(height: AppSpacing.xl),
               Center(
-                child: Text('Analyzing coin…',
+                child: Text(context.l10n.analyzingCoin,
                     style: Theme.of(context).textTheme.titleLarge),
               ),
               const SizedBox(height: AppSpacing.xl),
               for (var i = 0; i < stages.length; i++)
                 _StageRow(
-                  label: stages[i].label,
+                  label: stages[i].localizedLabel(context.l10n),
                   done: i < currentIndex,
                   active: i == currentIndex,
                 ),

@@ -1,5 +1,8 @@
 import 'package:coinsight/core/theme/app_theme.dart';
 import 'package:coinsight/features/result/result_page.dart';
+import 'package:coinsight/l10n/app_localizations.dart';
+import 'package:coinsight/services/preferences/locale_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:coinsight/services/analytics/analytics_service.dart';
 import 'package:coinsight/services/preferences/app_preferences.dart';
 import 'package:coinsight/services/subscription/mock_subscription_service.dart';
@@ -21,7 +24,18 @@ Widget _host(Widget child, List<Override> overrides) {
   ]);
   return ProviderScope(
     overrides: overrides,
-    child: MaterialApp.router(theme: AppTheme.dark, routerConfig: router),
+    child: MaterialApp.router(
+      theme: AppTheme.dark,
+      routerConfig: router,
+      locale: const Locale('en'),
+      supportedLocales: supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+    ),
   );
 }
 

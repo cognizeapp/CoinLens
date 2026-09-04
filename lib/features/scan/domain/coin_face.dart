@@ -12,12 +12,11 @@ class CaptureResult {
 }
 
 enum CoinFace {
-  front('front', 'Scan the front of your coin'),
-  back('back', 'Scan the back of your coin');
+  front('front'),
+  back('back');
 
-  const CoinFace(this.id, this.prompt);
+  const CoinFace(this.id);
   final String id;
-  final String prompt;
 
   bool get isFront => this == CoinFace.front;
 }

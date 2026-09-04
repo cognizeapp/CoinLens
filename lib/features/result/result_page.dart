@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/formatters.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
 import '../../core/widgets/state_views.dart';
 import '../coin/domain/coin_models.dart';
@@ -23,16 +23,17 @@ class ResultPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
     final scan = ref.watch(scanByIdProvider(scanId));
     final money = ref.watch(moneyFormatterProvider);
     final isPremium = ref.watch(isPremiumProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Coin result')),
+      appBar: AppBar(title: Text(l.resultTitle)),
       body: scan.when(
-        loading: () => const LoadingView(message: 'Loading result…'),
+        loading: () => LoadingView(message: l.loadingResult),
         error: (_, __) => ErrorStateView(
-          message: 'We could not open this result.',
+          message: l.resultOpenError,
           onRetry: () => ref.refresh(scanByIdProvider(scanId)),
         ),
         data: (record) {
@@ -96,10 +97,10 @@ class ResultPage extends ConsumerWidget {
                 ),
 
               const SizedBox(height: AppSpacing.xl),
-              Text(AppConstants.valueDisclaimer,
+              Text(l.valueDisclaimer,
                   style: Theme.of(context).textTheme.labelSmall),
               const SizedBox(height: AppSpacing.sm),
-              Text(AppConstants.gradingDisclaimer,
+              Text(l.gradingDisclaimer,
                   style: Theme.of(context).textTheme.labelSmall),
             ],
           );
@@ -148,23 +149,24 @@ class _SaveToCollectionButtonState
       err: (f) {
         setState(() => _busy = false);
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(f.message)));
+            .showSnackBar(SnackBar(content: Text(f.localized(context.l10n))));
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return _saved
         ? OutlinedButton.icon(
             onPressed: _busy ? null : _toggle,
             icon: const Icon(Icons.check_rounded, color: AppColors.success),
-            label: const Text('Saved to your collection'),
+            label: Text(l.savedToCollection),
           )
         : FilledButton.icon(
             onPressed: _busy ? null : _toggle,
             icon: const Icon(Icons.add_rounded),
-            label: const Text('Save to Collection'),
+            label: Text(l.saveToCollection),
           );
   }
 }
@@ -175,6 +177,7 @@ class _LowConfidence extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.lg),
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -190,12 +193,12 @@ class _LowConfidence extends StatelessWidget {
             const Icon(Icons.help_outline_rounded,
                 color: AppColors.warning, size: 18),
             const SizedBox(width: AppSpacing.sm),
-            Text('Not a confident match',
+            Text(l.notConfidentMatch,
                 style: Theme.of(context).textTheme.titleMedium),
           ]),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'We could not identify this coin with high confidence. Possible matches:',
+            l.notConfidentBody,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -237,13 +240,14 @@ class _ValueCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text('ESTIMATED MARKET VALUE',
+          Text(context.l10n.estimatedMarketValue,
               style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(height: AppSpacing.sm),
           Text(money.range(id.value.min, id.value.max),
               style: AppTypography.valueHero),
           const SizedBox(height: AppSpacing.xs),
-          Text('Typical estimate ${money.single(id.value.typical)}',
+          Text(
+              context.l10n.typicalEstimate(money.single(id.value.typical)),
               style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
@@ -289,7 +293,7 @@ class _ValueFactors extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('What affects this value',
+          Text(context.l10n.whatAffectsValue,
               style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppSpacing.sm),
           for (final f in visible)
@@ -328,7 +332,7 @@ class _ValueFactors extends StatelessWidget {
                   const Icon(Icons.lock_outline_rounded,
                       size: 15, color: AppColors.gold),
                   const SizedBox(width: 6),
-                  Text('+$hidden more in the full value analysis',
+                  Text(context.l10n.moreInFullAnalysis(hidden),
                       style: const TextStyle(
                           color: AppColors.gold,
                           fontSize: 13,
@@ -349,15 +353,16 @@ class _DetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final rows = <(String, String)>[
-      ('Country', id.country),
-      if (id.year != null) ('Year', '${id.year}'),
-      ('Denomination', id.denomination),
-      ('Material', id.material),
-      if (id.mint != null) ('Mint', id.mint!),
-      if (id.diameterMm != null) ('Diameter', '${id.diameterMm} mm'),
-      if (id.weightG != null) ('Weight', '${id.weightG} g'),
-      ('Condition (est.)', id.condition.label),
+      (l.detailCountry, id.country),
+      if (id.year != null) (l.detailYear, '${id.year}'),
+      (l.detailDenomination, id.denomination),
+      (l.detailMaterial, id.material),
+      if (id.mint != null) (l.detailMint, id.mint!),
+      if (id.diameterMm != null) (l.detailDiameter, '${id.diameterMm} mm'),
+      if (id.weightG != null) (l.detailWeight, '${id.weightG} g'),
+      (l.detailConditionEst, id.condition.localizedLabel(l)),
     ];
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -383,7 +388,7 @@ class _DetailsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Rarity (est.)',
+              Text(l.detailRarityEst,
                   style: Theme.of(context).textTheme.bodyMedium),
               RarityChip(rarity: id.rarity),
             ],

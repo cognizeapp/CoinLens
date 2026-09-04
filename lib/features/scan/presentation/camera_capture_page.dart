@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../domain/coin_face.dart';
 import '../scan_controller.dart';
 import '../widgets/coin_frame_overlay.dart';
@@ -125,7 +126,7 @@ class _CameraCapturePageState extends ConsumerState<CameraCapturePage>
     } on CameraException {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not take the photo. Try again.')),
+          SnackBar(content: Text(context.l10n.cameraCaptureFailed)),
         );
         setState(() => _busy = false);
       }
@@ -139,7 +140,9 @@ class _CameraCapturePageState extends ConsumerState<CameraCapturePage>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
-        title: Text(widget.face.prompt),
+        title: Text(widget.face.isFront
+            ? context.l10n.cameraPromptFront
+            : context.l10n.cameraPromptBack),
         actions: [
           if (_controller?.value.isInitialized ?? false)
             IconButton(
@@ -158,23 +161,22 @@ class _CameraCapturePageState extends ConsumerState<CameraCapturePage>
   }
 
   Widget _buildBody() {
+    final l = context.l10n;
     if (_permissionDenied) {
       return _CameraMessage(
         icon: Icons.no_photography_rounded,
-        title: 'Camera access is off',
-        message:
-            'Enable camera access for Coinsight in your device Settings, then '
-            'come back to scan. You can also upload a photo instead.',
-        actionLabel: 'Use a photo instead',
+        title: l.cameraAccessOffTitle,
+        message: l.cameraAccessOffBody,
+        actionLabel: l.cameraUsePhotoInstead,
         onAction: () => Navigator.of(context).pop(),
       );
     }
     if (_unavailable) {
       return _CameraMessage(
         icon: Icons.videocam_off_rounded,
-        title: 'No camera available',
-        message: 'This device has no usable camera. Upload a photo instead.',
-        actionLabel: 'Upload a photo',
+        title: l.cameraNoneTitle,
+        message: l.cameraNoneBody,
+        actionLabel: l.cameraUploadPhoto,
         onAction: () => Navigator.of(context).pop(),
       );
     }
@@ -238,9 +240,9 @@ class _CaptureBar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            'Fill the circle · plain background · steady hands',
-            style: TextStyle(color: Colors.white70, fontSize: 12),
+          Text(
+            context.l10n.cameraHint,
+            style: const TextStyle(color: Colors.white70, fontSize: 12),
           ),
           const SizedBox(height: AppSpacing.lg),
           GestureDetector(

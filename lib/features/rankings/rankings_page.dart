@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
 import '../../core/widgets/state_views.dart';
+import '../../l10n/app_localizations.dart';
 import '../coin/domain/catalog_entry.dart';
 import '../coin/presentation/widgets/coin_widgets.dart';
 import 'rankings_providers.dart';
@@ -20,28 +22,26 @@ class RankingsPage extends ConsumerStatefulWidget {
 class _RankingsPageState extends ConsumerState<RankingsPage> {
   RankingCategory _category = RankingCategory.mostValuable;
 
-  String _label(RankingCategory c) => switch (c) {
-        RankingCategory.mostValuable => 'Most valuable',
-        RankingCategory.rarest => 'Rarest',
-        RankingCategory.keyDates => 'Key dates',
+  String _label(RankingCategory c, AppLocalizations l) => switch (c) {
+        RankingCategory.mostValuable => l.rankMostValuable,
+        RankingCategory.rarest => l.rankRarest,
+        RankingCategory.keyDates => l.rankKeyDates,
       };
 
-  String _subtitle(RankingCategory c) => switch (c) {
-        RankingCategory.mostValuable =>
-          'The record-setters of the coin world. Extreme rarities — but it shows what a coin can be worth.',
-        RankingCategory.rarest =>
-          'Coins that almost never come to market.',
-        RankingCategory.keyDates =>
-          'Ordinary-looking coins with a date or mint mark worth checking your change for.',
+  String _subtitle(RankingCategory c, AppLocalizations l) => switch (c) {
+        RankingCategory.mostValuable => l.rankMostValuableSub,
+        RankingCategory.rarest => l.rankRarestSub,
+        RankingCategory.keyDates => l.rankKeyDatesSub,
       };
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final ranking = ref.watch(rankingProvider(_category));
     final money = ref.watch(moneyFormatterProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Coin rankings')),
+      appBar: AppBar(title: Text(l.rankingsTitle)),
       body: Column(
         children: [
           Padding(
@@ -50,7 +50,7 @@ class _RankingsPageState extends ConsumerState<RankingsPage> {
             child: SegmentedButton<RankingCategory>(
               segments: [
                 for (final c in RankingCategory.values)
-                  ButtonSegment(value: c, label: Text(_label(c))),
+                  ButtonSegment(value: c, label: Text(_label(c, l))),
               ],
               selected: {_category},
               onSelectionChanged: (s) => setState(() => _category = s.first),
@@ -60,7 +60,7 @@ class _RankingsPageState extends ConsumerState<RankingsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
             child: Text(
-              _subtitle(_category),
+              _subtitle(_category, l),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -69,7 +69,7 @@ class _RankingsPageState extends ConsumerState<RankingsPage> {
             child: ranking.when(
               loading: () => const LoadingView(),
               error: (_, __) => ErrorStateView(
-                message: 'Could not load the rankings.',
+                message: l.rankLoadError,
                 onRetry: () => ref.refresh(rankingProvider(_category)),
               ),
               data: (entries) => ListView.separated(
@@ -153,7 +153,7 @@ class _RankRow extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 2),
                       Text(
-                        '${entry.country} · ${entry.yearFrom < 0 ? '${-entry.yearFrom} BC' : entry.yearFrom}'
+                        '${entry.country} · ${entry.yearFrom < 0 ? context.l10n.yearBc(-entry.yearFrom) : entry.yearFrom}'
                         '${entry.yearTo != entry.yearFrom ? '–${entry.yearTo}' : ''}',
                         style: Theme.of(context).textTheme.bodyMedium,
                         maxLines: 1,

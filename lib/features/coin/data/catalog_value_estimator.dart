@@ -11,6 +11,11 @@ import '../domain/value_estimation_service.dart';
 /// with the spread widening for scarcer material. Every multiplier is exposed
 /// as a [ValueFactor] so the result screen can explain the number instead of
 /// just asserting it (product spec §8, §35).
+///
+/// NOTE: the `ValueFactor` label/detail strings are English here. In production
+/// the backend value service returns this explanatory prose already localised
+/// (like the AI analysis text); this on-device estimator is the offline
+/// fallback and its prose does not go through gen-l10n.
 class CatalogValueEstimator implements ValueEstimationService {
   const CatalogValueEstimator();
 

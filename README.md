@@ -60,15 +60,35 @@ flutter run --dart-define-from-file=.env
 
 ```bash
 flutter analyze     # clean — 0 issues
-flutter test        # 20 tests, all passing
+flutter test        # 24 tests, all passing
 ```
 
 Test coverage highlights: the image-quality analyzer (blur / exposure / glare /
 framing / multi-coin, against rendered fixtures), the identification pipeline
 (confident match / low-confidence alternatives / unidentified), the value model
-(condition + key-date + factor output), an app-boot smoke test through
-onboarding, and the free vs. Premium result flow (locked upsell vs. explicit
-AI-analysis generation).
+(condition + key-date + factor output), the reference catalog + rankings, an
+app-boot smoke test through onboarding, and the free vs. Premium result flow.
+
+---
+
+## Localization
+
+UI language follows the device by default; users can override it in
+**Profile → Language**. Shipped languages: **English, Italian, Spanish, French,
+German, Portuguese, Dutch**.
+
+- Strings live in `lib/l10n/app_*.arb` (`app_en.arb` is the template).
+- `flutter gen-l10n` (run automatically by `flutter pub get`, `generate: true`)
+  produces `lib/l10n/app_localizations*.dart`. Those generated files **are
+  committed** so the project analyzes/builds straight after a clone.
+- Access in code via `context.l10n.someKey` (see `core/utils/l10n_extensions.dart`).
+- Adding a language = drop in `app_<code>.arb` + add the `Locale` to
+  `supportedLocales` in `services/preferences/locale_provider.dart`.
+
+Non-EN/IT translations are solid but should get a native-speaker review before
+store launch. Content prose that the backend returns already-localised in
+production — the AI analysis text, the value-factor explanations, catalog coin
+names/notes — is left in English in the offline mock providers.
 
 ---
 

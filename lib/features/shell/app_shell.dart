@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_extensions.dart';
 import '../../services/connectivity/connectivity_service.dart';
 
 /// Bottom-navigation scaffold hosting the five primary tabs. Uses go_router's
@@ -12,13 +13,12 @@ class AppShell extends ConsumerWidget {
 
   final StatefulNavigationShell navigationShell;
 
-  static const _tabs = <_TabSpec>[
-    _TabSpec(Icons.home_rounded, Icons.home_outlined, 'Home'),
-    _TabSpec(Icons.grid_view_rounded, Icons.grid_view_outlined, 'Collection'),
-    _TabSpec(Icons.center_focus_strong_rounded,
-        Icons.center_focus_strong_outlined, 'Scan'),
-    _TabSpec(Icons.history_rounded, Icons.history_outlined, 'History'),
-    _TabSpec(Icons.person_rounded, Icons.person_outline_rounded, 'Profile'),
+  static const _icons = <(IconData, IconData)>[
+    (Icons.home_rounded, Icons.home_outlined),
+    (Icons.grid_view_rounded, Icons.grid_view_outlined),
+    (Icons.center_focus_strong_rounded, Icons.center_focus_strong_outlined),
+    (Icons.history_rounded, Icons.history_outlined),
+    (Icons.person_rounded, Icons.person_outline_rounded),
   ];
 
   void _goto(int index) {
@@ -32,6 +32,8 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final current = navigationShell.currentIndex;
     final online = ref.watch(isOnlineProvider);
+    final l = context.l10n;
+    final labels = [l.navHome, l.navCollection, l.navScan, l.navHistory, l.navProfile];
     return Scaffold(
       body: Column(
         children: [
@@ -48,7 +50,7 @@ class AppShell extends ConsumerWidget {
                       const Icon(Icons.cloud_off_rounded,
                           size: 14, color: AppColors.warning),
                       const SizedBox(width: 6),
-                      Text('Offline — cached scans still work',
+                      Text(l.offlineBanner,
                           style: Theme.of(context).textTheme.labelSmall),
                     ],
                   ),
@@ -69,22 +71,15 @@ class AppShell extends ConsumerWidget {
           indicatorColor: AppColors.goldSoft,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: [
-            for (var i = 0; i < _tabs.length; i++)
+            for (var i = 0; i < _icons.length; i++)
               NavigationDestination(
-                icon: Icon(_tabs[i].outlined, color: AppColors.textTertiary),
-                selectedIcon: Icon(_tabs[i].filled, color: AppColors.gold),
-                label: _tabs[i].label,
+                icon: Icon(_icons[i].$2, color: AppColors.textTertiary),
+                selectedIcon: Icon(_icons[i].$1, color: AppColors.gold),
+                label: labels[i],
               ),
           ],
         ),
       ),
     );
   }
-}
-
-class _TabSpec {
-  const _TabSpec(this.filled, this.outlined, this.label);
-  final IconData filled;
-  final IconData outlined;
-  final String label;
 }

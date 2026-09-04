@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/utils/l10n_extensions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/analytics/analytics_service.dart';
 import '../../services/preferences/app_preferences.dart';
 
@@ -14,14 +16,12 @@ class _Slide {
   final String body;
 }
 
-const _slides = <_Slide>[
-  _Slide(Icons.center_focus_strong_rounded, 'Discover Your Coins',
-      'Scan any coin and instantly discover what it is.'),
-  _Slide(Icons.savings_rounded, "Find Out What It's Worth",
-      'Get an estimated market value based on real data.'),
-  _Slide(Icons.auto_awesome_rounded, 'Unlock AI Coin Intelligence',
-      'Discover the story, rarity and selling potential of your coins.'),
-];
+List<_Slide> _slidesFor(AppLocalizations l) => [
+      _Slide(Icons.center_focus_strong_rounded, l.onboard1Title, l.onboard1Body),
+      _Slide(Icons.savings_rounded, l.onboard2Title, l.onboard2Body),
+      _Slide(Icons.auto_awesome_rounded, l.onboard3Title, l.onboard3Body),
+    ];
+const _slideCount = 3;
 
 class OnboardingPage extends ConsumerStatefulWidget {
   const OnboardingPage({super.key});
@@ -49,7 +49,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   }
 
   void _next() {
-    if (_index == _slides.length - 1) {
+    if (_index == _slideCount - 1) {
       _finish();
     } else {
       _controller.nextPage(
@@ -61,7 +61,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLast = _index == _slides.length - 1;
+    final l = context.l10n;
+    final slides = _slidesFor(l);
+    final isLast = _index == slides.length - 1;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -70,24 +72,24 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: _finish,
-                child: const Text('Skip'),
+                child: Text(l.actionSkip),
               ),
             ),
             Expanded(
               child: PageView.builder(
                 controller: _controller,
-                itemCount: _slides.length,
+                itemCount: slides.length,
                 onPageChanged: (i) => setState(() => _index = i),
-                itemBuilder: (context, i) => _SlideView(slide: _slides[i]),
+                itemBuilder: (context, i) => _SlideView(slide: slides[i]),
               ),
             ),
-            _Dots(count: _slides.length, index: _index),
+            _Dots(count: slides.length, index: _index),
             const SizedBox(height: AppSpacing.xl),
             Padding(
               padding: const EdgeInsets.all(AppSpacing.screen),
               child: FilledButton(
                 onPressed: _next,
-                child: Text(isLast ? 'Start Scanning' : 'Continue'),
+                child: Text(isLast ? l.onboardStart : l.actionContinue),
               ),
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/utils/l10n_extensions.dart';
 import '../domain/image_quality.dart';
 
 /// Shows the quality issues found in a capture. Returns `true` if the user
@@ -28,6 +29,7 @@ class _Sheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final blocking = report.hasBlockingIssue;
     return SafeArea(
       child: Padding(
@@ -46,7 +48,7 @@ class _Sheet extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  blocking ? 'Retake needed' : 'This photo could be better',
+                  blocking ? l.qualityRetakeNeeded : l.qualityCouldBeBetter,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
@@ -66,12 +68,12 @@ class _Sheet extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                           children: [
                             TextSpan(
-                              text: '${issue.shortLabel} — ',
+                              text: '${issue.localizedShort(l)} — ',
                               style: const TextStyle(
                                   color: AppColors.textPrimary,
                                   fontWeight: FontWeight.w600),
                             ),
-                            TextSpan(text: issue.feedback),
+                            TextSpan(text: issue.localizedFull(l)),
                           ],
                         ),
                       ),
@@ -83,13 +85,13 @@ class _Sheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.xl),
             FilledButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Retake'),
+              child: Text(l.qualityRetake),
             ),
             if (!blocking) ...[
               const SizedBox(height: AppSpacing.sm),
               TextButton(
                 onPressed: () => Navigator.pop(context, true),
-                child: const Text('Use this photo anyway'),
+                child: Text(l.qualityUseAnyway),
               ),
             ],
           ],

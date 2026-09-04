@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
+import '../../../../core/utils/l10n_extensions.dart';
 import '../../domain/coin_models.dart';
 
 Color rarityColor(CoinRarity r) => switch (r) {
@@ -29,7 +30,7 @@ class RarityChip extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Text(
-        rarity.label,
+        rarity.localizedLabel(context.l10n),
         style: TextStyle(
             color: color, fontSize: 12, fontWeight: FontWeight.w600),
       ),
@@ -52,7 +53,7 @@ class ConfidenceBadge extends StatelessWidget {
             size: 15, color: color),
         const SizedBox(width: 5),
         Text(
-          '${formatConfidence(confidence)} confidence',
+          context.l10n.confidenceValue(formatConfidence(confidence)),
           style: TextStyle(
               color: color, fontSize: 12, fontWeight: FontWeight.w600),
         ),
@@ -109,7 +110,7 @@ class ScanListTile extends StatelessWidget {
           maxLines: 1, overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.titleMedium),
       subtitle: Text(
-        '${id.country}${id.year != null ? ' • ${id.year}' : ''}  ·  ${formatScanDate(record.createdAt)}',
+        '${id.country}${id.year != null ? ' • ${id.year}' : ''}  ·  ${formatScanDate(record.createdAt, context.l10n)}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -123,7 +124,7 @@ class ScanListTile extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   fontSize: 13)),
           const SizedBox(height: 3),
-          Text(id.rarity.label,
+          Text(id.rarity.localizedLabel(context.l10n),
               style: TextStyle(color: rarityColor(id.rarity), fontSize: 11)),
         ],
       ),
