@@ -14,7 +14,8 @@ assuming a service is (or isn't) wired up.
 | Firebase | Spark (free) | $0 | ✅ active | Project `coinsights-eabc4`; Auth (email/Google/Apple) wired into the app |
 | RevenueCat | Free up to $2.5k MTR | $0 until $2.5k/mo tracked revenue | ✅ active (iOS) | `default` offering → real App Store products `coinsights_premium_monthly`/`coinsights_premium_yearly`, both attached to the `premium` entitlement. Android side still points at placeholder Test Store products — Play Console subscriptions not created yet. |
 | App Store Connect subscriptions | — | — | ✅ active | Group "Coinsights Premium": Premium Monthly (€4.99/mo) + Premium Yearly (€29.99/yr, 7-day free trial, all 175 regions). First auto-renewable subscription still needs to be submitted together with an app version before it goes live in production — TestFlight builds are unaffected by this. |
-| Google Play Console | — | $25 one-time (if not already paid) | ⬜ not yet set up | Needed before any Android release; Android subscription products (monthly/yearly) not created yet, so RevenueCat's Play Store product list is still empty |
+| Google Play Console | — | $25 one-time (if not already paid) | ⬜ not yet set up | Needed before any Android release; Android subscription products (monthly/yearly) not created yet, so RevenueCat's Play Store product list is still empty. NOTE: do NOT pay the $25 without the owner's go-ahead. |
+| AdMob | Free | $0 | 🔄 partial | google_mobile_ads integrated; app currently ships Google's public **test** ad unit ids (safe, non-earning). An AdMob account exists on the Google account but a real app entry + banner ad units still need creating, then plugged in via `ADMOB_BANNER_IOS`/`ADMOB_BANNER_ANDROID` dart-defines and the `APPLICATION_ID` in AndroidManifest.xml / Info.plist. AdMob payout/payment setup is separate and only affects earnings, not the build. |
 
 ## Recurring cost triggers to watch
 
@@ -40,3 +41,7 @@ assuming a service is (or isn't) wired up.
   in RevenueCat, attached both to the `premium` entitlement, and wired them
   into the `default` offering's Monthly/Yearly packages. Android/Play Store
   side still pending.
+- 2026-09-05: Big app-quality pass — branding (logo throughout, PRO badge),
+  13 openly-licensed real coin photos on Rankings, Rankings search/filter,
+  new premium "Where to sell" marketplace guide, and non-invasive AdMob
+  banner ads (free tier only) using test ad units for now. All $0.
