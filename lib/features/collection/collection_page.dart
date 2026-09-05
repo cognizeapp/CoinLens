@@ -187,14 +187,8 @@ class CollectionPage extends ConsumerWidget {
   }
 }
 
-/// Confirms, then drops a coin from the saved collection (its scan stays in
-/// History). Offers an Undo. Shared by the grid long-press sheet and the list
-/// swipe-to-remove.
-Future<void> removeCoinFromCollection(
-  BuildContext context,
-  WidgetRef ref,
-  ScanRecord record,
-) async {
+/// The "remove this coin from the collection?" confirmation dialog.
+Future<bool> confirmRemoveCoin(BuildContext context, ScanRecord record) async {
   final l = context.l10n;
   final confirmed = await showDialog<bool>(
     context: context,
@@ -213,8 +207,17 @@ Future<void> removeCoinFromCollection(
       ],
     ),
   );
-  if (confirmed != true) return;
+  return confirmed == true;
+}
 
+/// Drops a coin from the saved collection (its scan stays in History) and
+/// shows an Undo. Assumes the caller already confirmed.
+Future<void> applyRemoveCoin(
+  BuildContext context,
+  WidgetRef ref,
+  ScanRecord record,
+) async {
+  final l = context.l10n;
   final repo = ref.read(scanRepositoryProvider);
   final result = await repo.removeFromCollection(record.id);
   if (!context.mounted) return;
@@ -240,6 +243,16 @@ Future<void> removeCoinFromCollection(
     err: (f) => ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(f.localized(context.l10n)))),
   );
+}
+
+/// Confirm + remove, for the grid long-press sheet.
+Future<void> removeCoinFromCollection(
+  BuildContext context,
+  WidgetRef ref,
+  ScanRecord record,
+) async {
+  if (!await confirmRemoveCoin(context, record)) return;
+  if (context.mounted) await applyRemoveCoin(context, ref, record);
 }
 
 /// Long-press menu for a collected coin: open its result, or remove it.
@@ -710,12 +723,8 @@ class _List extends ConsumerWidget {
             child: const Icon(Icons.delete_outline_rounded,
                 color: AppColors.danger),
           ),
-          confirmDismiss: (_) async {
-            await removeCoinFromCollection(context, ref, record);
-            // removeCoinFromCollection already updates the list via provider
-            // invalidation; never let Dismissible remove the row itself.
-            return false;
-          },
+          confirmDismiss: (_) => confirmRemoveCoin(context, record),
+          onDismissed: (_) => applyRemoveCoin(context, ref, record),
           child: ScanListTile(
             record: record,
             money: money,
