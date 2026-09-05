@@ -26,6 +26,13 @@
 #    Apple caps you at 3 distribution certificates; if the create step ever
 #    says "maximum number of certificates", delete an unused one at
 #    developer.apple.com → Certificates.
+#
+#    The certificate's private key (IOS_DIST_CERT_KEY_BASE64, in the
+#    coinsights_secrets group) is generated ONCE and reused by every build —
+#    see "Signing 2/4" below. Without this, every build would generate a new
+#    key and ask Apple to CREATE a new Distribution certificate, hitting the
+#    cert cap after a few runs. If IOS_DIST_CERT_KEY_BASE64 is ever rotated,
+#    the next build's --create will mint a fresh certificate for it.
 # ─────────────────────────────────────────────────────────────────────────────
 
 workflows:
@@ -65,7 +72,18 @@ workflows:
       - name: "Signing 2/4 — generate certificate private key"
         script: |
           set -ex
-          ssh-keygen -t rsa -b 2048 -m PEM -f "$CM_BUILD_DIR/cert_key" -q -N ""
+          # Reuse the SAME key across builds (IOS_DIST_CERT_KEY_BASE64, secure
+          # env var) instead of generating a fresh one every run. A fresh key
+          # each build meant every build asked Apple to CREATE a brand new
+          # Distribution certificate, which eventually hits Apple's cert cap
+          # and fails with "You already have a current Distribution
+          # certificate". With a persisted key, fetch-signing-files (below)
+          # finds the existing certificate tied to it and just reuses it.
+          if [ -n "$IOS_DIST_CERT_KEY_BASE64" ]; then
+            echo "$IOS_DIST_CERT_KEY_BASE64" | base64 --decode > "$CM_BUILD_DIR/cert_key"
+          else
+            ssh-keygen -t rsa -b 2048 -m PEM -f "$CM_BUILD_DIR/cert_key" -q -N ""
+          fi
           ls -l "$CM_BUILD_DIR/cert_key"
 
       - name: "Signing 3/4 — create cert + App ID + App Store profile"
