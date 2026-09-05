@@ -16,6 +16,7 @@ class AppConfig {
     required this.admobBannerAndroid,
     required this.admobInterstitialIos,
     required this.admobInterstitialAndroid,
+    required this.geminiApiKey,
   });
 
   final AppFlavor flavor;
@@ -35,6 +36,11 @@ class AppConfig {
   final String admobBannerAndroid;
   final String admobInterstitialIos;
   final String admobInterstitialAndroid;
+
+  /// Google Gemini API key for cloud coin identification. Empty → the on-device
+  /// pipeline is used. Supplied via --dart-define=GEMINI_API_KEY.
+  final String geminiApiKey;
+  bool get useGemini => geminiApiKey.isNotEmpty;
 
   bool get useMockBackend => apiBaseUrl.isEmpty;
   bool get isProd => flavor == AppFlavor.prod;
@@ -64,6 +70,7 @@ class AppConfig {
           const String.fromEnvironment('ADMOB_INTERSTITIAL_IOS'),
       admobInterstitialAndroid:
           const String.fromEnvironment('ADMOB_INTERSTITIAL_ANDROID'),
+      geminiApiKey: const String.fromEnvironment('GEMINI_API_KEY'),
     );
   }
 }

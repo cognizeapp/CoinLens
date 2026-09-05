@@ -16,8 +16,11 @@ import 'features/auth/data/firebase_auth_repository.dart';
 import 'features/auth/data/mock_auth_repository.dart';
 import 'features/auth/domain/auth_repository.dart';
 import 'features/auth/presentation/auth_providers.dart';
+import 'features/coin/data/fallback_identification_service.dart';
+import 'features/coin/data/gemini_identification_service.dart';
 import 'features/coin/data/http_identification_service.dart';
 import 'features/coin/data/mock_scan_repository.dart';
+import 'features/coin/data/pipeline_identification_service.dart';
 import 'features/coin/presentation/coin_providers.dart';
 import 'services/ads/ad_service.dart';
 import 'services/analytics/analytics_service.dart';
@@ -110,6 +113,20 @@ Future<void> bootstrap() async {
       coinIntelligenceServiceProvider
           .overrideWith((ref) => HttpCoinIntelligenceService(api)),
     ]);
+  } else if (config.useGemini) {
+    // Cloud identification via Gemini, with the on-device pipeline as the
+    // offline / failure fallback so a scan always produces a result.
+    overrides.add(identificationServiceProvider.overrideWith((ref) {
+      return FallbackIdentificationService(
+        primary: GeminiIdentificationService(apiKey: config.geminiApiKey),
+        fallback: PipelineIdentificationService(
+          ocr: ref.watch(ocrServiceProvider),
+          catalog: ref.watch(coinCatalogProvider),
+          conditionEstimator: ref.watch(conditionEstimatorProvider),
+          valueEstimator: ref.watch(valueEstimationServiceProvider),
+        ),
+      );
+    }));
   }
 
   await analytics.logEvent(AnalyticsEvent.appOpened, params: {

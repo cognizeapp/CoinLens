@@ -115,7 +115,8 @@ workflows:
             --export-options-plist=/Users/builder/export_options.plist \
             --dart-define=ENABLE_FIREBASE=true \
             --dart-define=ENABLE_REVENUECAT=true \
-            --dart-define=REVENUECAT_API_KEY_IOS=$REVENUECAT_API_KEY_IOS
+            --dart-define=REVENUECAT_API_KEY_IOS=$REVENUECAT_API_KEY_IOS \
+            --dart-define=GEMINI_API_KEY=$GEMINI_API_KEY
     artifacts:
       - build/ios/ipa/*.ipa
       - flutter_drive.log
@@ -189,14 +190,16 @@ workflows:
           flutter build apk --release \
             --dart-define=ENABLE_FIREBASE=true \
             --dart-define=ENABLE_REVENUECAT=true \
-            --dart-define=REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID
+            --dart-define=REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID \
+            --dart-define=GEMINI_API_KEY=$GEMINI_API_KEY
 
       - name: Build App Bundle
         script: |
           flutter build appbundle --release \
             --dart-define=ENABLE_FIREBASE=true \
             --dart-define=ENABLE_REVENUECAT=true \
-            --dart-define=REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID
+            --dart-define=REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID \
+            --dart-define=GEMINI_API_KEY=$GEMINI_API_KEY
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
       - build/app/outputs/bundle/release/*.aab
