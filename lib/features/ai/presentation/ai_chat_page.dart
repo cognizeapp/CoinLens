@@ -122,7 +122,7 @@ class _ChatViewState extends ConsumerState<_ChatView> {
                 IconButton.filled(
                   style: IconButton.styleFrom(
                       backgroundColor: AppColors.gold,
-                      foregroundColor: const Color(0xFF1A1400)),
+                      foregroundColor: AppColors.onGold),
                   onPressed:
                       state.sending ? null : () => _send(_input.text),
                   icon: const Icon(Icons.arrow_upward_rounded),
@@ -196,7 +196,7 @@ class _Bubble extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: fromUser ? const Color(0xFF1A1400) : AppColors.textPrimary,
+            color: fromUser ? AppColors.onGold : AppColors.textPrimary,
             height: 1.4,
           ),
         ),

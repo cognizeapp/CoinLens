@@ -772,6 +772,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get rankLoadError => 'Die Rankings konnten nicht geladen werden.';
 
   @override
+  String get rankSearchHint => 'Nach Name, Land oder Nennwert suchen';
+
+  @override
+  String get rankAllCountries => 'Alle Länder';
+
+  @override
+  String get rankNoResults => 'Keine Münze passt';
+
+  @override
+  String get rankNoResultsBody => 'Anderen Suchbegriff versuchen oder Länderfilter entfernen.';
+
+  @override
+  String get premiumBadge => 'PRO';
+
+  @override
   String get typicalRange => 'TYPISCHE SPANNE';
 
   @override

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
+import '../../core/widgets/brand_mark.dart';
 import '../../core/widgets/state_views.dart';
 import '../coin/presentation/coin_providers.dart';
 import '../coin/presentation/widgets/coin_widgets.dart';
@@ -19,7 +20,16 @@ class HistoryPage extends ConsumerWidget {
     final money = ref.watch(moneyFormatterProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.historyTitle)),
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const BrandMark(size: 24),
+            const SizedBox(width: AppSpacing.sm),
+            Text(l.historyTitle),
+          ],
+        ),
+      ),
       body: scans.when(
         loading: () => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),

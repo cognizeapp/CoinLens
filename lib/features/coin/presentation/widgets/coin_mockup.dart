@@ -237,11 +237,19 @@ class CoinPhotoMockup extends StatelessWidget {
     required this.image,
     this.rarity,
     this.size = 96,
+    this.alignment = Alignment.center,
   });
 
   final ImageProvider image;
   final CoinRarity? rarity;
   final double size;
+
+  /// Where to anchor the cover-crop — most of the user's own captures are a
+  /// single coin face already, but bundled reference photos (see
+  /// referenceCoinImageAsset) are often a museum/auction "obverse + reverse"
+  /// side-by-side or stacked scan, so callers pass an edge alignment to crop
+  /// to just one face instead of a seam down the middle.
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +277,7 @@ class CoinPhotoMockup extends StatelessWidget {
         ],
       ),
       child: ClipOval(
-        child: Image(image: image, fit: BoxFit.cover),
+        child: Image(image: image, fit: BoxFit.cover, alignment: alignment),
       ),
     );
   }

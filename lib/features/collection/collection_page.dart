@@ -7,6 +7,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../core/utils/formatters.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
+import '../../core/widgets/brand_mark.dart';
 import '../../core/widgets/state_views.dart';
 import '../../l10n/app_localizations.dart';
 import '../coin/domain/coin_models.dart';
@@ -47,7 +48,14 @@ class CollectionPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.collectionTitle),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const BrandMark(size: 24),
+            const SizedBox(width: AppSpacing.sm),
+            Text(l.collectionTitle),
+          ],
+        ),
         actions: [
           IconButton(
             icon: Icon(view == _View.grid

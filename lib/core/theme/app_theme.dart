@@ -13,7 +13,7 @@ abstract final class AppTheme {
     const colorScheme = ColorScheme.dark(
       surface: AppColors.background,
       primary: AppColors.gold,
-      onPrimary: Color(0xFF1A1400),
+      onPrimary: AppColors.onGold,
       secondary: AppColors.blue,
       onSecondary: Colors.white,
       error: AppColors.danger,
@@ -80,7 +80,7 @@ abstract final class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.gold,
-          foregroundColor: const Color(0xFF1A1400),
+          foregroundColor: AppColors.onGold,
           disabledBackgroundColor: AppColors.border,
           minimumSize: const Size.fromHeight(54),
           textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),

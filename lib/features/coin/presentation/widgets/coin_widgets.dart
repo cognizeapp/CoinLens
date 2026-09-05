@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/utils/l10n_extensions.dart';
+import '../../data/reference_coin_images.dart';
 import '../../domain/coin_models.dart';
 import 'coin_mockup.dart';
 
@@ -74,9 +75,10 @@ class ConfidenceBadge extends StatelessWidget {
   }
 }
 
-/// A coin's visual: the user's own photo framed as a coin when we have one,
-/// otherwise a generated metallic mockup from [material]/[rarity], otherwise
-/// (neither available) a plain placeholder disc.
+/// A coin's visual, in priority order: the user's own photo framed as a coin,
+/// a bundled real reference photo for well-known catalog coins, a generated
+/// metallic mockup from [material]/[rarity], or (nothing available) a plain
+/// placeholder disc.
 class CoinThumb extends StatelessWidget {
   const CoinThumb({
     super.key,
@@ -86,6 +88,7 @@ class CoinThumb extends StatelessWidget {
     this.label,
     this.seed = '',
     this.size = 52,
+    this.referenceImageAsset,
   });
 
   final String? imagePath;
@@ -94,6 +97,11 @@ class CoinThumb extends StatelessWidget {
   final String? label;
   final String seed;
   final double size;
+
+  /// Bundled asset path (see [referenceCoinImageAsset]) for a real,
+  /// openly-licensed photo of this coin type — used on Rankings, where every
+  /// entry is a well-known catalog coin rather than the user's own capture.
+  final String? referenceImageAsset;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +114,14 @@ class CoinThumb extends StatelessWidget {
           size: size,
         );
       }
+    }
+    if (referenceImageAsset != null) {
+      return CoinPhotoMockup(
+        image: AssetImage(referenceImageAsset!),
+        rarity: rarity,
+        size: size,
+        alignment: referenceCoinImageAlignment(referenceImageAsset!),
+      );
     }
     if (material != null && rarity != null) {
       return CoinMockup(

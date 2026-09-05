@@ -772,6 +772,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rankLoadError => 'Impossible de charger les classements.';
 
   @override
+  String get rankSearchHint => 'Rechercher par nom, pays ou valeur';
+
+  @override
+  String get rankAllCountries => 'Tous les pays';
+
+  @override
+  String get rankNoResults => 'Aucune pièce ne correspond';
+
+  @override
+  String get rankNoResultsBody => 'Essayez un autre terme ou retirez le filtre de pays.';
+
+  @override
+  String get premiumBadge => 'PRO';
+
+  @override
   String get typicalRange => 'FOURCHETTE COURANTE';
 
   @override

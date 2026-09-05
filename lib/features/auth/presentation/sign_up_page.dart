@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/error/failure.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/utils/l10n_extensions.dart';
 import '../../../core/utils/validators.dart';
@@ -100,7 +101,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           height: 20,
                           width: 20,
                           child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Color(0xFF1A1400)),
+                              strokeWidth: 2, color: AppColors.onGold),
                         )
                       : Text(l.authCreateCta),
                 ),

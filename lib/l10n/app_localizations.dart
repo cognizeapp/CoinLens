@@ -1587,6 +1587,36 @@ abstract class AppLocalizations {
   /// **'Could not load the rankings.'**
   String get rankLoadError;
 
+  /// No description provided for @rankSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, country, or denomination'**
+  String get rankSearchHint;
+
+  /// No description provided for @rankAllCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'All countries'**
+  String get rankAllCountries;
+
+  /// No description provided for @rankNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No coins match'**
+  String get rankNoResults;
+
+  /// No description provided for @rankNoResultsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search term or clear the country filter.'**
+  String get rankNoResultsBody;
+
+  /// No description provided for @premiumBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'PRO'**
+  String get premiumBadge;
+
   /// No description provided for @typicalRange.
   ///
   /// In en, this message translates to:

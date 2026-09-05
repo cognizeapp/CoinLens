@@ -24,7 +24,7 @@ class GradientScanButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             gradient: const LinearGradient(
-              colors: [Color(0xFFE8C766), AppColors.gold],
+              colors: [AppColors.goldLight, AppColors.gold],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -42,12 +42,12 @@ class GradientScanButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.center_focus_strong_rounded,
-                    color: Color(0xFF1A1400), size: 26),
+                    color: AppColors.onGold, size: 26),
                 const SizedBox(width: AppSpacing.md),
                 Text(
                   label,
                   style: const TextStyle(
-                    color: Color(0xFF1A1400),
+                    color: AppColors.onGold,
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
                   ),

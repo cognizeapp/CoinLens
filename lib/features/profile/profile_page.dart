@@ -8,6 +8,7 @@ import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
+import '../../core/widgets/brand_mark.dart';
 import '../../services/preferences/app_preferences.dart';
 import '../../services/preferences/locale_provider.dart';
 import '../../services/subscription/subscription_service.dart';
@@ -37,7 +38,16 @@ class ProfilePage extends ConsumerWidget {
     final repo = ref.read(authRepositoryProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.profileTitle)),
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const BrandMark(size: 24),
+            const SizedBox(width: AppSpacing.sm),
+            Text(l.profileTitle),
+          ],
+        ),
+      ),
       body: ListView(
         children: [
           const SizedBox(height: AppSpacing.lg),

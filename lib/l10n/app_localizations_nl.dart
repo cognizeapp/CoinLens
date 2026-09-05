@@ -772,6 +772,21 @@ class AppLocalizationsNl extends AppLocalizations {
   String get rankLoadError => 'Kan de ranglijsten niet laden.';
 
   @override
+  String get rankSearchHint => 'Zoek op naam, land of denominatie';
+
+  @override
+  String get rankAllCountries => 'Alle landen';
+
+  @override
+  String get rankNoResults => 'Geen munt komt overeen';
+
+  @override
+  String get rankNoResultsBody => 'Probeer een andere zoekterm of wis het landfilter.';
+
+  @override
+  String get premiumBadge => 'PRO';
+
+  @override
   String get typicalRange => 'TYPISCHE BANDBREEDTE';
 
   @override

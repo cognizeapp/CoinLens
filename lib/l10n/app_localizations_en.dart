@@ -772,6 +772,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rankLoadError => 'Could not load the rankings.';
 
   @override
+  String get rankSearchHint => 'Search by name, country, or denomination';
+
+  @override
+  String get rankAllCountries => 'All countries';
+
+  @override
+  String get rankNoResults => 'No coins match';
+
+  @override
+  String get rankNoResultsBody => 'Try a different search term or clear the country filter.';
+
+  @override
+  String get premiumBadge => 'PRO';
+
+  @override
   String get typicalRange => 'TYPICAL RANGE';
 
   @override

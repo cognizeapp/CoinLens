@@ -12,6 +12,8 @@ abstract final class AppColors {
   // Accents
   static const Color gold = Color(0xFFD4AF37);
   static const Color goldSoft = Color(0x33D4AF37);
+  static const Color goldLight = Color(0xFFE8C766);
+  static const Color onGold = Color(0xFF1A1400);
   static const Color blue = Color(0xFF4F8CFF);
   static const Color blueSoft = Color(0x334F8CFF);
 

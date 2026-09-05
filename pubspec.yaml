@@ -72,6 +72,7 @@ flutter:
   assets:
     - assets/mock/
     - assets/brand/
+    - assets/coins/
 
 # ─── App icon (run: dart run flutter_launcher_icons) ───────────────────────
 flutter_launcher_icons:

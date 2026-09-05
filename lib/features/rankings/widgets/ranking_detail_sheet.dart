@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/utils/l10n_extensions.dart';
 import '../../../core/utils/money_provider.dart';
+import '../../coin/data/reference_coin_images.dart';
 import '../../coin/domain/catalog_entry.dart';
 import '../../coin/presentation/widgets/coin_widgets.dart';
 
@@ -66,6 +67,7 @@ class _Sheet extends ConsumerWidget {
                   rarity: entry.baseRarity,
                   label: shortDenomination(entry.denomination),
                   seed: entry.id,
+                  referenceImageAsset: referenceCoinImageAsset(entry.id),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(

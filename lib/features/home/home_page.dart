@@ -6,9 +6,11 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
+import '../../core/widgets/brand_mark.dart';
 import '../../core/widgets/gradient_scan_button.dart';
 import '../../core/widgets/state_views.dart';
 import '../../features/auth/presentation/auth_providers.dart';
+import '../../features/coin/data/reference_coin_images.dart';
 import '../../features/coin/presentation/coin_providers.dart';
 import '../../features/coin/presentation/widgets/coin_widgets.dart';
 import '../../features/rankings/rankings_providers.dart';
@@ -37,6 +39,16 @@ class HomePage extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.all(AppSpacing.screen),
             children: [
+              Row(
+                children: [
+                  const BrandWordmark(height: 26),
+                  if (isPremium) ...[
+                    const Spacer(),
+                    const _ProBadge(),
+                  ],
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xl),
               Text(
                 greetingName == null
                     ? l.homeWelcome
@@ -179,6 +191,8 @@ class _RankingsPreview extends ConsumerWidget {
                               rarity: entries[i].baseRarity,
                               label: shortDenomination(entries[i].denomination),
                               seed: entries[i].id,
+                              referenceImageAsset:
+                                  referenceCoinImageAsset(entries[i].id),
                             ),
                             const SizedBox(width: AppSpacing.md),
                             Expanded(
@@ -203,6 +217,32 @@ class _RankingsPreview extends ConsumerWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProBadge extends StatelessWidget {
+  const _ProBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [AppColors.goldLight, AppColors.gold],
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+      ),
+      child: Text(
+        context.l10n.premiumBadge,
+        style: const TextStyle(
+          color: AppColors.onGold,
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0.5,
         ),
       ),
     );

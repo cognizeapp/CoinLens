@@ -156,7 +156,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           height: 20,
                           width: 20,
                           child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Color(0xFF1A1400)),
+                              strokeWidth: 2, color: AppColors.onGold),
                         )
                       : Text(l.authSignIn),
                 ),

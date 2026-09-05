@@ -772,6 +772,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get rankLoadError => 'Não foi possível carregar as classificações.';
 
   @override
+  String get rankSearchHint => 'Pesquisar por nome, país ou denominação';
+
+  @override
+  String get rankAllCountries => 'Todos os países';
+
+  @override
+  String get rankNoResults => 'Nenhuma moeda corresponde';
+
+  @override
+  String get rankNoResultsBody => 'Tente outro termo ou remova o filtro de país.';
+
+  @override
+  String get premiumBadge => 'PRO';
+
+  @override
   String get typicalRange => 'INTERVALO TÍPICO';
 
   @override

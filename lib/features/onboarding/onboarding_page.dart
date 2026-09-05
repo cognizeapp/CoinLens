@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/widgets/brand_mark.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/analytics/analytics_service.dart';
@@ -68,11 +69,18 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: _finish,
-                child: Text(l.actionSkip),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+              child: Row(
+                children: [
+                  const BrandWordmark(height: 24),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: _finish,
+                    child: Text(l.actionSkip),
+                  ),
+                ],
               ),
             ),
             Expanded(
