@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
-/// Coinsight visual identity — a sophisticated dark palette where gold signals
-/// value, rarity and Premium.
+/// Coinsights visual identity — a deep dark palette with one vivid, warm
+/// orange doing all the work: value, discovery, actions and Premium.
+///
+/// The historical token names ([gold], [goldSoft]…) are kept so call sites
+/// don't churn, but they now resolve to the orange accent. [metalGold] is the
+/// only genuinely metallic gold left, for the top of the rarity scale and
+/// coin-material rendering.
 abstract final class AppColors {
   // Backgrounds
   static const Color background = Color(0xFF0B0D12);
@@ -9,11 +14,13 @@ abstract final class AppColors {
   static const Color card = Color(0xFF1C2029);
   static const Color cardElevated = Color(0xFF232833);
 
-  // Accents
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldSoft = Color(0x33D4AF37);
-  static const Color goldLight = Color(0xFFE8C766);
-  static const Color onGold = Color(0xFF1A1400);
+  // Accent — the one brand colour.
+  static const Color gold = Color(0xFFF5A524);
+  static const Color goldSoft = Color(0x33F5A524);
+  static const Color goldLight = Color(0xFFFFBE5C);
+  static const Color onGold = Color(0xFF241400);
+  static const Color accentDeep = Color(0xFFDB7C00);
+  static const Color metalGold = Color(0xFFD4AF37);
   static const Color blue = Color(0xFF4F8CFF);
   static const Color blueSoft = Color(0x334F8CFF);
 
@@ -24,7 +31,7 @@ abstract final class AppColors {
 
   // Semantic
   static const Color success = Color(0xFF3DD68C);
-  static const Color warning = Color(0xFFF5A623);
+  static const Color warning = Color(0xFFFFC53D);
   static const Color danger = Color(0xFFFF5C5C);
 
   // Lines / borders

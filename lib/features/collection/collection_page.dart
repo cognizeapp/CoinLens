@@ -116,6 +116,7 @@ class CollectionPage extends ConsumerWidget {
 
           return Column(
             children: [
+              _PortfolioHeader(items: all, money: money),
               Padding(
                 padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.sm,
                     AppSpacing.lg, AppSpacing.sm),
@@ -156,6 +157,113 @@ class CollectionPage extends ConsumerWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// The "coin portfolio" summary — total estimated value plus counts, shown to
+/// everyone at the top of the collection. Individual coin values live on each
+/// tile below.
+class _PortfolioHeader extends StatelessWidget {
+  const _PortfolioHeader({required this.items, required this.money});
+  final List<ScanRecord> items;
+  final MoneyFormatter money;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final total =
+        items.fold<double>(0, (s, r) => s + r.identification.value.typical);
+    final countries =
+        items.map((r) => r.identification.country).toSet().length;
+    final top = items.isEmpty
+        ? null
+        : items.reduce((a, b) =>
+            a.identification.value.typical >= b.identification.value.typical
+                ? a
+                : b);
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.xs),
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF2A1E08), AppColors.card],
+        ),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.35)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l.portfolioLabel,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall
+                  ?.copyWith(color: AppColors.gold, letterSpacing: 1)),
+          const SizedBox(height: 4),
+          Text(
+            money.single(total),
+            style: const TextStyle(
+              fontSize: 34,
+              fontWeight: FontWeight.w800,
+              color: AppColors.textPrimary,
+              letterSpacing: -0.5,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              _PortfolioStat(value: '${items.length}', label: l.portfolioCoins),
+              Container(
+                width: 1,
+                height: 30,
+                color: AppColors.border,
+                margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              ),
+              _PortfolioStat(
+                  value: '$countries', label: l.portfolioCountries),
+              if (top != null) ...[
+                Container(
+                  width: 1,
+                  height: 30,
+                  color: AppColors.border,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                ),
+                _PortfolioStat(
+                  value: money.compact(top.identification.value.typical),
+                  label: l.portfolioTopCoin,
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PortfolioStat extends StatelessWidget {
+  const _PortfolioStat({required this.value, required this.label});
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(value,
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary)),
+        Text(label, style: Theme.of(context).textTheme.labelSmall),
+      ],
     );
   }
 }

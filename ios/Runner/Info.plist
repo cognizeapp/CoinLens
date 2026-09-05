@@ -70,9 +70,8 @@
 				</array>
 			</dict>
 		</array>
-		<!-- AdMob. Google's public *test* application id — replace with the
-		     real one from the AdMob console before a store release. -->
+		<!-- AdMob — Coinsights iOS app (AdMob publisher pub-3811419528132275). -->
 		<key>GADApplicationIdentifier</key>
-		<string>ca-app-pub-3940256099942544~1458002511</string>
+		<string>ca-app-pub-3811419528132275~2633282597</string>
 	</dict>
 </plist>

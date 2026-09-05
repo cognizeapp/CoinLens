@@ -36,11 +36,10 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <!-- AdMob. Google's public *test* application id — replace with the
-             real one from the AdMob console before a store release. -->
+        <!-- AdMob — Coinsights Android app (AdMob publisher pub-3811419528132275). -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-3811419528132275~9293330766" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

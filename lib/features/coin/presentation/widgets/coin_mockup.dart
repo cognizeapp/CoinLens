@@ -63,7 +63,7 @@ _MetalPalette _materialPalette(String material) {
   if (m.contains('gold')) {
     return const _MetalPalette(
       Color(0xFFF3D77B),
-      AppColors.gold,
+      AppColors.metalGold,
       Color(0xFF8A6A16),
       Color(0xFF4A3708),
     );
@@ -202,7 +202,7 @@ class _CoinMockupPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = r * 0.05
-          ..color = AppColors.gold.withValues(alpha: 0.9),
+          ..color = AppColors.metalGold.withValues(alpha: 0.9),
       );
     }
 
@@ -254,7 +254,7 @@ class CoinPhotoMockup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ringColor = (rarity == CoinRarity.veryRare || rarity == CoinRarity.extremelyRare)
-        ? AppColors.gold
+        ? AppColors.metalGold
         : AppColors.border;
     return Container(
       width: size,

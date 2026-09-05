@@ -1629,6 +1629,168 @@ abstract class AppLocalizations {
   /// **'PRO'**
   String get premiumBadge;
 
+  /// No description provided for @paywallTrialFraming.
+  ///
+  /// In en, this message translates to:
+  /// **'7 days free, then {price}. Cancel anytime.'**
+  String paywallTrialFraming(String price);
+
+  /// No description provided for @paywallStartTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Start free trial'**
+  String get paywallStartTrial;
+
+  /// No description provided for @ob1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'See what your coin is really worth'**
+  String get ob1Title;
+
+  /// No description provided for @ob1Accent.
+  ///
+  /// In en, this message translates to:
+  /// **'really worth'**
+  String get ob1Accent;
+
+  /// No description provided for @ob1Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Never sell for less than it\'s actually worth.'**
+  String get ob1Sub;
+
+  /// No description provided for @ob1CoinName.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Sovereign'**
+  String get ob1CoinName;
+
+  /// No description provided for @ob1RefLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'REFERENCE VALUE'**
+  String get ob1RefLabel;
+
+  /// No description provided for @ob2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Valuation spots the rarest 1% of coins'**
+  String get ob2Title;
+
+  /// No description provided for @ob2Accent.
+  ///
+  /// In en, this message translates to:
+  /// **'1%'**
+  String get ob2Accent;
+
+  /// No description provided for @ob2Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Mint errors, gold and key dates.'**
+  String get ob2Sub;
+
+  /// No description provided for @ob2MeterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Extremely rare'**
+  String get ob2MeterLabel;
+
+  /// No description provided for @ob2MeterLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Very common'**
+  String get ob2MeterLow;
+
+  /// No description provided for @ob2MeterHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Ultra rare'**
+  String get ob2MeterHigh;
+
+  /// No description provided for @ob3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your whole collection\'s value'**
+  String get ob3Title;
+
+  /// No description provided for @ob3Accent.
+  ///
+  /// In en, this message translates to:
+  /// **'collection\'s value'**
+  String get ob3Accent;
+
+  /// No description provided for @ob3Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Anytime, anywhere.'**
+  String get ob3Sub;
+
+  /// No description provided for @ob4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan, discover, decide'**
+  String get ob4Title;
+
+  /// No description provided for @ob4Accent.
+  ///
+  /// In en, this message translates to:
+  /// **'discover'**
+  String get ob4Accent;
+
+  /// No description provided for @ob4Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'A few seconds and your camera is all it takes.'**
+  String get ob4Sub;
+
+  /// No description provided for @ob4Cta.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get ob4Cta;
+
+  /// No description provided for @ob4Step1.
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph both sides'**
+  String get ob4Step1;
+
+  /// No description provided for @ob4Step2.
+  ///
+  /// In en, this message translates to:
+  /// **'We identify the coin'**
+  String get ob4Step2;
+
+  /// No description provided for @ob4Step3.
+  ///
+  /// In en, this message translates to:
+  /// **'See its value and rarity'**
+  String get ob4Step3;
+
+  /// No description provided for @portfolioLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR PORTFOLIO'**
+  String get portfolioLabel;
+
+  /// No description provided for @portfolioCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Coins'**
+  String get portfolioCoins;
+
+  /// No description provided for @portfolioCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'Countries'**
+  String get portfolioCountries;
+
+  /// No description provided for @portfolioTopCoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Top coin'**
+  String get portfolioTopCoin;
+
   /// No description provided for @sellGuideTitle.
   ///
   /// In en, this message translates to:

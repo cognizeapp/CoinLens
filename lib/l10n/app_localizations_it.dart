@@ -793,6 +793,89 @@ class AppLocalizationsIt extends AppLocalizations {
   String get premiumBadge => 'PRO';
 
   @override
+  String paywallTrialFraming(String price) {
+    return '7 giorni gratis, poi $price. Disdici quando vuoi.';
+  }
+
+  @override
+  String get paywallStartTrial => 'Inizia la prova gratuita';
+
+  @override
+  String get ob1Title => 'Scopri il vero valore della tua moneta';
+
+  @override
+  String get ob1Accent => 'vero valore';
+
+  @override
+  String get ob1Sub => 'Non vendere mai a un prezzo troppo basso.';
+
+  @override
+  String get ob1CoinName => 'Sterlina d\'oro';
+
+  @override
+  String get ob1RefLabel => 'VALORE DI RIFERIMENTO';
+
+  @override
+  String get ob2Title => 'La valutazione trova l\'1% delle monete più rare';
+
+  @override
+  String get ob2Accent => '1%';
+
+  @override
+  String get ob2Sub => 'Errori di conio, oro e date chiave.';
+
+  @override
+  String get ob2MeterLabel => 'Estremamente raro';
+
+  @override
+  String get ob2MeterLow => 'Molto comune';
+
+  @override
+  String get ob2MeterHigh => 'Ultra raro';
+
+  @override
+  String get ob3Title => 'Monitora il valore totale della tua collezione';
+
+  @override
+  String get ob3Accent => 'valore totale';
+
+  @override
+  String get ob3Sub => 'Sempre e ovunque.';
+
+  @override
+  String get ob4Title => 'Scansiona, scopri, decidi';
+
+  @override
+  String get ob4Accent => 'scopri';
+
+  @override
+  String get ob4Sub => 'Bastano pochi secondi e la fotocamera.';
+
+  @override
+  String get ob4Cta => 'Inizia';
+
+  @override
+  String get ob4Step1 => 'Fotografa fronte e retro';
+
+  @override
+  String get ob4Step2 => 'Identifichiamo la moneta';
+
+  @override
+  String get ob4Step3 => 'Vedi valore e rarità';
+
+  @override
+  String get portfolioLabel => 'IL TUO PORTAFOGLIO';
+
+  @override
+  String get portfolioCoins => 'Monete';
+
+  @override
+  String get portfolioCountries => 'Paesi';
+
+  @override
+  String get portfolioTopCoin => 'Top moneta';
+
+  @override
   String get sellGuideTitle => 'Dove vendere questa moneta';
 
   @override

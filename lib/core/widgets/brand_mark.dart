@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// The Coinsights coin+scan-frame icon, standalone — for app bars, onboarding,
-/// and anywhere the full wordmark would be too wide.
+import '../theme/app_colors.dart';
+
+/// The Coinsights coin mark, standalone — for app bars, onboarding, and
+/// anywhere the full wordmark would be too wide.
 class BrandMark extends StatelessWidget {
   const BrandMark({super.key, this.size = 28});
 
@@ -10,7 +12,7 @@ class BrandMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(size / 2),
+      borderRadius: BorderRadius.circular(size * 0.28),
       child: Image.asset(
         'assets/brand/icon.png',
         width: size,
@@ -21,20 +23,31 @@ class BrandMark extends StatelessWidget {
   }
 }
 
-/// The full "icon + Coinsights" lockup, for the Home header and other
-/// high-visibility spots with enough horizontal room.
+/// The "coin mark + Coinsights" lockup, rendered live in Inter so it stays
+/// crisp at any size and follows the theme.
 class BrandWordmark extends StatelessWidget {
-  const BrandWordmark({super.key, this.height = 32});
+  const BrandWordmark({super.key, this.height = 30, this.color});
 
   final double height;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'assets/brand/logo_transparent.png',
-      height: height,
-      fit: BoxFit.fitHeight,
-      alignment: Alignment.centerLeft,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BrandMark(size: height),
+        SizedBox(width: height * 0.34),
+        Text(
+          'Coinsights',
+          style: TextStyle(
+            fontSize: height * 0.72,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.5,
+            color: color ?? AppColors.textPrimary,
+          ),
+        ),
+      ],
     );
   }
 }

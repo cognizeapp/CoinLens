@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
+import '../../core/widgets/brand_mark.dart';
 import '../../core/widgets/state_views.dart';
 import '../../services/analytics/analytics_service.dart';
 import '../../services/subscription/subscription_service.dart';
@@ -91,15 +92,22 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                   child: ListView(
                     padding: const EdgeInsets.all(AppSpacing.screen),
                     children: [
-                      const Icon(Icons.auto_awesome_rounded,
-                          color: AppColors.gold, size: 36),
-                      const SizedBox(height: AppSpacing.md),
+                      const Center(child: BrandMark(size: 52)),
+                      const SizedBox(height: AppSpacing.lg),
                       Text(l.paywallHeadline,
-                          style: Theme.of(context).textTheme.headlineMedium),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(fontSize: 26)),
                       const SizedBox(height: AppSpacing.sm),
                       Text(
                         l.paywallSubheadline,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: AppColors.textSecondary),
                       ),
                       const SizedBox(height: AppSpacing.xl),
                       ...features.map((f) => Padding(
@@ -130,6 +138,37 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                   padding: const EdgeInsets.all(AppSpacing.screen),
                   child: Column(
                     children: [
+                      Builder(builder: (context) {
+                        final selected = plans.firstWhere(
+                            (p) => p.id == _selectedPlanId,
+                            orElse: () => plans.first);
+                        if (selected.trialLabel == null) {
+                          return const SizedBox.shrink();
+                        }
+                        return Padding(
+                          padding:
+                              const EdgeInsets.only(bottom: AppSpacing.sm),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.card_giftcard_rounded,
+                                  size: 16, color: AppColors.gold),
+                              const SizedBox(width: 6),
+                              Flexible(
+                                child: Text(
+                                  l.paywallTrialFraming(selected.priceLabel),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          color: AppColors.textSecondary),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                       FilledButton(
                         onPressed: _busy ? null : () => _subscribe(service),
                         child: _busy
@@ -139,7 +178,16 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                                 child: CircularProgressIndicator(
                                     strokeWidth: 2, color: AppColors.onGold),
                               )
-                            : Text(l.actionContinue),
+                            : Text(
+                                plans
+                                            .firstWhere(
+                                                (p) => p.id == _selectedPlanId,
+                                                orElse: () => plans.first)
+                                            .trialLabel !=
+                                        null
+                                    ? l.paywallStartTrial
+                                    : l.actionContinue,
+                              ),
                       ),
                       TextButton(
                         onPressed: _busy

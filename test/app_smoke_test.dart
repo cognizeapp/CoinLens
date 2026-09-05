@@ -17,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('cold start shows onboarding, then routes to sign-in',
+  testWidgets('cold start shows onboarding, then routes to the paywall',
       (tester) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
@@ -39,23 +39,19 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('Discover Your Coins'), findsOneWidget);
+    // Onboarding is on screen (the Skip affordance is unique to it).
+    expect(find.text('Skip'), findsOneWidget);
 
-    // Walk the 3 onboarding slides.
-    for (var i = 0; i < 2; i++) {
+    // Walk the 4 onboarding slides: 3 "Continue" taps, then the final CTA.
+    for (var i = 0; i < 3; i++) {
       await tester.tap(find.text('Continue'));
       await tester.pumpAndSettle();
     }
-    await tester.tap(find.text('Start Scanning'));
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.text('Get started'));
+    await tester.pumpAndSettle();
 
-    // Onboarding is complete and the app has navigated past it — either to the
-    // sign-in screen or (auth resolves async) briefly to the home shell.
-    expect(find.text('Discover Your Coins'), findsNothing);
-    final reachedApp = find.text('Sign In').evaluate().isNotEmpty ||
-        find.text('Scan a Coin').evaluate().isNotEmpty ||
-        find.text('Explore without an account').evaluate().isNotEmpty;
-    expect(reachedApp, isTrue);
+    // Onboarding is complete and the app has navigated to the paywall.
+    expect(find.text('Skip'), findsNothing);
+    expect(find.text('Restore purchases'), findsOneWidget);
   });
 }

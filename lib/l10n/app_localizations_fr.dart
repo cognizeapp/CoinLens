@@ -793,6 +793,89 @@ class AppLocalizationsFr extends AppLocalizations {
   String get premiumBadge => 'PRO';
 
   @override
+  String paywallTrialFraming(String price) {
+    return '7 days free, then $price. Cancel anytime.';
+  }
+
+  @override
+  String get paywallStartTrial => 'Start free trial';
+
+  @override
+  String get ob1Title => 'See what your coin is really worth';
+
+  @override
+  String get ob1Accent => 'really worth';
+
+  @override
+  String get ob1Sub => 'Never sell for less than it\'s actually worth.';
+
+  @override
+  String get ob1CoinName => 'Gold Sovereign';
+
+  @override
+  String get ob1RefLabel => 'REFERENCE VALUE';
+
+  @override
+  String get ob2Title => 'Valuation spots the rarest 1% of coins';
+
+  @override
+  String get ob2Accent => '1%';
+
+  @override
+  String get ob2Sub => 'Mint errors, gold and key dates.';
+
+  @override
+  String get ob2MeterLabel => 'Extremely rare';
+
+  @override
+  String get ob2MeterLow => 'Very common';
+
+  @override
+  String get ob2MeterHigh => 'Ultra rare';
+
+  @override
+  String get ob3Title => 'Track your whole collection\'s value';
+
+  @override
+  String get ob3Accent => 'collection\'s value';
+
+  @override
+  String get ob3Sub => 'Anytime, anywhere.';
+
+  @override
+  String get ob4Title => 'Scan, discover, decide';
+
+  @override
+  String get ob4Accent => 'discover';
+
+  @override
+  String get ob4Sub => 'A few seconds and your camera is all it takes.';
+
+  @override
+  String get ob4Cta => 'Get started';
+
+  @override
+  String get ob4Step1 => 'Photograph both sides';
+
+  @override
+  String get ob4Step2 => 'We identify the coin';
+
+  @override
+  String get ob4Step3 => 'See its value and rarity';
+
+  @override
+  String get portfolioLabel => 'YOUR PORTFOLIO';
+
+  @override
+  String get portfolioCoins => 'Coins';
+
+  @override
+  String get portfolioCountries => 'Countries';
+
+  @override
+  String get portfolioTopCoin => 'Top coin';
+
+  @override
   String get sellGuideTitle => 'Where to sell this coin';
 
   @override

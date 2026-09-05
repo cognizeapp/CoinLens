@@ -45,12 +45,15 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       final loc = state.matchedLocation;
       final atOnboarding = loc == '/onboarding';
       final atAuth = loc == '/sign-in' || loc == '/sign-up';
+      // The post-onboarding paywall is reachable before sign-in so new users
+      // meet the free-trial offer straight away.
+      final atPaywall = loc == '/paywall';
 
       if (!onboardingDone) return atOnboarding ? null : '/onboarding';
-      if (atOnboarding) return loggedIn ? '/' : '/sign-in';
+      if (atOnboarding) return loggedIn ? '/' : '/paywall';
 
       if (loading) return null;
-      if (!loggedIn) return atAuth ? null : '/sign-in';
+      if (!loggedIn) return (atAuth || atPaywall) ? null : '/sign-in';
       if (loggedIn && atAuth) return '/';
       return null;
     },

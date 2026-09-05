@@ -6,11 +6,12 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../core/config/app_config.dart';
 
-/// Google's public test banner units — safe to ship, show a labelled
-/// "Test Ad", and never earn or spend. Used until real AdMob units are
-/// supplied via --dart-define (ADMOB_BANNER_IOS / ADMOB_BANNER_ANDROID).
-const _testBannerAndroid = 'ca-app-pub-3940256099942544/9214589741';
-const _testBannerIos = 'ca-app-pub-3940256099942544/2435281174';
+/// Coinsights' real AdMob banner units (publisher pub-3811419528132275).
+/// Ad unit ids aren't secret — they're embedded in every shipped binary.
+/// A --dart-define (ADMOB_BANNER_IOS / ADMOB_BANNER_ANDROID) still overrides,
+/// e.g. to point a debug build at Google's test units.
+const _bannerAndroid = 'ca-app-pub-3811419528132275/9354603614';
+const _bannerIos = 'ca-app-pub-3811419528132275/3661247639';
 
 class AdService {
   AdService(this._config);
@@ -34,11 +35,11 @@ class AdService {
     if (Platform.isIOS) {
       return config.admobBannerIos.isNotEmpty
           ? config.admobBannerIos
-          : _testBannerIos;
+          : _bannerIos;
     }
     return config.admobBannerAndroid.isNotEmpty
         ? config.admobBannerAndroid
-        : _testBannerAndroid;
+        : _bannerAndroid;
   }
 
   Future<void> init() async {
