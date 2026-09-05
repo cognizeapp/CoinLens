@@ -1041,6 +1041,41 @@ class AppLocalizationsIt extends AppLocalizations {
   String get valueDisclaimer => 'I valori delle monete sono stime basate sui dati disponibili e possono variare in base a condizioni, autenticità e domanda di mercato.';
 
   @override
+  String get confirmCoinLink => 'Correggi i dati della moneta';
+
+  @override
+  String get confirmCoinTitle => 'Conferma di che moneta si tratta';
+
+  @override
+  String get confirmCoinBody => 'Il valore è accurato quanto l\'identificazione. Indica paese, tipo e anno e ricalcoliamo il valore dai dati di catalogo verificati.';
+
+  @override
+  String get confirmCoinCta => 'Imposta i dati della moneta';
+
+  @override
+  String get correctCountryTitle => 'Quale paese?';
+
+  @override
+  String get correctTypeTitle => 'Quale moneta?';
+
+  @override
+  String get correctYearTitle => 'Quale anno?';
+
+  @override
+  String get correctSearchCountry => 'Cerca paese';
+
+  @override
+  String get correctYearLabel => 'Anno sulla moneta';
+
+  @override
+  String correctYearRange(String from, String to) {
+    return 'Inserisci un anno tra $from e $to';
+  }
+
+  @override
+  String get correctSave => 'Salva e ricalcola';
+
+  @override
   String get gradingDisclaimer => 'Questa app non fornisce autenticazione numismatica professionale né consulenza finanziaria. Le stime delle condizioni sono approssimative.';
 
   @override

@@ -109,7 +109,8 @@ void main() {
     expect(id.alternativeMatches, isNotEmpty);
   });
 
-  test('no recognisable text → unidentified with guesses', () async {
+  test('no recognisable text → unidentified, no invented value or matches',
+      () async {
     final bytes = await _blankPng();
     final res = await build(const OcrResult(tokens: ['ZZZZ', 'QXQX']))
         .identify(frontImage: bytes);
@@ -117,6 +118,9 @@ void main() {
     final id = res.valueOrNull!;
     expect(id.country, 'Unknown');
     expect(id.confidence, lessThan(0.5));
-    expect(id.alternativeMatches, isNotEmpty);
+    // We didn't read the coin — don't dangle random catalogue coins as
+    // "matches" or assert a value. The result screen asks the user to confirm.
+    expect(id.alternativeMatches, isEmpty);
+    expect(id.value.typical, lessThan(3));
   });
 }

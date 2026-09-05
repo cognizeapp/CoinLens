@@ -1041,6 +1041,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get valueDisclaimer => 'Coin values are estimates based on available data and may vary depending on condition, authenticity and market demand.';
 
   @override
+  String get confirmCoinLink => 'Correct the coin details';
+
+  @override
+  String get confirmCoinTitle => 'Confirm what this coin is';
+
+  @override
+  String get confirmCoinBody => 'The value is only as accurate as the identification. Set the country, type and year and we recalculate it from verified catalogue data.';
+
+  @override
+  String get confirmCoinCta => 'Set the coin details';
+
+  @override
+  String get correctCountryTitle => 'Which country?';
+
+  @override
+  String get correctTypeTitle => 'Which coin?';
+
+  @override
+  String get correctYearTitle => 'Which year?';
+
+  @override
+  String get correctSearchCountry => 'Search country';
+
+  @override
+  String get correctYearLabel => 'Year on the coin';
+
+  @override
+  String correctYearRange(String from, String to) {
+    return 'Enter a year between $from and $to';
+  }
+
+  @override
+  String get correctSave => 'Save and recalculate';
+
+  @override
   String get gradingDisclaimer => 'This app does not provide professional numismatic authentication or financial advice. Condition estimates are approximate.';
 
   @override

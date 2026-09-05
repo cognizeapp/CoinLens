@@ -162,9 +162,13 @@ class ScanRecord extends Equatable {
   final String? backImagePath;
   final bool savedToCollection;
 
-  ScanRecord copyWith({bool? savedToCollection}) => ScanRecord(
+  ScanRecord copyWith({
+    bool? savedToCollection,
+    CoinIdentification? identification,
+  }) =>
+      ScanRecord(
         id: id,
-        identification: identification,
+        identification: identification ?? this.identification,
         createdAt: createdAt,
         frontImagePath: frontImagePath,
         backImagePath: backImagePath,

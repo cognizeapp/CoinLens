@@ -68,7 +68,7 @@ class PipelineIdentificationService implements IdentificationService {
       onStage?.call(IdentificationStage.calculatingValue);
 
       if (scored.isEmpty) {
-        return Result.ok(_unidentified(year, entries));
+        return Result.ok(_unidentified(year));
       }
 
       final best = scored.first;
@@ -199,8 +199,10 @@ class PipelineIdentificationService implements IdentificationService {
     return null;
   }
 
-  CoinIdentification _unidentified(int? year, List<CatalogEntry> entries) {
-    final guesses = entries.take(3).toList();
+  CoinIdentification _unidentified(int? year) {
+    // Don't invent a value or dangle random (often museum-grade) catalogue
+    // entries as "matches" — say we couldn't read it and let the result screen
+    // push the user to confirm the details.
     return CoinIdentification(
       coinName: _unidentifiedName(year),
       country: 'Unknown',
@@ -209,11 +211,9 @@ class PipelineIdentificationService implements IdentificationService {
       material: 'Unknown',
       condition: CoinCondition.good,
       rarity: CoinRarity.common,
-      confidence: 0.28,
-      value: const ValueEstimate(min: 1, max: 8, typical: 3),
-      alternativeMatches: [
-        for (final g in guesses) CoinMatch(name: g.name, confidence: 0.2),
-      ],
+      confidence: 0.2,
+      value: const ValueEstimate(min: 0.1, max: 2, typical: 0.5),
+      alternativeMatches: const [],
     );
   }
 }

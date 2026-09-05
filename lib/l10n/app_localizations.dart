@@ -2097,6 +2097,72 @@ abstract class AppLocalizations {
   /// **'Coin values are estimates based on available data and may vary depending on condition, authenticity and market demand.'**
   String get valueDisclaimer;
 
+  /// No description provided for @confirmCoinLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct the coin details'**
+  String get confirmCoinLink;
+
+  /// No description provided for @confirmCoinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm what this coin is'**
+  String get confirmCoinTitle;
+
+  /// No description provided for @confirmCoinBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The value is only as accurate as the identification. Set the country, type and year and we recalculate it from verified catalogue data.'**
+  String get confirmCoinBody;
+
+  /// No description provided for @confirmCoinCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the coin details'**
+  String get confirmCoinCta;
+
+  /// No description provided for @correctCountryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Which country?'**
+  String get correctCountryTitle;
+
+  /// No description provided for @correctTypeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Which coin?'**
+  String get correctTypeTitle;
+
+  /// No description provided for @correctYearTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Which year?'**
+  String get correctYearTitle;
+
+  /// No description provided for @correctSearchCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Search country'**
+  String get correctSearchCountry;
+
+  /// No description provided for @correctYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Year on the coin'**
+  String get correctYearLabel;
+
+  /// No description provided for @correctYearRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a year between {from} and {to}'**
+  String correctYearRange(String from, String to);
+
+  /// No description provided for @correctSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save and recalculate'**
+  String get correctSave;
+
   /// No description provided for @gradingDisclaimer.
   ///
   /// In en, this message translates to:

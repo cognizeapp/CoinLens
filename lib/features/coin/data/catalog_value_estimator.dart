@@ -47,25 +47,44 @@ class CatalogValueEstimator implements ValueEstimationService {
     String? mint,
   }) {
     final base = entry.baseValueEur;
-    final condMul = _conditionMultiplier[condition] ?? 1.0;
-    final rarMul = _rarityMultiplier[rarity] ?? 1.0;
     final isKey = entry.isKeyDate(year);
-    final keyMul = isKey ? 3.2 : 1.0;
     final hasMint = mint != null && entry.mintMarks.contains(mint);
-    final mintMul = hasMint ? 1.4 : 1.0;
-
-    final typicalRaw = base * condMul * rarMul * keyMul * mintMul;
-    final typical = _round(typicalRaw);
-
-    // Spread: wider when the coin is scarce or a key date (thinner market).
-    final spread = 0.35 + (rarMul - 1) * 0.06 + (isKey ? 0.25 : 0);
-    final min = _round(max(0.5, typicalRaw * (1 - spread.clamp(0.2, 0.7))));
-    final maxV = _round(typicalRaw * (1 + spread.clamp(0.3, 1.2)));
 
     final metal = entry.material.toLowerCase();
     final isPrecious = metal.contains('silver') ||
         metal.contains('gold') ||
         metal.contains('platinum');
+
+    // An ordinary, non-precious, non-key circulation coin is worth close to
+    // its catalogue value no matter how crisp it looks — a shiny modern
+    // 10-cent piece is still worth ~10 cents. Only genuine scarcity (a key
+    // date, a sought mintmark, a scarce type) or precious-metal content moves
+    // the number materially. This keeps the estimate honest instead of
+    // multiplying a common coin up to tens of euros.
+    final ordinary =
+        rarity == CoinRarity.common && !isPrecious && !isKey && !hasMint;
+
+    var condMul = _conditionMultiplier[condition] ?? 1.0;
+    if (ordinary) condMul = condMul.clamp(0.6, 1.8);
+
+    final rarMul = _rarityMultiplier[rarity] ?? 1.0;
+    final keyMul = isKey ? 3.2 : 1.0;
+    final mintMul = hasMint ? 1.4 : 1.0;
+
+    var typicalRaw = base * condMul * rarMul * keyMul * mintMul;
+    if (ordinary) {
+      // Never let an ordinary coin drift more than ~2.5× its catalogue value.
+      typicalRaw = typicalRaw.clamp(base * 0.5, base * 2.5);
+    }
+    final typical = _round(typicalRaw);
+
+    // Spread: wider when the coin is scarce or a key date (thinner market);
+    // tight for an ordinary coin whose price is well established.
+    final spread = ordinary
+        ? 0.25
+        : 0.35 + (rarMul - 1) * 0.06 + (isKey ? 0.25 : 0);
+    final min = _round(max(0.1, typicalRaw * (1 - spread.clamp(0.2, 0.7))));
+    final maxV = _round(typicalRaw * (1 + spread.clamp(0.3, 1.2)));
 
     final factors = <ValueFactor>[
       ValueFactor(
@@ -121,6 +140,7 @@ class CatalogValueEstimator implements ValueEstimationService {
   }
 
   double _round(double v) {
+    if (v < 2) return max(0.05, (v * 20).round() / 20); // nearest 0.05
     if (v < 5) return (v * 2).round() / 2; // nearest 0.50
     if (v < 50) return v.roundToDouble();
     if (v < 500) return (v / 5).round() * 5;

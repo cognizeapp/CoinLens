@@ -18,6 +18,7 @@ import '../coin/presentation/widgets/coin_widgets.dart';
 import '../sell/sell_guide_section.dart';
 import '../../services/analytics/analytics_service.dart';
 import '../../services/subscription/subscription_service.dart';
+import 'widgets/coin_correction_sheet.dart';
 import 'widgets/locked_premium_section.dart';
 import 'widgets/premium_analysis_section.dart';
 
@@ -97,6 +98,12 @@ class ResultPage extends ConsumerWidget {
               const SizedBox(height: AppSpacing.xl),
 
               if (!id.isConfident) _LowConfidence(id: id),
+
+              _ConfirmCoinCard(
+                record: record,
+                lowConfidence: !id.isConfident,
+              ),
+              const SizedBox(height: AppSpacing.lg),
 
               _ValueCard(id: id, money: money),
               if (id.value.factors.isNotEmpty) ...[
@@ -208,6 +215,74 @@ class _SaveToCollectionButtonState
             icon: const Icon(Icons.add_rounded),
             label: Text(l.saveToCollection),
           );
+  }
+}
+
+/// "Is this right?" — the estimate is only as good as the identification, so
+/// this always offers a one-tap way to set the real country / type / year and
+/// have the value recomputed from a verified catalogue entry. It shifts from a
+/// quiet link to a prominent card when the scan wasn't confident.
+class _ConfirmCoinCard extends ConsumerWidget {
+  const _ConfirmCoinCard(
+      {required this.record, required this.lowConfidence});
+  final ScanRecord record;
+  final bool lowConfidence;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    void open() => showCoinCorrectionSheet(context, ref, record);
+
+    if (!lowConfidence) {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: TextButton.icon(
+          onPressed: open,
+          icon: const Icon(Icons.edit_rounded, size: 16),
+          label: Text(l.confirmCoinLink),
+          style: TextButton.styleFrom(
+              foregroundColor: AppColors.textSecondary,
+              padding: EdgeInsets.zero),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.help_outline_rounded,
+                  size: 18, color: AppColors.gold),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(l.confirmCoinTitle,
+                    style: Theme.of(context).textTheme.titleMedium),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(l.confirmCoinBody,
+              style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: AppSpacing.md),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: open,
+              icon: const Icon(Icons.tune_rounded, size: 18),
+              label: Text(l.confirmCoinCta),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
