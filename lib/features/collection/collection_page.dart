@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -61,8 +62,14 @@ class CollectionPage extends ConsumerWidget {
             icon: Icon(view == _View.grid
                 ? Icons.view_list_rounded
                 : Icons.grid_view_rounded),
+            tooltip: l.collectionManage,
             onPressed: () => ref.read(_collectionViewProvider.notifier).state =
                 view == _View.grid ? _View.list : _View.grid,
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_a_photo_rounded),
+            tooltip: l.collectionAddCoin,
+            onPressed: () => context.go('/scan'),
           ),
         ],
       ),
@@ -143,6 +150,25 @@ class CollectionPage extends ConsumerWidget {
                     ref.read(_collectionCountryProvider.notifier).state = c,
               ),
               if (isPremium) _CollectionInsights(items: all, money: money),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.xs),
+                child: Row(
+                  children: [
+                    const Icon(Icons.swipe_rounded,
+                        size: 13, color: AppColors.textTertiary),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        view == _View.list
+                            ? l.collectionEditHintList
+                            : l.collectionEditHintGrid,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: items.isEmpty
                     ? EmptyStateView(
@@ -159,6 +185,112 @@ class CollectionPage extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// Confirms, then drops a coin from the saved collection (its scan stays in
+/// History). Offers an Undo. Shared by the grid long-press sheet and the list
+/// swipe-to-remove.
+Future<void> removeCoinFromCollection(
+  BuildContext context,
+  WidgetRef ref,
+  ScanRecord record,
+) async {
+  final l = context.l10n;
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text(l.collectionRemoveTitle),
+      content: Text(l.collectionRemoveBody(record.identification.coinName)),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, false),
+          child: Text(l.actionCancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(ctx, true),
+          child: Text(l.collectionRemoveAction),
+        ),
+      ],
+    ),
+  );
+  if (confirmed != true) return;
+
+  final repo = ref.read(scanRepositoryProvider);
+  final result = await repo.removeFromCollection(record.id);
+  if (!context.mounted) return;
+  result.when(
+    ok: (_) {
+      HapticFeedback.mediumImpact();
+      ref.invalidate(collectionProvider);
+      ref.invalidate(recentScansProvider);
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+          content: Text(l.collectionRemovedToast),
+          action: SnackBarAction(
+            label: l.actionUndo,
+            onPressed: () async {
+              await repo.addToCollection(record.id);
+              ref.invalidate(collectionProvider);
+              ref.invalidate(recentScansProvider);
+            },
+          ),
+        ));
+    },
+    err: (f) => ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(f.localized(context.l10n)))),
+  );
+}
+
+/// Long-press menu for a collected coin: open its result, or remove it.
+void _showCoinActions(
+    BuildContext context, WidgetRef ref, ScanRecord record) {
+  final l = context.l10n;
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: AppColors.backgroundSecondary,
+    builder: (ctx) => SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg, AppSpacing.lg, AppSpacing.lg, AppSpacing.sm),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(record.identification.coinName,
+                      style: Theme.of(ctx).textTheme.titleMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.open_in_new_rounded,
+                color: AppColors.gold),
+            title: Text(l.actionOpen),
+            onTap: () {
+              Navigator.pop(ctx);
+              context.push('/result/${record.id}');
+            },
+          ),
+          ListTile(
+            leading:
+                const Icon(Icons.delete_outline_rounded, color: AppColors.danger),
+            title: Text(l.collectionRemoveAction,
+                style: const TextStyle(color: AppColors.danger)),
+            onTap: () {
+              Navigator.pop(ctx);
+              removeCoinFromCollection(context, ref, record);
+            },
+          ),
+          const SizedBox(height: AppSpacing.sm),
+        ],
+      ),
+    ),
+  );
 }
 
 /// The "coin portfolio" summary — total estimated value plus counts, shown to
@@ -490,13 +622,13 @@ class _Stat extends StatelessWidget {
   }
 }
 
-class _Grid extends StatelessWidget {
+class _Grid extends ConsumerWidget {
   const _Grid({required this.items, required this.money});
   final List<ScanRecord> items;
   final MoneyFormatter money;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GridView.builder(
       padding: const EdgeInsets.all(AppSpacing.lg),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -511,6 +643,7 @@ class _Grid extends StatelessWidget {
         final id = s.identification;
         return InkWell(
           onTap: () => context.push('/result/${s.id}'),
+          onLongPress: () => _showCoinActions(context, ref, s),
           borderRadius: BorderRadius.circular(AppRadius.lg),
           child: Container(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -522,8 +655,17 @@ class _Grid extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Align(
-                    alignment: Alignment.center, child: CoinThumb(size: 56)),
+                Align(
+                  alignment: Alignment.center,
+                  child: CoinThumb(
+                    size: 56,
+                    imagePath: s.frontImagePath,
+                    material: id.material,
+                    rarity: id.rarity,
+                    label: shortDenomination(id.denomination),
+                    seed: id.coinName,
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(id.coinName,
                     maxLines: 2,
@@ -546,21 +688,41 @@ class _Grid extends StatelessWidget {
   }
 }
 
-class _List extends StatelessWidget {
+class _List extends ConsumerWidget {
   const _List({required this.items, required this.money});
   final List<ScanRecord> items;
   final MoneyFormatter money;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListView.separated(
       itemCount: items.length,
       separatorBuilder: (_, __) => const Divider(),
-      itemBuilder: (context, i) => ScanListTile(
-        record: items[i],
-        money: money,
-        onTap: () => context.push('/result/${items[i].id}'),
-      ),
+      itemBuilder: (context, i) {
+        final record = items[i];
+        return Dismissible(
+          key: ValueKey('collection-${record.id}'),
+          direction: DismissDirection.endToStart,
+          background: Container(
+            alignment: Alignment.centerRight,
+            color: AppColors.danger.withValues(alpha: 0.15),
+            padding: const EdgeInsets.only(right: AppSpacing.xl),
+            child: const Icon(Icons.delete_outline_rounded,
+                color: AppColors.danger),
+          ),
+          confirmDismiss: (_) async {
+            await removeCoinFromCollection(context, ref, record);
+            // removeCoinFromCollection already updates the list via provider
+            // invalidation; never let Dismissible remove the row itself.
+            return false;
+          },
+          child: ScanListTile(
+            record: record,
+            money: money,
+            onTap: () => context.push('/result/${record.id}'),
+          ),
+        );
+      },
     );
   }
 }

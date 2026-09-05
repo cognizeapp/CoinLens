@@ -619,6 +619,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanACoin => 'Scan a Coin';
 
   @override
+  String get collectionAddCoin => 'Add a coin';
+
+  @override
+  String get collectionEditHintList => 'Swipe a coin left to remove it, or tap + to add one.';
+
+  @override
+  String get collectionEditHintGrid => 'Long-press a coin to remove it, or tap + to add one.';
+
+  @override
+  String get collectionManage => 'Edit collection';
+
+  @override
+  String get actionOpen => 'Open';
+
+  @override
+  String get actionUndo => 'Undo';
+
+  @override
+  String get collectionRemoveTitle => 'Remove from collection?';
+
+  @override
+  String collectionRemoveBody(String coin) {
+    return '$coin stays in your scan history — it just leaves your collection and portfolio total.';
+  }
+
+  @override
+  String get collectionRemoveAction => 'Remove';
+
+  @override
+  String get collectionRemovedToast => 'Removed from your collection';
+
+  @override
   String get searchCoinCountry => 'Search by coin or country';
 
   @override

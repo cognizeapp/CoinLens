@@ -1293,6 +1293,66 @@ abstract class AppLocalizations {
   /// **'Scan a Coin'**
   String get scanACoin;
 
+  /// No description provided for @collectionAddCoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a coin'**
+  String get collectionAddCoin;
+
+  /// No description provided for @collectionEditHintList.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe a coin left to remove it, or tap + to add one.'**
+  String get collectionEditHintList;
+
+  /// No description provided for @collectionEditHintGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press a coin to remove it, or tap + to add one.'**
+  String get collectionEditHintGrid;
+
+  /// No description provided for @collectionManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit collection'**
+  String get collectionManage;
+
+  /// No description provided for @actionOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get actionOpen;
+
+  /// No description provided for @actionUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get actionUndo;
+
+  /// No description provided for @collectionRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from collection?'**
+  String get collectionRemoveTitle;
+
+  /// No description provided for @collectionRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{coin} stays in your scan history — it just leaves your collection and portfolio total.'**
+  String collectionRemoveBody(String coin);
+
+  /// No description provided for @collectionRemoveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get collectionRemoveAction;
+
+  /// No description provided for @collectionRemovedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from your collection'**
+  String get collectionRemovedToast;
+
   /// No description provided for @searchCoinCountry.
   ///
   /// In en, this message translates to:

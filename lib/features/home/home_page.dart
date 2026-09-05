@@ -8,6 +8,7 @@ import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
 import '../../core/widgets/banner_ad_slot.dart';
 import '../../core/widgets/brand_mark.dart';
+import '../../core/widgets/glow_coin.dart';
 import '../../core/widgets/gradient_scan_button.dart';
 import '../../core/widgets/state_views.dart';
 import '../../features/auth/presentation/auth_providers.dart';
@@ -49,16 +50,13 @@ class HomePage extends ConsumerWidget {
                   ],
                 ],
               ),
-              const SizedBox(height: AppSpacing.xl),
-              Text(
-                greetingName == null
+              const SizedBox(height: AppSpacing.lg),
+              _CoinHero(
+                greeting: greetingName == null
                     ? l.homeWelcome
                     : l.homeWelcomeNamed(greetingName),
-                style: Theme.of(context).textTheme.headlineMedium,
+                tagline: l.appTagline,
               ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(l.appTagline,
-                  style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: AppSpacing.xl),
               GradientScanButton(onPressed: () => context.go('/scan')),
               const SizedBox(height: AppSpacing.xl),
@@ -129,6 +127,60 @@ class HomePage extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// The home banner: a warm greeting beside the Coinsights hero coin. The coin
+/// is the "big graphic" of the screen — a soft glow with a slow float.
+class _CoinHero extends StatelessWidget {
+  const _CoinHero({required this.greeting, required this.tagline});
+
+  final String greeting;
+  final String tagline;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, AppSpacing.lg, AppSpacing.md, AppSpacing.lg),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF241A0A), AppColors.card],
+        ),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  greeting,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium
+                      ?.copyWith(fontSize: 24),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  tagline,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: AppColors.textSecondary),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          const GlowCoin(size: 96),
+        ],
       ),
     );
   }

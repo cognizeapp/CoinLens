@@ -8,6 +8,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../core/widgets/brand_mark.dart';
+import '../../core/widgets/glow_coin.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/analytics/analytics_service.dart';
 import '../../services/preferences/app_preferences.dart';
@@ -33,16 +34,18 @@ List<_Slide> _slidesFor(AppLocalizations l) => [
         title: l.ob1Title,
         accent: l.ob1Accent,
         subtitle: l.ob1Sub,
-        hero: (_) => const _ValueCardHero(),
+        hero: (_) => const _CoinValueHero(),
       ),
       _Slide(
         title: l.ob2Title,
         accent: l.ob2Accent,
         subtitle: l.ob2Sub,
-        hero: (context) => RarityMeter(
-          label: context.l10n.ob2MeterLabel,
-          lowLabel: context.l10n.ob2MeterLow,
-          highLabel: context.l10n.ob2MeterHigh,
+        hero: (context) => _HeroCard(
+          child: RarityMeter(
+            label: context.l10n.ob2MeterLabel,
+            lowLabel: context.l10n.ob2MeterLow,
+            highLabel: context.l10n.ob2MeterHigh,
+          ),
         ),
       ),
       _Slide(
@@ -94,8 +97,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       if (mounted) context.go('/paywall');
     } else {
       unawaited(_controller.nextPage(
-        duration: const Duration(milliseconds: 280),
-        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
       ));
     }
   }
@@ -107,47 +110,98 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     final isLast = _index == slides.length - 1;
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment(0, 1.1),
-            radius: 1.3,
-            colors: [Color(0xFF3A2400), AppColors.background],
+      body: Stack(
+        children: [
+          // Layered brand backdrop.
+          const Positioned.fill(child: _Backdrop()),
+          SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+                  child: Row(
+                    children: [
+                      const BrandWordmark(height: 22),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: _skip,
+                        child: Text(l.actionSkip,
+                            style: const TextStyle(
+                                color: AppColors.textSecondary)),
+                      ),
+                    ],
+                  ),
+                ),
+                _Progress(count: slides.length, index: _index),
+                const SizedBox(height: AppSpacing.sm),
+                Expanded(
+                  child: PageView.builder(
+                    controller: _controller,
+                    itemCount: slides.length,
+                    onPageChanged: (i) => setState(() => _index = i),
+                    itemBuilder: (context, i) =>
+                        _SlideView(slide: slides[i], active: i == _index),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
+                      AppSpacing.sm, AppSpacing.screen, AppSpacing.lg),
+                  child: _CtaButton(
+                    label: isLast ? l.ob4Cta : l.actionContinue,
+                    onPressed: () => _next(slides.length),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
-                child: Row(
-                  children: [
-                    const BrandWordmark(height: 22),
-                    const Spacer(),
-                    TextButton(onPressed: _skip, child: Text(l.actionSkip)),
+        ],
+      ),
+    );
+  }
+}
+
+class _Backdrop extends StatelessWidget {
+  const _Backdrop();
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(color: AppColors.background),
+      child: Stack(
+        children: [
+          // Warm bloom rising from the bottom.
+          const Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment(0, 1.15),
+                  radius: 1.25,
+                  colors: [Color(0xFF3E2600), AppColors.background],
+                  stops: [0.0, 0.85],
+                ),
+              ),
+            ),
+          ),
+          // Faint top-right accent.
+          Positioned(
+            top: -120,
+            right: -120,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.gold.withValues(alpha: 0.14),
+                    AppColors.gold.withValues(alpha: 0),
                   ],
                 ),
               ),
-              _Progress(count: slides.length, index: _index),
-              Expanded(
-                child: PageView.builder(
-                  controller: _controller,
-                  itemCount: slides.length,
-                  onPageChanged: (i) => setState(() => _index = i),
-                  itemBuilder: (context, i) => _SlideView(slide: slides[i]),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(AppSpacing.screen),
-                child: FilledButton(
-                  onPressed: () => _next(slides.length),
-                  child: Text(isLast ? l.ob4Cta : l.actionContinue),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -164,14 +218,24 @@ class _Progress extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       child: Row(
         children: List.generate(count, (i) {
+          final done = i <= index;
           return Expanded(
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 240),
-              height: 4,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              height: 5,
               margin: const EdgeInsets.symmetric(horizontal: 3),
               decoration: BoxDecoration(
-                color: i <= index ? AppColors.gold : AppColors.border,
-                borderRadius: BorderRadius.circular(2),
+                color: done ? AppColors.gold : AppColors.border,
+                borderRadius: BorderRadius.circular(3),
+                boxShadow: done
+                    ? [
+                        BoxShadow(
+                          color: AppColors.gold.withValues(alpha: 0.4),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
               ),
             ),
           );
@@ -182,51 +246,124 @@ class _Progress extends StatelessWidget {
 }
 
 class _SlideView extends StatelessWidget {
-  const _SlideView({required this.slide});
+  const _SlideView({required this.slide, required this.active});
   final _Slide slide;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
     final base = Theme.of(context).textTheme.headlineMedium!.copyWith(
-          fontSize: 30,
-          height: 1.15,
+          fontSize: 31,
+          height: 1.12,
           fontWeight: FontWeight.w800,
+          letterSpacing: -0.4,
         );
     final parts = slide.title.split(slide.accent);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-      child: Column(
-        children: [
-          const SizedBox(height: AppSpacing.lg),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              style: base,
+    return AnimatedSlide(
+      offset: active ? Offset.zero : const Offset(0, 0.05),
+      duration: const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+      child: AnimatedOpacity(
+        opacity: active ? 1 : 0.35,
+        duration: const Duration(milliseconds: 380),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: slide.hero(context),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  children: [
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: base,
+                        children: [
+                          if (parts.isNotEmpty) TextSpan(text: parts[0]),
+                          TextSpan(
+                              text: slide.accent,
+                              style: base.copyWith(color: AppColors.gold)),
+                          if (parts.length > 1) TextSpan(text: parts[1]),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      slide.subtitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.textSecondary, height: 1.4),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CtaButton extends StatelessWidget {
+  const _CtaButton({required this.label, required this.onPressed});
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: label,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            gradient: const LinearGradient(
+              colors: [AppColors.goldLight, AppColors.gold],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.gold.withValues(alpha: 0.3),
+                blurRadius: 24,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (parts.isNotEmpty) TextSpan(text: parts[0]),
-                TextSpan(
-                    text: slide.accent,
-                    style: base.copyWith(color: AppColors.gold)),
-                if (parts.length > 1) TextSpan(text: parts[1]),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: AppColors.onGold,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                const Icon(Icons.arrow_forward_rounded,
+                    color: AppColors.onGold, size: 20),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            slide.subtitle,
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(color: AppColors.textSecondary),
-          ),
-          Expanded(
-            child: Center(
-              child: SingleChildScrollView(child: slide.hero(context)),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -234,50 +371,138 @@ class _SlideView extends StatelessWidget {
 
 // ── Heroes ──────────────────────────────────────────────────────────────────
 
-class _ValueCardHero extends StatelessWidget {
-  const _ValueCardHero();
+/// Shared framing for the flat "info card" heroes (rarity meter, portfolio).
+class _HeroCard extends StatelessWidget {
+  const _HeroCard({required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final l = context.l10n;
     return Container(
       width: 300,
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.xl),
       decoration: BoxDecoration(
-        color: AppColors.card,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF241A0A), AppColors.card],
+        ),
         borderRadius: BorderRadius.circular(AppRadius.xl),
         border: Border.all(color: AppColors.gold.withValues(alpha: 0.4)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.gold.withValues(alpha: 0.15),
-            blurRadius: 40,
+            color: AppColors.gold.withValues(alpha: 0.12),
+            blurRadius: 44,
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+}
+
+/// Slide 1 — the hero coin with a floating reference-value tag.
+class _CoinValueHero extends StatelessWidget {
+  const _CoinValueHero();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return SizedBox(
+      width: 260,
+      height: 260,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          const GlowCoin(size: 190),
+          Positioned(
+            right: -6,
+            top: 26,
+            child: _Tag(
+              label: l.ob1RefLabel,
+              value: '€ 480',
+            ),
+          ),
+          Positioned(
+            left: 2,
+            bottom: 30,
+            child: _Pill(text: l.ob1CoinName),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Tag extends StatelessWidget {
+  const _Tag({required this.label, required this.value});
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.5)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.35),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              ClipOval(
-                child: Image.asset('assets/coins/gb-sovereign.jpg',
-                    width: 52, height: 52, fit: BoxFit.cover),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Text(l.ob1CoinName,
-                    style: Theme.of(context).textTheme.titleMedium),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Text(l.ob1RefLabel,
-              style: Theme.of(context).textTheme.labelSmall),
-          const Text('€ 480',
-              style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.gold)),
+          Text(label,
+              style: const TextStyle(
+                  color: AppColors.textTertiary,
+                  fontSize: 9,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.6)),
+          const SizedBox(height: 1),
+          Text(value,
+              style: const TextStyle(
+                  color: AppColors.gold,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800)),
+        ],
+      ),
+    );
+  }
+}
+
+class _Pill extends StatelessWidget {
+  const _Pill({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.verified_rounded,
+              size: 13, color: AppColors.success),
+          const SizedBox(width: 5),
+          Text(text,
+              style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -290,18 +515,7 @@ class _PortfolioHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return Container(
-      width: 300,
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF2A1E08), AppColors.card],
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.xl),
-        border: Border.all(color: AppColors.gold.withValues(alpha: 0.4)),
-      ),
+    return _HeroCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -313,10 +527,11 @@ class _PortfolioHero extends StatelessWidget {
           const SizedBox(height: 4),
           const Text('€ 3.240',
               style: TextStyle(
-                  fontSize: 34,
+                  fontSize: 36,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary)),
-          const SizedBox(height: AppSpacing.md),
+                  color: AppColors.textPrimary,
+                  letterSpacing: -0.5)),
+          const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
               _MiniStat(value: '128', label: l.portfolioCoins),
@@ -340,7 +555,7 @@ class _MiniStat extends StatelessWidget {
         children: [
           Text(value,
               style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary)),
           Text(label, style: Theme.of(context).textTheme.labelSmall),
@@ -368,7 +583,11 @@ class _StepsHero extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 6),
             padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
-              color: AppColors.card,
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF20180A), AppColors.card],
+              ),
               borderRadius: BorderRadius.circular(AppRadius.lg),
               border: Border.all(color: AppColors.border),
             ),

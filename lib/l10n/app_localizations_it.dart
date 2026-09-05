@@ -619,6 +619,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get scanACoin => 'Scansiona una moneta';
 
   @override
+  String get collectionAddCoin => 'Aggiungi una moneta';
+
+  @override
+  String get collectionEditHintList => 'Scorri una moneta a sinistra per rimuoverla, o tocca + per aggiungerne una.';
+
+  @override
+  String get collectionEditHintGrid => 'Tieni premuta una moneta per rimuoverla, o tocca + per aggiungerne una.';
+
+  @override
+  String get collectionManage => 'Modifica collezione';
+
+  @override
+  String get actionOpen => 'Apri';
+
+  @override
+  String get actionUndo => 'Annulla';
+
+  @override
+  String get collectionRemoveTitle => 'Rimuovere dalla collezione?';
+
+  @override
+  String collectionRemoveBody(String coin) {
+    return '$coin resta nella cronologia delle scansioni: esce solo dalla collezione e dal totale del portafoglio.';
+  }
+
+  @override
+  String get collectionRemoveAction => 'Rimuovi';
+
+  @override
+  String get collectionRemovedToast => 'Rimossa dalla collezione';
+
+  @override
   String get searchCoinCountry => 'Cerca per moneta o Paese';
 
   @override

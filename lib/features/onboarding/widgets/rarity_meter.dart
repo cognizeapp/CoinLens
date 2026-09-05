@@ -45,14 +45,23 @@ class RarityMeter extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(lowLabel,
-                style: const TextStyle(
-                    color: AppColors.textTertiary, fontSize: 12)),
-            Text(highLabel,
-                style: const TextStyle(
-                    color: AppColors.textTertiary, fontSize: 12)),
+            Expanded(
+              child: Text(lowLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: AppColors.textTertiary, fontSize: 12)),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(highLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(
+                      color: AppColors.textTertiary, fontSize: 12)),
+            ),
           ],
         ),
       ],
