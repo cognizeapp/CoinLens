@@ -6,6 +6,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
+import '../../core/widgets/banner_ad_slot.dart';
 import '../../core/widgets/brand_mark.dart';
 import '../../core/widgets/gradient_scan_button.dart';
 import '../../core/widgets/state_views.dart';
@@ -124,6 +125,7 @@ class HomePage extends ConsumerWidget {
                 l.valueDisclaimer,
                 style: Theme.of(context).textTheme.labelSmall,
               ),
+              const BannerAdSlot(),
             ],
           ),
         ),

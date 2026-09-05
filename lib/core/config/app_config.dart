@@ -8,17 +8,29 @@ class AppConfig {
     required this.flavor,
     required this.enableFirebase,
     required this.enableRevenueCat,
+    required this.enableAds,
     required this.apiBaseUrl,
     required this.revenueCatKeyIos,
     required this.revenueCatKeyAndroid,
+    required this.admobBannerIos,
+    required this.admobBannerAndroid,
   });
 
   final AppFlavor flavor;
   final bool enableFirebase;
   final bool enableRevenueCat;
+
+  /// Master switch for AdMob banners. Even when true, ads only show to
+  /// free-tier users (premium is always ad-free).
+  final bool enableAds;
   final String apiBaseUrl;
   final String revenueCatKeyIos;
   final String revenueCatKeyAndroid;
+
+  /// AdMob banner unit ids. Empty falls back to Google's public test unit
+  /// (safe to ship — shows a labelled "Test Ad" and never earns/spends).
+  final String admobBannerIos;
+  final String admobBannerAndroid;
 
   bool get useMockBackend => apiBaseUrl.isEmpty;
   bool get isProd => flavor == AppFlavor.prod;
@@ -37,10 +49,13 @@ class AppConfig {
           const bool.fromEnvironment('ENABLE_FIREBASE', defaultValue: true),
       enableRevenueCat:
           const bool.fromEnvironment('ENABLE_REVENUECAT', defaultValue: true),
+      enableAds: const bool.fromEnvironment('ENABLE_ADS', defaultValue: true),
       apiBaseUrl: const String.fromEnvironment('API_BASE_URL'),
       revenueCatKeyIos: const String.fromEnvironment('REVENUECAT_API_KEY_IOS'),
       revenueCatKeyAndroid:
           const String.fromEnvironment('REVENUECAT_API_KEY_ANDROID'),
+      admobBannerIos: const String.fromEnvironment('ADMOB_BANNER_IOS'),
+      admobBannerAndroid: const String.fromEnvironment('ADMOB_BANNER_ANDROID'),
     );
   }
 }

@@ -60,6 +60,9 @@ dependencies:
   # Subscriptions — RevenueCat.
   purchases_flutter: ^8.4.5
 
+  # Ads — Google AdMob (free-tier users only; premium is ad-free).
+  google_mobile_ads: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

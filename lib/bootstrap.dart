@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ import 'features/auth/presentation/auth_providers.dart';
 import 'features/coin/data/http_identification_service.dart';
 import 'features/coin/data/mock_scan_repository.dart';
 import 'features/coin/presentation/coin_providers.dart';
+import 'services/ads/ad_service.dart';
 import 'services/analytics/analytics_service.dart';
 import 'services/preferences/app_preferences.dart';
 import 'services/subscription/mock_subscription_service.dart';
@@ -84,6 +87,9 @@ Future<void> bootstrap() async {
     subscriptions = MockSubscriptionService(prefs);
   }
 
+  final adService = AdService(config);
+  unawaited(adService.init());
+
   final overrides = <Override>[
     sharedPreferencesProvider.overrideWithValue(prefs),
     appConfigProvider.overrideWithValue(config),
@@ -92,6 +98,7 @@ Future<void> bootstrap() async {
     authRepositoryProvider.overrideWithValue(authRepository),
     subscriptionServiceProvider.overrideWithValue(subscriptions),
     scanRepositoryProvider.overrideWithValue(scanRepository),
+    adServiceProvider.overrideWithValue(adService),
   ];
 
   // Backend wiring: when an API base URL is configured, identification and AI

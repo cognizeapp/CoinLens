@@ -10,6 +10,7 @@ import '../../core/theme/app_typography.dart';
 import '../../core/utils/formatters.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../core/utils/money_provider.dart';
+import '../../core/widgets/banner_ad_slot.dart';
 import '../../core/widgets/state_views.dart';
 import '../coin/domain/coin_models.dart';
 import '../coin/presentation/coin_providers.dart';
@@ -139,6 +140,7 @@ class ResultPage extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm),
               Text(l.gradingDisclaimer,
                   style: Theme.of(context).textTheme.labelSmall),
+              const BannerAdSlot(),
             ],
           );
         },
