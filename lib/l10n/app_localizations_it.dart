@@ -574,6 +574,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featAdvancedStats => 'Statistiche avanzate della collezione';
 
   @override
+  String get featSellGuide => 'Guida completa ai marketplace dove vendere';
+
+  @override
+  String get featNoAds => 'Nessuna pubblicità';
+
+  @override
   String get planYearly => 'Annuale';
 
   @override
@@ -785,6 +791,80 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get premiumBadge => 'PRO';
+
+  @override
+  String get sellGuideTitle => 'Dove vendere questa moneta';
+
+  @override
+  String get sellGuideResaleLabel => 'RANGE REALISTICO DI VENDITA PRIVATA';
+
+  @override
+  String get sellGuideResaleNote => 'La nostra stima di quanto incassa un venditore privato — sotto il prezzo al dettaglio per via delle commissioni d’asta, dei margini dei commercianti e dello sconto che i collezionisti si aspettano su una moneta non periziata.';
+
+  @override
+  String get sellGuideDisclaimer => 'I range sono stimati dal nostro modello di valutazione, non da vendite reali. Per pezzi di valore conviene una perizia specialistica prima di vendere.';
+
+  @override
+  String sellGuideUnlock(int count) {
+    return 'Sblocca altri $count canali e consigli di vendita con PRO';
+  }
+
+  @override
+  String get sellTierHigh => 'A questo valore, fai periziare la moneta (PCGS/NGC) e affidala a una grande casa d’aste — il bacino di acquirenti più ampio di solito copre abbondantemente la commissione.';
+
+  @override
+  String get sellTierMid => 'Foto nitide e ben illuminate di entrambi i lati e una descrizione onesta della conservazione: è questo che fa vendere le monete di valore medio. La certificazione è facoltativa ma aumenta la fiducia.';
+
+  @override
+  String get sellTierLow => 'Le monete comuni si vendono più in fretta in lotti o a un commerciante locale. Paga la perizia solo se una data/zecca specifica è l’eccezione di pregio.';
+
+  @override
+  String get sellEbayName => 'eBay';
+
+  @override
+  String get sellEbayBlurb => 'Di gran lunga il bacino di acquirenti più ampio. Commissione sul venduto ~13% più costi di pagamento. Ottimo da pochi euro fino a qualche migliaio.';
+
+  @override
+  String get sellHeritageName => 'Heritage Auctions';
+
+  @override
+  String get sellHeritageBlurb => 'La più grande casa d’aste numismatica. Portata mondiale per le rarità; la commissione al venditore è trattabile sui pezzi di alto valore.';
+
+  @override
+  String get sellStacksName => 'Stack’s Bowers';
+
+  @override
+  String get sellStacksBlurb => 'Casa d’aste storica, forte su monete USA e mondiali. Come Heritage, meglio riservarla a materiale davvero raro.';
+
+  @override
+  String get sellCertifiedDealerName => 'Commerciante numismatico';
+
+  @override
+  String get sellCertifiedDealerBlurb => 'Vendita rapida e sicura a prezzo d’acquisto all’ingrosso — in genere il 60–80% del dettaglio. Nessuna commissione, nessun rischio di spedizione.';
+
+  @override
+  String get sellLocalShopName => 'Negozio di monete locale';
+
+  @override
+  String get sellLocalShopBlurb => 'Offerta immediata, nessun annuncio da gestire. Prezzi più bassi dell’online ma nessuna commissione e nessun rischio di storno.';
+
+  @override
+  String get sellForumsName => 'Forum di collezionisti';
+
+  @override
+  String get sellForumsBlurb => 'Siti come CoinTalk o i forum NGC/PCGS hanno sezioni dedicate alla compravendita. Commissioni più basse di eBay e acquirenti esperti, ma più lento.';
+
+  @override
+  String get sellCoinShowName => 'Fiera / convegno numismatico';
+
+  @override
+  String get sellCoinShowBlurb => 'Decine di commercianti in una sala significano offerte in concorrenza. Ottimo per vendere un gruppo in una volta.';
+
+  @override
+  String get sellFacebookName => 'Gruppi Facebook';
+
+  @override
+  String get sellFacebookBlurb => 'Gruppi locali di compravendita attivi per monete comuni. Incontratevi in un luogo pubblico sicuro e usate solo pagamenti protetti.';
 
   @override
   String get typicalRange => 'INTERVALLO TIPICO';

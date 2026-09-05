@@ -574,6 +574,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get featAdvancedStats => 'Geavanceerde collectiestatistieken';
 
   @override
+  String get featSellGuide => 'Full where-to-sell marketplace guide';
+
+  @override
+  String get featNoAds => 'No ads';
+
+  @override
   String get planYearly => 'Jaarlijks';
 
   @override
@@ -785,6 +791,80 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get premiumBadge => 'PRO';
+
+  @override
+  String get sellGuideTitle => 'Where to sell this coin';
+
+  @override
+  String get sellGuideResaleLabel => 'REALISTIC PRIVATE-SALE RANGE';
+
+  @override
+  String get sellGuideResaleNote => 'Our estimate of what a private seller nets — below retail because of buyer premiums, dealer margins and the discount collectors expect on a raw coin.';
+
+  @override
+  String get sellGuideDisclaimer => 'Ranges are estimated from our valuation model, not actual sale records. A specialist appraisal is worth it before selling anything valuable.';
+
+  @override
+  String sellGuideUnlock(int count) {
+    return 'Unlock $count more venues and selling tips with PRO';
+  }
+
+  @override
+  String get sellTierHigh => 'At this value, get the coin professionally graded (PCGS/NGC) and consign it to a major auction house — the wider bidder pool usually more than covers the seller fee.';
+
+  @override
+  String get sellTierMid => 'Sharp, well-lit photos of both sides and an honest grade description are what move mid-value coins. Certification is optional but lifts trust for buyers.';
+
+  @override
+  String get sellTierLow => 'Everyday coins sell fastest in bulk lots or to a local dealer. Only pay for grading if a specific date/mint mark is the key-date exception.';
+
+  @override
+  String get sellEbayName => 'eBay';
+
+  @override
+  String get sellEbayBlurb => 'Largest buyer pool by far. Expect ~13% final-value fee plus payment processing. Best for anything from a few euros up to mid four figures.';
+
+  @override
+  String get sellHeritageName => 'Heritage Auctions';
+
+  @override
+  String get sellHeritageBlurb => 'The biggest numismatic auction house. Worldwide collector reach for rarities; seller commission is negotiable on higher-value consignments.';
+
+  @override
+  String get sellStacksName => 'Stack’s Bowers';
+
+  @override
+  String get sellStacksBlurb => 'Long-established auction house, strong for US and world coins. Like Heritage, best reserved for genuinely scarce material.';
+
+  @override
+  String get sellCertifiedDealerName => 'Certified coin dealer';
+
+  @override
+  String get sellCertifiedDealerBlurb => 'A quick, clean sale at a wholesale (buy) price — typically 60–80% of retail. No fees, no shipping risk, cash in hand.';
+
+  @override
+  String get sellLocalShopName => 'Local coin shop';
+
+  @override
+  String get sellLocalShopBlurb => 'Immediate offer, no listing hassle. Prices are lower than online but there is no fee and no chance of a chargeback.';
+
+  @override
+  String get sellForumsName => 'Collector forums';
+
+  @override
+  String get sellForumsBlurb => 'Sites like CoinTalk or NGC/PCGS forums have dedicated buy/sell boards. Lower fees than eBay and knowledgeable buyers, but slower.';
+
+  @override
+  String get sellCoinShowName => 'Coin show / bourse';
+
+  @override
+  String get sellCoinShowBlurb => 'Dozens of dealers in one room means competing offers. Great for selling a group at once; bring a want-list of your own too.';
+
+  @override
+  String get sellFacebookName => 'Facebook groups';
+
+  @override
+  String get sellFacebookBlurb => 'Active local buy/sell/trade groups for common coins. Meet in a safe public place and use protected payments only.';
 
   @override
   String get typicalRange => 'TYPISCHE BANDBREEDTE';

@@ -1203,6 +1203,18 @@ abstract class AppLocalizations {
   /// **'Advanced collection statistics'**
   String get featAdvancedStats;
 
+  /// No description provided for @featSellGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Full where-to-sell marketplace guide'**
+  String get featSellGuide;
+
+  /// No description provided for @featNoAds.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads'**
+  String get featNoAds;
+
   /// No description provided for @planYearly.
   ///
   /// In en, this message translates to:
@@ -1616,6 +1628,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'PRO'**
   String get premiumBadge;
+
+  /// No description provided for @sellGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where to sell this coin'**
+  String get sellGuideTitle;
+
+  /// No description provided for @sellGuideResaleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'REALISTIC PRIVATE-SALE RANGE'**
+  String get sellGuideResaleLabel;
+
+  /// No description provided for @sellGuideResaleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Our estimate of what a private seller nets — below retail because of buyer premiums, dealer margins and the discount collectors expect on a raw coin.'**
+  String get sellGuideResaleNote;
+
+  /// No description provided for @sellGuideDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranges are estimated from our valuation model, not actual sale records. A specialist appraisal is worth it before selling anything valuable.'**
+  String get sellGuideDisclaimer;
+
+  /// No description provided for @sellGuideUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock {count} more venues and selling tips with PRO'**
+  String sellGuideUnlock(int count);
+
+  /// No description provided for @sellTierHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'At this value, get the coin professionally graded (PCGS/NGC) and consign it to a major auction house — the wider bidder pool usually more than covers the seller fee.'**
+  String get sellTierHigh;
+
+  /// No description provided for @sellTierMid.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharp, well-lit photos of both sides and an honest grade description are what move mid-value coins. Certification is optional but lifts trust for buyers.'**
+  String get sellTierMid;
+
+  /// No description provided for @sellTierLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyday coins sell fastest in bulk lots or to a local dealer. Only pay for grading if a specific date/mint mark is the key-date exception.'**
+  String get sellTierLow;
+
+  /// No description provided for @sellEbayName.
+  ///
+  /// In en, this message translates to:
+  /// **'eBay'**
+  String get sellEbayName;
+
+  /// No description provided for @sellEbayBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Largest buyer pool by far. Expect ~13% final-value fee plus payment processing. Best for anything from a few euros up to mid four figures.'**
+  String get sellEbayBlurb;
+
+  /// No description provided for @sellHeritageName.
+  ///
+  /// In en, this message translates to:
+  /// **'Heritage Auctions'**
+  String get sellHeritageName;
+
+  /// No description provided for @sellHeritageBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'The biggest numismatic auction house. Worldwide collector reach for rarities; seller commission is negotiable on higher-value consignments.'**
+  String get sellHeritageBlurb;
+
+  /// No description provided for @sellStacksName.
+  ///
+  /// In en, this message translates to:
+  /// **'Stack’s Bowers'**
+  String get sellStacksName;
+
+  /// No description provided for @sellStacksBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-established auction house, strong for US and world coins. Like Heritage, best reserved for genuinely scarce material.'**
+  String get sellStacksBlurb;
+
+  /// No description provided for @sellCertifiedDealerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Certified coin dealer'**
+  String get sellCertifiedDealerName;
+
+  /// No description provided for @sellCertifiedDealerBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'A quick, clean sale at a wholesale (buy) price — typically 60–80% of retail. No fees, no shipping risk, cash in hand.'**
+  String get sellCertifiedDealerBlurb;
+
+  /// No description provided for @sellLocalShopName.
+  ///
+  /// In en, this message translates to:
+  /// **'Local coin shop'**
+  String get sellLocalShopName;
+
+  /// No description provided for @sellLocalShopBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediate offer, no listing hassle. Prices are lower than online but there is no fee and no chance of a chargeback.'**
+  String get sellLocalShopBlurb;
+
+  /// No description provided for @sellForumsName.
+  ///
+  /// In en, this message translates to:
+  /// **'Collector forums'**
+  String get sellForumsName;
+
+  /// No description provided for @sellForumsBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Sites like CoinTalk or NGC/PCGS forums have dedicated buy/sell boards. Lower fees than eBay and knowledgeable buyers, but slower.'**
+  String get sellForumsBlurb;
+
+  /// No description provided for @sellCoinShowName.
+  ///
+  /// In en, this message translates to:
+  /// **'Coin show / bourse'**
+  String get sellCoinShowName;
+
+  /// No description provided for @sellCoinShowBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Dozens of dealers in one room means competing offers. Great for selling a group at once; bring a want-list of your own too.'**
+  String get sellCoinShowBlurb;
+
+  /// No description provided for @sellFacebookName.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook groups'**
+  String get sellFacebookName;
+
+  /// No description provided for @sellFacebookBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Active local buy/sell/trade groups for common coins. Meet in a safe public place and use protected payments only.'**
+  String get sellFacebookBlurb;
 
   /// No description provided for @typicalRange.
   ///

@@ -9,6 +9,8 @@ import '../../../core/utils/money_provider.dart';
 import '../../coin/data/reference_coin_images.dart';
 import '../../coin/domain/catalog_entry.dart';
 import '../../coin/presentation/widgets/coin_widgets.dart';
+import '../../sell/sell_guide_section.dart';
+import '../../../services/subscription/subscription_service.dart';
 
 Future<void> showRankingDetailSheet(BuildContext context, CatalogEntry entry) {
   return showModalBottomSheet<void>(
@@ -129,6 +131,16 @@ class _Sheet extends ConsumerWidget {
               Text(entry.notes!,
                   style: Theme.of(context).textTheme.bodyMedium),
             ],
+            const SizedBox(height: AppSpacing.lg),
+            SellGuideSection(
+              typicalValueEur: entry.baseValueEur,
+              money: money,
+              isPremium: ref.watch(isPremiumProvider),
+              onUnlock: () {
+                Navigator.of(context).pop();
+                context.push('/paywall');
+              },
+            ),
             const SizedBox(height: AppSpacing.lg),
             FilledButton.icon(
               onPressed: () {

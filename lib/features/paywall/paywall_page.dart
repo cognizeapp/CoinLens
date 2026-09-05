@@ -60,10 +60,12 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
       l.featCoinHistory,
       l.featRarityInsights,
       l.featConditionAnalysis,
+      l.featSellGuide,
       l.featSellingRecs,
       l.featCollectorInsights,
       l.featAiAssistant,
       l.featAdvancedStats,
+      l.featNoAds,
     ];
 
     return Scaffold(
@@ -135,7 +137,7 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                                 height: 20,
                                 width: 20,
                                 child: CircularProgressIndicator(
-                                    strokeWidth: 2, color: Color(0xFF1A1400)),
+                                    strokeWidth: 2, color: AppColors.onGold),
                               )
                             : Text(l.actionContinue),
                       ),
@@ -227,7 +229,7 @@ class _PlanTile extends StatelessWidget {
                           ),
                           child: Text(badge,
                               style: const TextStyle(
-                                  color: Color(0xFF1A1400),
+                                  color: AppColors.onGold,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700)),
                         ),

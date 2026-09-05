@@ -14,6 +14,7 @@ import '../../core/widgets/state_views.dart';
 import '../coin/domain/coin_models.dart';
 import '../coin/presentation/coin_providers.dart';
 import '../coin/presentation/widgets/coin_widgets.dart';
+import '../sell/sell_guide_section.dart';
 import '../../services/analytics/analytics_service.dart';
 import '../../services/subscription/subscription_service.dart';
 import 'widgets/locked_premium_section.dart';
@@ -107,6 +108,14 @@ class ResultPage extends ConsumerWidget {
               ],
               const SizedBox(height: AppSpacing.lg),
               _DetailsCard(id: id),
+              const SizedBox(height: AppSpacing.lg),
+
+              SellGuideSection(
+                typicalValueEur: id.value.typical,
+                money: money,
+                isPremium: isPremium,
+                onUnlock: () => context.push('/paywall'),
+              ),
               const SizedBox(height: AppSpacing.xl),
 
               _SaveToCollectionButton(record: record),
