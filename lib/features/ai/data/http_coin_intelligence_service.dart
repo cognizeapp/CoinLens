@@ -53,7 +53,8 @@ class HttpCoinIntelligenceService implements CoinIntelligenceService {
       final j = await _api.postJson('/assistant', {
         'coin': context.toAiContext(),
         'history': [
-          for (final m in history) {'role': m.fromUser ? 'user' : 'assistant', 'text': m.text}
+          for (final m in history)
+            {'role': m.fromUser ? 'user' : 'assistant', 'text': m.text}
         ],
         'question': question,
       });

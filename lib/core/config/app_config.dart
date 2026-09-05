@@ -14,6 +14,8 @@ class AppConfig {
     required this.revenueCatKeyAndroid,
     required this.admobBannerIos,
     required this.admobBannerAndroid,
+    required this.admobInterstitialIos,
+    required this.admobInterstitialAndroid,
   });
 
   final AppFlavor flavor;
@@ -27,10 +29,12 @@ class AppConfig {
   final String revenueCatKeyIos;
   final String revenueCatKeyAndroid;
 
-  /// AdMob banner unit ids. Empty falls back to Google's public test unit
-  /// (safe to ship — shows a labelled "Test Ad" and never earns/spends).
+  /// AdMob unit ids. Empty falls back to a built-in default (real banner units;
+  /// Google test units for interstitials until real ones are created).
   final String admobBannerIos;
   final String admobBannerAndroid;
+  final String admobInterstitialIos;
+  final String admobInterstitialAndroid;
 
   bool get useMockBackend => apiBaseUrl.isEmpty;
   bool get isProd => flavor == AppFlavor.prod;
@@ -56,6 +60,10 @@ class AppConfig {
           const String.fromEnvironment('REVENUECAT_API_KEY_ANDROID'),
       admobBannerIos: const String.fromEnvironment('ADMOB_BANNER_IOS'),
       admobBannerAndroid: const String.fromEnvironment('ADMOB_BANNER_ANDROID'),
+      admobInterstitialIos:
+          const String.fromEnvironment('ADMOB_INTERSTITIAL_IOS'),
+      admobInterstitialAndroid:
+          const String.fromEnvironment('ADMOB_INTERSTITIAL_ANDROID'),
     );
   }
 }

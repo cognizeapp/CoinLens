@@ -72,8 +72,8 @@ class HeuristicConditionEstimator implements ConditionEstimator {
         if (dx * dx + dy * dy > r2) continue;
         discPixels++;
         final i = y * w + x;
-        final g = (lum[i + 1] - lum[i - 1]).abs() +
-            (lum[i + w] - lum[i - w]).abs();
+        final g =
+            (lum[i + 1] - lum[i - 1]).abs() + (lum[i + w] - lum[i - w]).abs();
         if (g > 0.06) detailPixels++;
       }
     }

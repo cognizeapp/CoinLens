@@ -55,7 +55,8 @@ abstract interface class SubscriptionService {
 /// Overridden in `main()` with [MockSubscriptionService] or the RevenueCat
 /// implementation.
 final subscriptionServiceProvider = Provider<SubscriptionService>(
-  (ref) => throw UnimplementedError('subscriptionServiceProvider not overridden'),
+  (ref) =>
+      throw UnimplementedError('subscriptionServiceProvider not overridden'),
 );
 
 /// Convenience: current entitlement as a reactive value.

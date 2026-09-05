@@ -64,7 +64,8 @@ class AiChatController extends StateNotifier<AiChatState> {
           sending: false,
         );
         _ref.read(analyticsServiceProvider).logEvent(
-            AnalyticsEvent.aiAnalysisCompleted, params: {'kind': 'assistant'});
+            AnalyticsEvent.aiAnalysisCompleted,
+            params: {'kind': 'assistant'});
       },
       err: (f) => state = state.copyWith(sending: false, error: f),
     );

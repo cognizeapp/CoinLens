@@ -9,6 +9,8 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
 import '../../l10n/app_localizations.dart';
+import '../../services/ads/ad_service.dart';
+import '../../services/subscription/subscription_service.dart';
 import 'domain/coin_face.dart';
 import 'domain/image_quality.dart';
 import 'presentation/camera_capture_page.dart';
@@ -115,6 +117,11 @@ class _ScanPageState extends ConsumerState<ScanPage> {
         HapticFeedback.mediumImpact();
         context.push('/result/${next.resultId}');
         ref.read(scanControllerProvider.notifier).reset();
+        // Free users see an interstitial every few scans (funds cloud
+        // identification); premium is ad-free.
+        if (!ref.read(isPremiumProvider)) {
+          ref.read(adServiceProvider).recordScanAndMaybeInterstitial();
+        }
       }
       if (next.failure != null && next.failure != prev?.failure) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -129,7 +136,8 @@ class _ScanPageState extends ConsumerState<ScanPage> {
         actions: [
           if (state.hasFront)
             TextButton(
-              onPressed: () => ref.read(scanControllerProvider.notifier).reset(),
+              onPressed: () =>
+                  ref.read(scanControllerProvider.notifier).reset(),
               child: Text(l.scanReset),
             ),
         ],
@@ -148,9 +156,8 @@ class _ScanPageState extends ConsumerState<ScanPage> {
               ),
               const SizedBox(height: AppSpacing.lg),
               CoinCaptureTarget(
-                label: state.backImagePath != null
-                    ? l.scanBackShort
-                    : l.scanBack,
+                label:
+                    state.backImagePath != null ? l.scanBackShort : l.scanBack,
                 captured: state.backImagePath != null,
                 imagePath: state.backImagePath,
                 warning: _warningFor(state.backReport, l),
@@ -206,8 +213,7 @@ class _Tips extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l.forBestResult,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(l.forBestResult, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: AppSpacing.sm),
           for (final t in tips)
             Padding(

@@ -18,8 +18,7 @@ class PremiumAnalysisSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final requested =
-        ref.watch(aiAnalysisRequestedProvider(record.id));
+    final requested = ref.watch(aiAnalysisRequestedProvider(record.id));
 
     if (!requested) {
       return _GenerateCta(
@@ -37,8 +36,7 @@ class PremiumAnalysisSection extends ConsumerWidget {
       loading: () => const _GeneratingCard(),
       error: (_, __) => Column(
         children: [
-          Text(l.aiUnavailable,
-              style: Theme.of(context).textTheme.bodyMedium),
+          Text(l.aiUnavailable, style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton(
             onPressed: () =>
@@ -116,8 +114,8 @@ class _GenerateCta extends StatelessWidget {
                 Text(e),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                    child: Text(t,
-                        style: Theme.of(context).textTheme.bodyMedium)),
+                    child:
+                        Text(t, style: Theme.of(context).textTheme.bodyMedium)),
               ]),
             ),
           const SizedBox(height: AppSpacing.lg),
@@ -153,8 +151,8 @@ class _GeneratingCard extends StatelessWidget {
           const SizedBox(
             width: 20,
             height: 20,
-            child:
-                CircularProgressIndicator(strokeWidth: 2, color: AppColors.gold),
+            child: CircularProgressIndicator(
+                strokeWidth: 2, color: AppColors.gold),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -189,8 +187,8 @@ class _Section extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(title,
-                    style: Theme.of(context).textTheme.titleLarge),
+                child:
+                    Text(title, style: Theme.of(context).textTheme.titleLarge),
               ),
               if (badge != null)
                 Container(
@@ -242,8 +240,7 @@ class _SellingCard extends StatelessWidget {
               strategy.suggestedListPrice),
           _kv(context, context.l10n.minimumReasonablePrice,
               strategy.minimumPrice),
-          _kv(context, context.l10n.whereToSell,
-              strategy.recommendedPlatforms),
+          _kv(context, context.l10n.whereToSell, strategy.recommendedPlatforms),
           _kv(context, context.l10n.auctionSuitable, strategy.auctionAdvice),
           _kv(context, context.l10n.professionalAppraisal,
               strategy.appraisalAdvice),

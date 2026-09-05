@@ -151,8 +151,7 @@ class _ScanningCoinState extends State<_ScanningCoin>
                     ),
                   ),
                 ),
-                const Icon(Icons.paid_rounded,
-                    size: 44, color: AppColors.gold),
+                const Icon(Icons.paid_rounded, size: 44, color: AppColors.gold),
               ],
             );
           },

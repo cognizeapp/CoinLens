@@ -68,10 +68,9 @@ Future<void> bootstrap() async {
 
   // RevenueCat only if a platform key is configured; otherwise the app keeps
   // using the dev-only mock (which supports `debugSetPremium`).
-  final revenueCatKey =
-      defaultTargetPlatform == TargetPlatform.iOS
-          ? config.revenueCatKeyIos
-          : config.revenueCatKeyAndroid;
+  final revenueCatKey = defaultTargetPlatform == TargetPlatform.iOS
+      ? config.revenueCatKeyIos
+      : config.revenueCatKeyAndroid;
   SubscriptionService subscriptions;
   if (config.enableRevenueCat && revenueCatKey.isNotEmpty) {
     final rc = RevenueCatSubscriptionService(
@@ -87,7 +86,7 @@ Future<void> bootstrap() async {
     subscriptions = MockSubscriptionService(prefs);
   }
 
-  final adService = AdService(config);
+  final adService = AdService(config, prefs);
   unawaited(adService.init());
 
   final overrides = <Override>[

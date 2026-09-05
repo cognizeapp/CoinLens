@@ -109,7 +109,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: '/scan', builder: (_, __) => const ScanPage())],
+            routes: [
+              GoRoute(path: '/scan', builder: (_, __) => const ScanPage())
+            ],
           ),
           StatefulShellBranch(
             routes: [

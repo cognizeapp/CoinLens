@@ -2,10 +2,14 @@ abstract final class AppConstants {
   static const String appName = 'Coinsights';
   static const String tagline = 'Discover what your coins are really worth.';
 
-  // Legal
-  static const String privacyPolicyUrl = 'https://coinsights.app/privacy';
-  static const String termsOfServiceUrl = 'https://coinsights.app/terms';
-  static const String supportEmail = 'support@coinsights.app';
+  // Legal — hosted on GitHub Pages (repo cognizeapp/CoinLens, /docs).
+  static const String privacyPolicyUrl =
+      'https://cognizeapp.github.io/CoinLens/privacy.html';
+  static const String termsOfServiceUrl =
+      'https://cognizeapp.github.io/CoinLens/terms.html';
+  static const String supportUrl =
+      'https://cognizeapp.github.io/CoinLens/support.html';
+  static const String supportEmail = 'cognizeapp@gmail.com';
 
   // Disclaimers surfaced across value / grading UI.
   static const String valueDisclaimer =

@@ -44,8 +44,7 @@ class PipelineIdentificationService implements IdentificationService {
     try {
       onStage?.call(IdentificationStage.detectingText);
       final ocr = await _ocr.readText(frontImage);
-      final backOcr =
-          backImage != null ? await _ocr.readText(backImage) : null;
+      final backOcr = backImage != null ? await _ocr.readText(backImage) : null;
       final tokens = <String>{
         ...ocr.tokens,
         if (backOcr != null) ...backOcr.tokens,
@@ -89,7 +88,8 @@ class PipelineIdentificationService implements IdentificationService {
       final alternatives = scored
           .take(3)
           .map((s) => CoinMatch(
-                name: '${s.entry.name}${_matchYear(s.entry, year) != null ? ' (${_matchYear(s.entry, year)})' : ''}',
+                name:
+                    '${s.entry.name}${_matchYear(s.entry, year) != null ? ' (${_matchYear(s.entry, year)})' : ''}',
                 confidence: _shareConfidence(s.score, scored),
               ))
           .toList();
@@ -146,8 +146,7 @@ class PipelineIdentificationService implements IdentificationService {
     if (tokens.contains(needle)) return true;
     if (needle.length < 5) return false;
     for (final t in tokens) {
-      if (t.length >= 5 &&
-          (t.startsWith(needle) || needle.startsWith(t))) {
+      if (t.length >= 5 && (t.startsWith(needle) || needle.startsWith(t))) {
         return true;
       }
     }
@@ -186,8 +185,7 @@ class PipelineIdentificationService implements IdentificationService {
     if (entry.isKeyDate(year)) {
       // Bump one step for a key date.
       final next = entry.baseRarity.index + 1;
-      return CoinRarity
-          .values[next.clamp(0, CoinRarity.values.length - 1)];
+      return CoinRarity.values[next.clamp(0, CoinRarity.values.length - 1)];
     }
     return entry.baseRarity;
   }

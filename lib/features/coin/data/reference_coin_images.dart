@@ -45,7 +45,7 @@ String? referenceCoinImageAsset(String catalogEntryId) =>
 /// Cover-crop anchor for a bundled reference photo returned by
 /// [referenceCoinImageAsset]. Looked up by asset path so callers that only
 /// carry the path (e.g. [CoinThumb]) don't need the catalog id too.
-Alignment referenceCoinImageAlignment(String asset) => _referenceCoinImages
-    .values
-    .firstWhere((v) => v.asset == asset, orElse: () => const _RefImage(''))
-    .alignment;
+Alignment referenceCoinImageAlignment(String asset) =>
+    _referenceCoinImages.values
+        .firstWhere((v) => v.asset == asset, orElse: () => const _RefImage(''))
+        .alignment;

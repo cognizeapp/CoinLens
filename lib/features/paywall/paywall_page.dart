@@ -27,9 +27,7 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
   @override
   void initState() {
     super.initState();
-    ref
-        .read(analyticsServiceProvider)
-        .logEvent(AnalyticsEvent.paywallViewed);
+    ref.read(analyticsServiceProvider).logEvent(AnalyticsEvent.paywallViewed);
   }
 
   Future<void> _subscribe(SubscriptionService service) async {
@@ -45,7 +43,8 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
     if (status.isPremium) {
       unawaited(HapticFeedback.mediumImpact());
       unawaited(ref.read(analyticsServiceProvider).logEvent(
-          AnalyticsEvent.subscriptionCompleted, params: {'plan': planId}));
+          AnalyticsEvent.subscriptionCompleted,
+          params: {'plan': planId}));
       if (context.canPop()) context.pop();
     }
   }
@@ -84,8 +83,9 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
             onRetry: () => ref.refresh(_plansProvider),
           ),
           data: (plans) {
-            _selectedPlanId ??=
-                plans.firstWhere((p) => p.badge != null, orElse: () => plans.first).id;
+            _selectedPlanId ??= plans
+                .firstWhere((p) => p.badge != null, orElse: () => plans.first)
+                .id;
             return Column(
               children: [
                 Expanded(
@@ -118,9 +118,8 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                                     color: AppColors.gold, size: 20),
                                 const SizedBox(width: AppSpacing.md),
                                 Text(f,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge),
                               ],
                             ),
                           )),
@@ -128,8 +127,7 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                       ...plans.map((p) => _PlanTile(
                             plan: p,
                             selected: p.id == _selectedPlanId,
-                            onTap: () =>
-                                setState(() => _selectedPlanId = p.id),
+                            onTap: () => setState(() => _selectedPlanId = p.id),
                           )),
                     ],
                   ),
@@ -146,8 +144,7 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                           return const SizedBox.shrink();
                         }
                         return Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: AppSpacing.sm),
+                          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -285,8 +282,7 @@ class _PlanTile extends StatelessWidget {
                     ],
                   ),
                   if (trial != null)
-                    Text(trial,
-                        style: Theme.of(context).textTheme.bodyMedium),
+                    Text(trial, style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
             ),
@@ -295,8 +291,7 @@ class _PlanTile extends StatelessWidget {
               children: [
                 Text(plan.priceLabel,
                     style: Theme.of(context).textTheme.titleLarge),
-                Text(period,
-                    style: Theme.of(context).textTheme.labelSmall),
+                Text(period, style: Theme.of(context).textTheme.labelSmall),
               ],
             ),
           ],

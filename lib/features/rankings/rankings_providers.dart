@@ -22,7 +22,8 @@ final _catalogEntriesProvider = FutureProvider<List<CatalogEntry>>((ref) {
   return ref.watch(coinCatalogProvider).all();
 });
 
-final rankingProvider = FutureProvider.family<List<CatalogEntry>, RankingCategory>(
+final rankingProvider =
+    FutureProvider.family<List<CatalogEntry>, RankingCategory>(
   (ref, category) async {
     final all = await ref.watch(_catalogEntriesProvider.future);
     final list = [...all];

@@ -46,8 +46,8 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
   Future<bool> signIn(String email, String password) =>
       _run(() => _repo.signInWithEmail(email: email, password: password));
 
-  Future<bool> register(String email, String password, String? name) => _run(
-      () => _repo.registerWithEmail(
+  Future<bool> register(String email, String password, String? name) =>
+      _run(() => _repo.registerWithEmail(
           email: email, password: password, displayName: name));
 
   Future<bool> social(SocialProvider provider) =>

@@ -265,8 +265,7 @@ class _CaptureBar extends StatelessWidget {
                       child: CircularProgressIndicator(
                           strokeWidth: 2, color: AppColors.gold),
                     )
-                  : const Icon(Icons.camera_alt_rounded,
-                      color: Colors.black87),
+                  : const Icon(Icons.camera_alt_rounded, color: Colors.black87),
             ),
           ),
         ],

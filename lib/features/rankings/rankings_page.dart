@@ -258,9 +258,8 @@ class _RankRow extends StatelessWidget {
                     style: TextStyle(
                       fontSize: rank <= 3 ? 18 : 15,
                       fontWeight: FontWeight.w700,
-                      color: rank <= 3
-                          ? AppColors.gold
-                          : AppColors.textSecondary,
+                      color:
+                          rank <= 3 ? AppColors.gold : AppColors.textSecondary,
                     ),
                   ),
                 ),

@@ -140,8 +140,17 @@ class CoinIdentification extends Equatable {
       };
 
   @override
-  List<Object?> get props =>
-      [coinName, country, year, denomination, material, condition, rarity, confidence, value];
+  List<Object?> get props => [
+        coinName,
+        country,
+        year,
+        denomination,
+        material,
+        condition,
+        rarity,
+        confidence,
+        value
+      ];
 }
 
 /// A persisted scan: identification plus the captured images and metadata.

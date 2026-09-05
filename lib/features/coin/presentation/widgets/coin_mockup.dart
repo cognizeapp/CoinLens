@@ -28,6 +28,7 @@ class CoinMockup extends StatelessWidget {
 
   final String material;
   final CoinRarity rarity;
+
   /// Short engraving text — usually the denomination (e.g. "25¢", "£1").
   final String? label;
   final String seed;
@@ -144,9 +145,11 @@ class _CoinMockupPainter extends CustomPainter {
 
     // Reeded edge — small ticks around the border, deterministic per seed.
     const tickCount = 40;
-    final hash = seed.isEmpty ? 0 : seed.codeUnits.fold<int>(0, (a, b) => a + b);
+    final hash =
+        seed.isEmpty ? 0 : seed.codeUnits.fold<int>(0, (a, b) => a + b);
     for (var i = 0; i < tickCount; i++) {
-      final angle = (2 * math.pi / tickCount) * i + (hash % 360) * math.pi / 180;
+      final angle =
+          (2 * math.pi / tickCount) * i + (hash % 360) * math.pi / 180;
       final inner = Offset(
         center.dx + math.cos(angle) * r * 0.92,
         center.dy + math.sin(angle) * r * 0.92,
@@ -175,9 +178,8 @@ class _CoinMockupPainter extends CustomPainter {
     );
 
     // Engraving text (denomination / initial).
-    final text = (label != null && label!.trim().isNotEmpty)
-        ? label!.trim()
-        : '¤';
+    final text =
+        (label != null && label!.trim().isNotEmpty) ? label!.trim() : '¤';
     final tp = TextPainter(
       text: TextSpan(
         text: text,
@@ -214,7 +216,10 @@ class _CoinMockupPainter extends CustomPainter {
         ..shader = ui.Gradient.radial(
           center - Offset(r * 0.32, r * 0.35),
           r * 0.28,
-          [Colors.white.withValues(alpha: 0.35), Colors.white.withValues(alpha: 0.0)],
+          [
+            Colors.white.withValues(alpha: 0.35),
+            Colors.white.withValues(alpha: 0.0)
+          ],
         ),
     );
   }
@@ -253,9 +258,10 @@ class CoinPhotoMockup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ringColor = (rarity == CoinRarity.veryRare || rarity == CoinRarity.extremelyRare)
-        ? AppColors.metalGold
-        : AppColors.border;
+    final ringColor =
+        (rarity == CoinRarity.veryRare || rarity == CoinRarity.extremelyRare)
+            ? AppColors.metalGold
+            : AppColors.border;
     return Container(
       width: size,
       height: size,

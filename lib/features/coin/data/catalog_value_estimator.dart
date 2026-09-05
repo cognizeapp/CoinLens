@@ -80,9 +80,8 @@ class CatalogValueEstimator implements ValueEstimationService {
 
     // Spread: wider when the coin is scarce or a key date (thinner market);
     // tight for an ordinary coin whose price is well established.
-    final spread = ordinary
-        ? 0.25
-        : 0.35 + (rarMul - 1) * 0.06 + (isKey ? 0.25 : 0);
+    final spread =
+        ordinary ? 0.25 : 0.35 + (rarMul - 1) * 0.06 + (isKey ? 0.25 : 0);
     final min = _round(max(0.1, typicalRaw * (1 - spread.clamp(0.2, 0.7))));
     final maxV = _round(typicalRaw * (1 + spread.clamp(0.3, 1.2)));
 
@@ -120,7 +119,8 @@ class CatalogValueEstimator implements ValueEstimationService {
               : hasMint
                   ? '$year, $mint mint — a mintmark collectors seek.'
                   : '$year is a regular-issue date with normal mintage.',
-          impact: (isKey || hasMint) ? ValueImpact.positive : ValueImpact.neutral,
+          impact:
+              (isKey || hasMint) ? ValueImpact.positive : ValueImpact.neutral,
         ),
       const ValueFactor(
         label: 'Authenticity',

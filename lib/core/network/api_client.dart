@@ -49,7 +49,8 @@ class ApiClient {
   }) async {
     try {
       final request = http.MultipartRequest('POST', _uri(path))
-        ..headers.addAll({if (authToken != null) 'authorization': 'Bearer $authToken'})
+        ..headers.addAll(
+            {if (authToken != null) 'authorization': 'Bearer $authToken'})
         ..fields.addAll(fields)
         ..files.add(http.MultipartFile.fromBytes('front', front,
             filename: 'front.jpg'));
@@ -57,7 +58,8 @@ class ApiClient {
         request.files.add(
             http.MultipartFile.fromBytes('back', back, filename: 'back.jpg'));
       }
-      final streamed = await request.send().timeout(const Duration(seconds: 40));
+      final streamed =
+          await request.send().timeout(const Duration(seconds: 40));
       final res = await http.Response.fromStream(streamed);
       return _decode(res);
     } on Failure {

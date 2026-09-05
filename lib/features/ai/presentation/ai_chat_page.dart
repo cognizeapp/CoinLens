@@ -123,8 +123,7 @@ class _ChatViewState extends ConsumerState<_ChatView> {
                   style: IconButton.styleFrom(
                       backgroundColor: AppColors.gold,
                       foregroundColor: AppColors.onGold),
-                  onPressed:
-                      state.sending ? null : () => _send(_input.text),
+                  onPressed: state.sending ? null : () => _send(_input.text),
                   icon: const Icon(Icons.arrow_upward_rounded),
                 ),
               ],
@@ -186,8 +185,8 @@ class _Bubble extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         padding: const EdgeInsets.all(AppSpacing.md),
-        constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.82),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.82),
         decoration: BoxDecoration(
           color: fromUser ? AppColors.gold : AppColors.card,
           borderRadius: BorderRadius.circular(AppRadius.lg),

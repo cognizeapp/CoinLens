@@ -39,10 +39,13 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Stream<AppUser?> authStateChanges() {
-    return _auth.authStateChanges().map((u) => u == null ? null : _toAppUser(u));
+    return _auth
+        .authStateChanges()
+        .map((u) => u == null ? null : _toAppUser(u));
   }
 
-  Future<Result<AppUser>> _guard(Future<fb.UserCredential> Function() op) async {
+  Future<Result<AppUser>> _guard(
+      Future<fb.UserCredential> Function() op) async {
     try {
       final cred = await op();
       final user = cred.user;
@@ -53,7 +56,8 @@ class FirebaseAuthRepository implements AuthRepository {
     } on fb.FirebaseAuthException catch (e) {
       return Result.err(AuthFailure(_messageFor(e), cause: e));
     } catch (e) {
-      return Result.err(AuthFailure('Sign-in failed. Please try again.', cause: e));
+      return Result.err(
+          AuthFailure('Sign-in failed. Please try again.', cause: e));
     }
   }
 

@@ -96,15 +96,12 @@ class ResultPage extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm),
               Center(child: ConfidenceBadge(confidence: id.confidence)),
               const SizedBox(height: AppSpacing.xl),
-
               if (!id.isConfident) _LowConfidence(id: id),
-
               _ConfirmCoinCard(
                 record: record,
                 lowConfidence: !id.isConfident,
               ),
               const SizedBox(height: AppSpacing.lg),
-
               _ValueCard(id: id, money: money),
               if (id.value.factors.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.lg),
@@ -117,7 +114,6 @@ class ResultPage extends ConsumerWidget {
               const SizedBox(height: AppSpacing.lg),
               _DetailsCard(id: id),
               const SizedBox(height: AppSpacing.lg),
-
               SellGuideSection(
                 typicalValueEur: id.value.typical,
                 money: money,
@@ -125,10 +121,8 @@ class ResultPage extends ConsumerWidget {
                 onUnlock: () => context.push('/paywall'),
               ),
               const SizedBox(height: AppSpacing.xl),
-
               _SaveToCollectionButton(record: record),
               const SizedBox(height: AppSpacing.xl),
-
               if (isPremium)
                 PremiumAnalysisSection(record: record)
               else
@@ -140,7 +134,6 @@ class ResultPage extends ConsumerWidget {
                     context.push('/paywall');
                   },
                 ),
-
               const SizedBox(height: AppSpacing.xl),
               Text(l.valueDisclaimer,
                   style: Theme.of(context).textTheme.labelSmall),
@@ -223,8 +216,7 @@ class _SaveToCollectionButtonState
 /// have the value recomputed from a verified catalogue entry. It shifts from a
 /// quiet link to a prominent card when the scan wasn't confident.
 class _ConfirmCoinCard extends ConsumerWidget {
-  const _ConfirmCoinCard(
-      {required this.record, required this.lowConfidence});
+  const _ConfirmCoinCard({required this.record, required this.lowConfidence});
   final ScanRecord record;
   final bool lowConfidence;
 
@@ -361,8 +353,7 @@ class _ValueCard extends StatelessWidget {
           Text(money.range(id.value.min, id.value.max),
               style: AppTypography.valueHero),
           const SizedBox(height: AppSpacing.xs),
-          Text(
-              context.l10n.typicalEstimate(money.single(id.value.typical)),
+          Text(context.l10n.typicalEstimate(money.single(id.value.typical)),
               style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),

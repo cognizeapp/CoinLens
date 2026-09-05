@@ -43,9 +43,10 @@ class HeuristicImageQualityAnalyzer implements ImageQualityAnalyzer {
         ? descriptor.width
         : descriptor.height;
 
-    final scale = _sample / (descriptor.width > descriptor.height
-        ? descriptor.width
-        : descriptor.height);
+    final scale = _sample /
+        (descriptor.width > descriptor.height
+            ? descriptor.width
+            : descriptor.height);
     final targetW = (descriptor.width * scale).clamp(1, _sample).round();
     final targetH = (descriptor.height * scale).clamp(1, _sample).round();
 
@@ -55,8 +56,7 @@ class HeuristicImageQualityAnalyzer implements ImageQualityAnalyzer {
     );
     final frame = await codec.getNextFrame();
     final image = frame.image;
-    final data =
-        await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+    final data = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
     image.dispose();
     codec.dispose();
     descriptor.dispose();
@@ -83,8 +83,8 @@ class HeuristicImageQualityAnalyzer implements ImageQualityAnalyzer {
     var glare = 0;
     for (var i = 0; i < n; i++) {
       final o = i * 4;
-      final l = (0.299 * rgba[o] + 0.587 * rgba[o + 1] + 0.114 * rgba[o + 2]) /
-          255.0;
+      final l =
+          (0.299 * rgba[o] + 0.587 * rgba[o + 1] + 0.114 * rgba[o + 2]) / 255.0;
       lum[i] = l;
       sum += l;
       if (l > 0.96) glare++;
@@ -102,8 +102,8 @@ class HeuristicImageQualityAnalyzer implements ImageQualityAnalyzer {
     for (var y = 1; y < h - 1; y++) {
       for (var x = 1; x < w - 1; x++) {
         final i = y * w + x;
-        final g = (lum[i + 1] - lum[i - 1]).abs() +
-            (lum[i + w] - lum[i - w]).abs();
+        final g =
+            (lum[i + 1] - lum[i - 1]).abs() + (lum[i + w] - lum[i - w]).abs();
         if (g > edgeEpsilon) {
           edgeSum += g;
           edgeCount++;

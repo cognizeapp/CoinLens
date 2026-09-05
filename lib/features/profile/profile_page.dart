@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
@@ -79,7 +80,6 @@ class ProfilePage extends ConsumerWidget {
               ),
             ),
           const SizedBox(height: AppSpacing.lg),
-
           _SectionHeader(l.sectionSubscription),
           ListTile(
             leading: Icon(
@@ -117,7 +117,6 @@ class ProfilePage extends ConsumerWidget {
                 );
               },
             ),
-
           _SectionHeader(l.sectionPreferences),
           ListTile(
             leading: const Icon(Icons.euro_rounded),
@@ -150,21 +149,25 @@ class ProfilePage extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right_rounded),
             onTap: () => context.push('/tutorial'),
           ),
-
           _SectionHeader(l.sectionLegal),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: Text(l.privacyPolicy),
             trailing: const Icon(Icons.open_in_new_rounded, size: 16),
-            onTap: () {},
+            onTap: () => _open(AppConstants.privacyPolicyUrl),
           ),
           ListTile(
             leading: const Icon(Icons.description_outlined),
             title: Text(l.termsOfService),
             trailing: const Icon(Icons.open_in_new_rounded, size: 16),
-            onTap: () {},
+            onTap: () => _open(AppConstants.termsOfServiceUrl),
           ),
-
+          ListTile(
+            leading: const Icon(Icons.help_outline_rounded),
+            title: Text(l.helpAndSupport),
+            trailing: const Icon(Icons.open_in_new_rounded, size: 16),
+            onTap: () => _open(AppConstants.supportUrl),
+          ),
           if (kDebugMode) ...[
             _SectionHeader(l.sectionDeveloper),
             SwitchListTile(
@@ -175,7 +178,6 @@ class ProfilePage extends ConsumerWidget {
                   ref.read(subscriptionServiceProvider).debugSetPremium(v),
             ),
           ],
-
           const SizedBox(height: AppSpacing.lg),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screen),
@@ -194,13 +196,20 @@ class ProfilePage extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Center(
-            child: Text('${AppConstants.appName} • v0.1.0',
+            child: Text('${AppConstants.appName} • v1.0.0',
                 style: Theme.of(context).textTheme.labelSmall),
           ),
           const SizedBox(height: AppSpacing.xxl),
         ],
       ),
     );
+  }
+
+  Future<void> _open(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 
   Future<void> _pickLanguage(

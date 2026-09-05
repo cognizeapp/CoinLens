@@ -80,10 +80,8 @@ class CollectionPage extends ConsumerWidget {
           onRetry: () => ref.refresh(collectionProvider),
         ),
         data: (all) {
-          final countries = {
-            for (final s in all) s.identification.country
-          }.toList()
-            ..sort();
+          final countries =
+              {for (final s in all) s.identification.country}.toList()..sort();
           final items = all.where((s) {
             final id = s.identification;
             if (query.isNotEmpty &&
@@ -106,7 +104,8 @@ class CollectionPage extends ConsumerWidget {
                   .compareTo(a.identification.value.typical));
             case _Sort.rarity:
               items.sort((a, b) =>
-                  b.identification.rarity.index - a.identification.rarity.index);
+                  b.identification.rarity.index -
+                  a.identification.rarity.index);
           }
 
           if (all.isEmpty) {
@@ -125,8 +124,8 @@ class CollectionPage extends ConsumerWidget {
             children: [
               _PortfolioHeader(items: all, money: money),
               Padding(
-                padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.sm,
-                    AppSpacing.lg, AppSpacing.sm),
+                padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.sm),
                 child: TextField(
                   onChanged: (v) =>
                       ref.read(_collectionQueryProvider.notifier).state = v,
@@ -256,8 +255,7 @@ Future<void> removeCoinFromCollection(
 }
 
 /// Long-press menu for a collected coin: open its result, or remove it.
-void _showCoinActions(
-    BuildContext context, WidgetRef ref, ScanRecord record) {
+void _showCoinActions(BuildContext context, WidgetRef ref, ScanRecord record) {
   final l = context.l10n;
   showModalBottomSheet<void>(
     context: context,
@@ -281,8 +279,8 @@ void _showCoinActions(
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.open_in_new_rounded,
-                color: AppColors.gold),
+            leading:
+                const Icon(Icons.open_in_new_rounded, color: AppColors.gold),
             title: Text(l.actionOpen),
             onTap: () {
               Navigator.pop(ctx);
@@ -290,8 +288,8 @@ void _showCoinActions(
             },
           ),
           ListTile(
-            leading:
-                const Icon(Icons.delete_outline_rounded, color: AppColors.danger),
+            leading: const Icon(Icons.delete_outline_rounded,
+                color: AppColors.danger),
             title: Text(l.collectionRemoveAction,
                 style: const TextStyle(color: AppColors.danger)),
             onTap: () {
@@ -319,8 +317,7 @@ class _PortfolioHeader extends StatelessWidget {
     final l = context.l10n;
     final total =
         items.fold<double>(0, (s, r) => s + r.identification.value.typical);
-    final countries =
-        items.map((r) => r.identification.country).toSet().length;
+    final countries = items.map((r) => r.identification.country).toSet().length;
     final top = items.isEmpty
         ? null
         : items.reduce((a, b) =>
@@ -369,15 +366,13 @@ class _PortfolioHeader extends StatelessWidget {
                 color: AppColors.border,
                 margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               ),
-              _PortfolioStat(
-                  value: '$countries', label: l.portfolioCountries),
+              _PortfolioStat(value: '$countries', label: l.portfolioCountries),
               if (top != null) ...[
                 Container(
                   width: 1,
                   height: 30,
                   color: AppColors.border,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                  margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                 ),
                 _PortfolioStat(
                   value: money.compact(top.identification.value.typical),
@@ -422,8 +417,8 @@ class _CollectionInsights extends StatelessWidget {
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
     final l = context.l10n;
-    final total = items.fold<double>(
-        0, (sum, s) => sum + s.identification.value.typical);
+    final total =
+        items.fold<double>(0, (sum, s) => sum + s.identification.value.typical);
     final mostValuable = items.reduce((a, b) =>
         a.identification.value.typical > b.identification.value.typical
             ? a
@@ -447,8 +442,7 @@ class _CollectionInsights extends StatelessWidget {
             _Stat(label: l.statEstValue, value: money.single(total)),
             _Stat(
                 label: l.statMostValuable,
-                value:
-                    money.single(mostValuable.identification.value.typical)),
+                value: money.single(mostValuable.identification.value.typical)),
           ]),
           const Divider(height: AppSpacing.xl),
           Row(

@@ -73,9 +73,8 @@ class _CorrectionSheetState extends ConsumerState<_CorrectionSheet> {
   }
 
   List<CatalogEntry> get _typesForCountry {
-    final list =
-        widget.catalog.where((e) => e.country == _country).toList()
-          ..sort((a, b) => a.name.compareTo(b.name));
+    final list = widget.catalog.where((e) => e.country == _country).toList()
+      ..sort((a, b) => a.name.compareTo(b.name));
     return list;
   }
 
@@ -85,11 +84,9 @@ class _CorrectionSheetState extends ConsumerState<_CorrectionSheet> {
     int? year;
     if (raw.isNotEmpty) {
       year = int.tryParse(raw);
-      if (year == null ||
-          year < entry.yearFrom ||
-          year > entry.yearTo) {
-        setState(() => _yearError =
-            context.l10n.correctYearRange('${entry.yearFrom}', '${entry.yearTo}'));
+      if (year == null || year < entry.yearFrom || year > entry.yearTo) {
+        setState(() => _yearError = context.l10n
+            .correctYearRange('${entry.yearFrom}', '${entry.yearTo}'));
         return;
       }
     }
@@ -129,9 +126,9 @@ class _CorrectionSheetState extends ConsumerState<_CorrectionSheet> {
     ref.invalidate(collectionProvider);
     ref.invalidate(recentScansProvider);
     unawaited(ref.read(analyticsServiceProvider).logEvent(
-          AnalyticsEvent.coinIdentified,
-          params: const {'corrected': true},
-        ));
+      AnalyticsEvent.coinIdentified,
+      params: const {'corrected': true},
+    ));
 
     if (mounted) {
       unawaited(HapticFeedback.mediumImpact());
@@ -142,8 +139,7 @@ class _CorrectionSheetState extends ConsumerState<_CorrectionSheet> {
   static CoinRarity _rarityFor(CatalogEntry entry, int? year) {
     if (entry.isKeyDate(year)) {
       final next = entry.baseRarity.index + 1;
-      return CoinRarity.values[
-          next.clamp(0, CoinRarity.values.length - 1)];
+      return CoinRarity.values[next.clamp(0, CoinRarity.values.length - 1)];
     }
     return entry.baseRarity;
   }
@@ -173,8 +169,8 @@ class _CorrectionSheetState extends ConsumerState<_CorrectionSheet> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.md,
-                    AppSpacing.lg, AppSpacing.sm),
+                padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.sm),
                 child: Row(
                   children: [
                     if (_country != null)
@@ -217,8 +213,7 @@ class _CorrectionSheetState extends ConsumerState<_CorrectionSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(_entry!.name,
-                style: Theme.of(context).textTheme.titleLarge),
+            Text(_entry!.name, style: Theme.of(context).textTheme.titleLarge),
             Text('${_entry!.country} · ${_entry!.denomination}',
                 style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: AppSpacing.lg),

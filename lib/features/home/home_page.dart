@@ -106,8 +106,7 @@ class HomePage extends ConsumerWidget {
                     children: [
                       for (final s in scans.take(4))
                         Card(
-                          margin:
-                              const EdgeInsets.only(bottom: AppSpacing.sm),
+                          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                           child: ScanListTile(
                             record: s,
                             money: money,
@@ -227,8 +226,7 @@ class _RankingsPreview extends ConsumerWidget {
                 children: [
                   for (var i = 0; i < entries.take(3).length; i++)
                     InkWell(
-                      onTap: () =>
-                          showRankingDetailSheet(context, entries[i]),
+                      onTap: () => showRankingDetailSheet(context, entries[i]),
                       child: Padding(
                         padding:
                             const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -253,9 +251,7 @@ class _RankingsPreview extends ConsumerWidget {
                               child: Text(entries[i].name,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge),
+                                  style: Theme.of(context).textTheme.bodyLarge),
                             ),
                             const SizedBox(width: AppSpacing.sm),
                             Text(money.compact(entries[i].baseValueEur),
@@ -283,7 +279,8 @@ class _ProBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [AppColors.goldLight, AppColors.gold],
@@ -320,8 +317,7 @@ class _HowItWorks extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l.howItWorks,
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(l.howItWorks, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: AppSpacing.md),
             for (final (n, title, body) in steps)
               Padding(
@@ -344,11 +340,9 @@ class _HowItWorks extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(title,
-                              style:
-                                  Theme.of(context).textTheme.titleMedium),
+                              style: Theme.of(context).textTheme.titleMedium),
                           Text(body,
-                              style:
-                                  Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context).textTheme.bodyMedium),
                         ],
                       ),
                     ),

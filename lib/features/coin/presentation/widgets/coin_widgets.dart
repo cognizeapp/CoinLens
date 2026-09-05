@@ -13,8 +13,8 @@ import 'coin_mockup.dart';
 /// Shortens a denomination string ("20 Dollars", "1 Lira") to a compact
 /// engraving glyph ("20", "1") for the generated coin mockup.
 String shortDenomination(String denomination) {
-  final match = RegExp(r'^[\p{Sc}]?\s*[\d.,/]+', unicode: true)
-      .firstMatch(denomination);
+  final match =
+      RegExp(r'^[\p{Sc}]?\s*[\d.,/]+', unicode: true).firstMatch(denomination);
   final token = (match?.group(0) ?? denomination).trim();
   return token.length > 5 ? token.substring(0, 5) : token;
 }
@@ -44,8 +44,8 @@ class RarityChip extends StatelessWidget {
       ),
       child: Text(
         rarity.localizedLabel(context.l10n),
-        style: TextStyle(
-            color: color, fontSize: 12, fontWeight: FontWeight.w600),
+        style:
+            TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -176,7 +176,8 @@ class ScanListTile extends StatelessWidget {
         seed: id.coinName,
       ),
       title: Text(id.coinName,
-          maxLines: 1, overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.titleMedium),
       subtitle: Text(
         '${id.country}${id.year != null ? ' • ${id.year}' : ''}  ·  ${formatScanDate(record.createdAt, context.l10n)}',

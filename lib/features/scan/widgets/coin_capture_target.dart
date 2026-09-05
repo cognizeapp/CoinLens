@@ -66,17 +66,22 @@ class _CoinCaptureTargetState extends State<CoinCaptureTarget>
             alignment: Alignment.center,
             children: [
               if (hasImage)
-                Opacity(opacity: 0.9, child: CapturedImage(path: widget.imagePath!)),
+                Opacity(
+                    opacity: 0.9,
+                    child: CapturedImage(path: widget.imagePath!)),
               AnimatedBuilder(
                 animation: _pulse,
                 builder: (context, _) {
-                  final t = widget.captured ? 1.0 : (0.85 + _pulse.value * 0.15);
+                  final t =
+                      widget.captured ? 1.0 : (0.85 + _pulse.value * 0.15);
                   return Container(
                     width: 108 * t,
                     height: 108 * t,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: hasImage ? null : AppColors.background.withValues(alpha: 0.2),
+                      color: hasImage
+                          ? null
+                          : AppColors.background.withValues(alpha: 0.2),
                       border: Border.all(
                         color: widget.captured
                             ? ringColor

@@ -52,35 +52,34 @@ class LockedPremiumSection extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                  const Icon(Icons.auto_awesome_rounded,
-                      color: AppColors.gold, size: 28),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(l.unlockAiTitle,
-                      style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: AppSpacing.md),
-                  ...features.map((f) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 3),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(f.$1),
-                            const SizedBox(width: AppSpacing.sm),
-                            Flexible(
-                              child: Text(f.$2,
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge),
-                            ),
-                          ],
-                        ),
-                      )),
-                  const SizedBox(height: AppSpacing.lg),
-                  FilledButton(
-                    onPressed: onUnlock,
-                    child: Text(l.unlockPremium),
-                  ),
-                ],
-              ),
+                const Icon(Icons.auto_awesome_rounded,
+                    color: AppColors.gold, size: 28),
+                const SizedBox(height: AppSpacing.sm),
+                Text(l.unlockAiTitle,
+                    style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: AppSpacing.md),
+                ...features.map((f) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(f.$1),
+                          const SizedBox(width: AppSpacing.sm),
+                          Flexible(
+                            child: Text(f.$2,
+                                style: Theme.of(context).textTheme.bodyLarge),
+                          ),
+                        ],
+                      ),
+                    )),
+                const SizedBox(height: AppSpacing.lg),
+                FilledButton(
+                  onPressed: onUnlock,
+                  child: Text(l.unlockPremium),
+                ),
+              ],
             ),
+          ),
         ],
       ),
     );

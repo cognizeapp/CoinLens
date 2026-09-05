@@ -45,8 +45,7 @@ class SellGuideSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.sell_outlined,
-                  color: AppColors.gold, size: 20),
+              const Icon(Icons.sell_outlined, color: AppColors.gold, size: 20),
               const SizedBox(width: AppSpacing.sm),
               Text(l.sellGuideTitle,
                   style: Theme.of(context).textTheme.titleMedium),

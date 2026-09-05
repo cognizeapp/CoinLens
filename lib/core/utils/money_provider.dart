@@ -10,7 +10,7 @@ import 'formatters.dart';
 /// (so thousands separators etc. follow the language).
 final moneyFormatterProvider = Provider<MoneyFormatter>((ref) {
   final code = ref.watch(currencyCodeProvider);
-  final locale = ref.watch(localeProvider) ??
-      PlatformDispatcher.instance.locale;
+  final locale =
+      ref.watch(localeProvider) ?? PlatformDispatcher.instance.locale;
   return MoneyFormatter(currencyCode: code, locale: locale.languageCode);
 });

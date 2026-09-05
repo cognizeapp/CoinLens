@@ -47,7 +47,8 @@ class _Sheet extends ConsumerWidget {
       ),
       (l.detailDenomination, entry.denomination),
       (l.detailMaterial, entry.material),
-      if (entry.diameterMm != null) (l.detailDiameter, '${entry.diameterMm} mm'),
+      if (entry.diameterMm != null)
+        (l.detailDiameter, '${entry.diameterMm} mm'),
       if (entry.weightG != null) (l.detailWeight, '${entry.weightG} g'),
       if (entry.keyDates.isNotEmpty)
         (l.rankKeyDatesLabel, entry.keyDates.join(', ')),
@@ -128,8 +129,7 @@ class _Sheet extends ConsumerWidget {
               ),
             if (entry.notes != null) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(entry.notes!,
-                  style: Theme.of(context).textTheme.bodyMedium),
+              Text(entry.notes!, style: Theme.of(context).textTheme.bodyMedium),
             ],
             const SizedBox(height: AppSpacing.lg),
             SellGuideSection(

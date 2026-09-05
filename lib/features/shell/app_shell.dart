@@ -33,7 +33,13 @@ class AppShell extends ConsumerWidget {
     final current = navigationShell.currentIndex;
     final online = ref.watch(isOnlineProvider);
     final l = context.l10n;
-    final labels = [l.navHome, l.navCollection, l.navScan, l.navHistory, l.navProfile];
+    final labels = [
+      l.navHome,
+      l.navCollection,
+      l.navScan,
+      l.navHistory,
+      l.navProfile
+    ];
     return Scaffold(
       body: Column(
         children: [

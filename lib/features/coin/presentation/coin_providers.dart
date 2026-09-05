@@ -23,7 +23,8 @@ final scanRepositoryProvider = Provider<ScanRepository>(
 final coinCatalogProvider = Provider<CoinCatalog>((ref) => AssetCoinCatalog());
 
 /// Mock OCR by default; overridden with an on-device engine when available.
-final ocrServiceProvider = Provider<OcrService>((ref) => const MockOcrService());
+final ocrServiceProvider =
+    Provider<OcrService>((ref) => const MockOcrService());
 
 final conditionEstimatorProvider = Provider<ConditionEstimator>(
   (ref) => const HeuristicConditionEstimator(),

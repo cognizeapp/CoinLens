@@ -17,8 +17,7 @@ const supportedLocales = <Locale>[
 
 /// `null` = system default; otherwise a forced language.
 class LocaleNotifier extends StateNotifier<Locale?> {
-  LocaleNotifier(this._prefs)
-      : super(_decode(_prefs.languageOverride));
+  LocaleNotifier(this._prefs) : super(_decode(_prefs.languageOverride));
 
   final AppPreferences _prefs;
 

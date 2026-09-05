@@ -11,7 +11,8 @@ class MockCoinIntelligenceService implements CoinIntelligenceService {
   Future<Result<CoinIntelligence>> analyze(CoinIdentification id) async {
     await Future<void>.delayed(const Duration(milliseconds: 900));
 
-    final yearText = id.year != null ? 'in ${id.year}' : 'in an unrecorded year';
+    final yearText =
+        id.year != null ? 'in ${id.year}' : 'in an unrecorded year';
     final mintText = id.mint != null ? ' at the ${id.mint} mint' : '';
 
     return Result.ok(CoinIntelligence(

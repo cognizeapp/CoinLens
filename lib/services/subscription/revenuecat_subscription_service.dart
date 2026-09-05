@@ -122,8 +122,8 @@ class RevenueCatSubscriptionService implements SubscriptionService {
   }
 
   @override
-  Future<void> debugSetPremium(bool value) =>
-      throw UnsupportedError('Not available with the real subscription service.');
+  Future<void> debugSetPremium(bool value) => throw UnsupportedError(
+      'Not available with the real subscription service.');
 
   void dispose() => _controller.close();
 }

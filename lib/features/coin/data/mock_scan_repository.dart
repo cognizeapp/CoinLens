@@ -99,7 +99,8 @@ class MockScanRepository implements ScanRepository {
   @override
   Future<Result<List<ScanRecord>>> recentScans({int limit = 20}) async {
     await _tick();
-    final sorted = [..._scans]..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final sorted = [..._scans]
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return Result.ok(sorted.take(limit).toList());
   }
 
@@ -149,5 +150,6 @@ class MockScanRepository implements ScanRepository {
     return const Result.ok(null);
   }
 
-  Future<void> _tick() => Future<void>.delayed(const Duration(milliseconds: 260));
+  Future<void> _tick() =>
+      Future<void>.delayed(const Duration(milliseconds: 260));
 }

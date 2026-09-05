@@ -33,8 +33,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   }
 
   void _showError(Object error) {
-    final message =
-        error is Failure ? error.localized(context.l10n) : context.l10n.errUnknown;
+    final message = error is Failure
+        ? error.localized(context.l10n)
+        : context.l10n.errUnknown;
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(message)));
@@ -50,9 +51,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         .signIn(_email.text, _password.text);
     if (!mounted) return;
     if (ok) {
-      await ref
-          .read(analyticsServiceProvider)
-          .logEvent(AnalyticsEvent.signInCompleted, params: {'method': 'email'});
+      await ref.read(analyticsServiceProvider).logEvent(
+          AnalyticsEvent.signInCompleted,
+          params: {'method': 'email'});
     }
   }
 
@@ -61,7 +62,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         await ref.read(authControllerProvider.notifier).continueAsGuest();
     if (mounted && ok) {
       await ref.read(analyticsServiceProvider).logEvent(
-          AnalyticsEvent.signInCompleted, params: {'method': 'guest'});
+          AnalyticsEvent.signInCompleted,
+          params: {'method': 'guest'});
     }
   }
 

@@ -102,7 +102,12 @@ class _MeterPainter extends CustomPainter {
     final tip = Offset(cx + r * math.cos(angle), cy + r * math.sin(angle));
     canvas.drawCircle(tip, 9, Paint()..color = AppColors.gold);
     canvas.drawCircle(
-        tip, 9, Paint()..color = AppColors.onGold..style = PaintingStyle.stroke..strokeWidth = 2);
+        tip,
+        9,
+        Paint()
+          ..color = AppColors.onGold
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2);
   }
 
   @override

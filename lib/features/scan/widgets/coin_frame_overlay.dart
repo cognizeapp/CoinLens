@@ -71,7 +71,8 @@ class _OverlayPainter extends CustomPainter {
 
     // Scrim with a circular cut-out.
     final scrim = Path()..addRect(Offset.zero & size);
-    final hole = Path()..addOval(Rect.fromCircle(center: center, radius: radius));
+    final hole = Path()
+      ..addOval(Rect.fromCircle(center: center, radius: radius));
     canvas.drawPath(
       Path.combine(PathOperation.difference, scrim, hole),
       Paint()..color = Colors.black.withValues(alpha: 0.55),
@@ -85,7 +86,8 @@ class _OverlayPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..color = AppColors.gold.withValues(alpha: active ? 0.5 + pulse * 0.5 : 0.6),
+        ..color =
+            AppColors.gold.withValues(alpha: active ? 0.5 + pulse * 0.5 : 0.6),
     );
 
     // Corner brackets around the ring's bounding box.

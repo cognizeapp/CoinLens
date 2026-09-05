@@ -7,7 +7,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../domain/auth_repository.dart';
 
 class SocialSignInButtons extends StatelessWidget {
-  const SocialSignInButtons({super.key, required this.onSelected, this.busy = false});
+  const SocialSignInButtons(
+      {super.key, required this.onSelected, this.busy = false});
 
   final ValueChanged<SocialProvider> onSelected;
   final bool busy;
