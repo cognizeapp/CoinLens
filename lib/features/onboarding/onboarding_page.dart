@@ -40,12 +40,19 @@ List<_Slide> _slidesFor(AppLocalizations l) => [
         title: l.ob2Title,
         accent: l.ob2Accent,
         subtitle: l.ob2Sub,
-        hero: (context) => _HeroCard(
-          child: RarityMeter(
-            label: context.l10n.ob2MeterLabel,
-            lowLabel: context.l10n.ob2MeterLow,
-            highLabel: context.l10n.ob2MeterHigh,
-          ),
+        hero: (context) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const _Art('assets/brand/coin_hero.png', size: 100),
+            const SizedBox(height: AppSpacing.sm),
+            _HeroCard(
+              child: RarityMeter(
+                label: context.l10n.ob2MeterLabel,
+                lowLabel: context.l10n.ob2MeterLow,
+                highLabel: context.l10n.ob2MeterHigh,
+              ),
+            ),
+          ],
         ),
       ),
       _Slide(
@@ -63,7 +70,11 @@ List<_Slide> _slidesFor(AppLocalizations l) => [
     ];
 
 class OnboardingPage extends ConsumerStatefulWidget {
-  const OnboardingPage({super.key});
+  const OnboardingPage({super.key, this.replay = false});
+
+  /// `true` when opened from Profile → "Replay intro": nothing to persist,
+  /// and finishing/skipping just returns to where the user came from.
+  final bool replay;
 
   @override
   ConsumerState<OnboardingPage> createState() => _OnboardingPageState();
@@ -80,21 +91,39 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   }
 
   Future<void> _complete() async {
+    if (widget.replay) return;
     await ref.read(onboardingCompleteProvider.notifier).complete();
     await ref
         .read(analyticsServiceProvider)
         .logEvent(AnalyticsEvent.onboardingCompleted);
   }
 
+  void _leave() {
+    if (widget.replay) {
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        context.go('/');
+      }
+    } else {
+      context.go('/paywall');
+    }
+  }
+
   Future<void> _skip() async {
     await _complete();
-    if (mounted) context.go('/');
+    if (!mounted) return;
+    if (widget.replay) {
+      _leave();
+    } else {
+      context.go('/');
+    }
   }
 
   Future<void> _next(int count) async {
     if (_index == count - 1) {
       await _complete();
-      if (mounted) context.go('/paywall');
+      if (mounted) _leave();
     } else {
       unawaited(_controller.nextPage(
         duration: const Duration(milliseconds: 320),
@@ -111,48 +140,51 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: [
           // Layered brand backdrop.
           const Positioned.fill(child: _Backdrop()),
-          SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
-                  child: Row(
-                    children: [
-                      const BrandWordmark(height: 22),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: _skip,
-                        child: Text(l.actionSkip,
-                            style: const TextStyle(
-                                color: AppColors.textSecondary)),
-                      ),
-                    ],
+          Positioned.fill(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+                    child: Row(
+                      children: [
+                        const BrandWordmark(height: 22),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: _skip,
+                          child: Text(l.actionSkip,
+                              style: const TextStyle(
+                                  color: AppColors.textSecondary)),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                _Progress(count: slides.length, index: _index),
-                const SizedBox(height: AppSpacing.sm),
-                Expanded(
-                  child: PageView.builder(
-                    controller: _controller,
-                    itemCount: slides.length,
-                    onPageChanged: (i) => setState(() => _index = i),
-                    itemBuilder: (context, i) =>
-                        _SlideView(slide: slides[i], active: i == _index),
+                  _Progress(count: slides.length, index: _index),
+                  const SizedBox(height: AppSpacing.sm),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _controller,
+                      itemCount: slides.length,
+                      onPageChanged: (i) => setState(() => _index = i),
+                      itemBuilder: (context, i) =>
+                          _SlideView(slide: slides[i], active: i == _index),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                      AppSpacing.sm, AppSpacing.screen, AppSpacing.lg),
-                  child: _CtaButton(
-                    label: isLast ? l.ob4Cta : l.actionContinue,
-                    onPressed: () => _next(slides.length),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
+                        AppSpacing.sm, AppSpacing.screen, AppSpacing.lg),
+                    child: _CtaButton(
+                      label: isLast ? l.ob4Cta : l.actionContinue,
+                      onPressed: () => _next(slides.length),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -275,8 +307,12 @@ class _SlideView extends StatelessWidget {
                 flex: 5,
                 child: Center(
                   child: SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    child: slide.hero(context),
+                    physics: const ClampingScrollPhysics(),
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                      child: slide.hero(context),
+                    ),
                   ),
                 ),
               ),
@@ -371,6 +407,36 @@ class _CtaButton extends StatelessWidget {
 
 // ── Heroes ──────────────────────────────────────────────────────────────────
 
+/// A brand illustration (coin / stack / trio) on a soft orange halo.
+class _Art extends StatelessWidget {
+  const _Art(this.asset, {this.size = 150, this.aspect = 1});
+  final String asset;
+  final double size;
+
+  /// width / height of the source art, so the glow behind it is proportioned.
+  final double aspect;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [
+            AppColors.gold.withValues(alpha: 0.20),
+            AppColors.gold.withValues(alpha: 0),
+          ],
+          stops: const [0.05, 0.75],
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: size * 0.12, vertical: size * 0.12 / aspect),
+        child: Image.asset(asset, width: size, fit: BoxFit.contain),
+      ),
+    );
+  }
+}
+
 /// Shared framing for the flat "info card" heroes (rarity meter, portfolio).
 class _HeroCard extends StatelessWidget {
   const _HeroCard({required this.child});
@@ -408,29 +474,28 @@ class _CoinValueHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return SizedBox(
-      width: 260,
-      height: 260,
-      child: Stack(
-        alignment: Alignment.center,
-        clipBehavior: Clip.none,
-        children: [
-          const GlowCoin(size: 190),
-          Positioned(
-            right: -6,
-            top: 26,
-            child: _Tag(
-              label: l.ob1RefLabel,
-              value: '€ 480',
-            ),
+    final w = MediaQuery.sizeOf(context).width;
+    final coin = (w - 120).clamp(150.0, 210.0);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: coin * 1.38,
+          height: coin * 1.12,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              GlowCoin(size: coin),
+              Align(
+                alignment: const Alignment(1, -0.5),
+                child: _Tag(label: l.ob1RefLabel, value: '€ 480'),
+              ),
+            ],
           ),
-          Positioned(
-            left: 2,
-            bottom: 30,
-            child: _Pill(text: l.ob1CoinName),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        _Pill(text: l.ob1CoinName),
+      ],
     );
   }
 }
@@ -443,6 +508,7 @@ class _Tag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(maxWidth: 148),
       padding:
           const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 8),
       decoration: BoxDecoration(
@@ -458,19 +524,22 @@ class _Tag extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label,
+              maxLines: 2,
               style: const TextStyle(
                   color: AppColors.textTertiary,
-                  fontSize: 9,
+                  fontSize: 8.5,
+                  height: 1.15,
                   fontWeight: FontWeight.w700,
-                  letterSpacing: 0.6)),
-          const SizedBox(height: 1),
+                  letterSpacing: 0.5)),
+          const SizedBox(height: 2),
           Text(value,
               style: const TextStyle(
                   color: AppColors.gold,
-                  fontSize: 20,
+                  fontSize: 19,
                   fontWeight: FontWeight.w800)),
         ],
       ),
@@ -515,6 +584,23 @@ class _PortfolioHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const _Art('assets/brand/coin_stack.png', size: 128),
+        const SizedBox(height: AppSpacing.sm),
+        _PortfolioCard(l: l),
+      ],
+    );
+  }
+}
+
+class _PortfolioCard extends StatelessWidget {
+  const _PortfolioCard({required this.l});
+  final AppLocalizations l;
+
+  @override
+  Widget build(BuildContext context) {
     return _HeroCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -577,11 +663,14 @@ class _StepsHero extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        const _Art('assets/brand/coin_trio.png', size: 150, aspect: 1.28),
+        const SizedBox(height: AppSpacing.sm),
         for (final (icon, text) in steps)
           Container(
             width: 300,
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            margin: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md, vertical: 10),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 begin: Alignment.topLeft,
@@ -594,17 +683,17 @@ class _StepsHero extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
                     color: AppColors.goldSoft,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, color: AppColors.gold, size: 20),
+                  child: Icon(icon, color: AppColors.gold, size: 18),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
-                  child: Text(text,
-                      style: Theme.of(context).textTheme.bodyLarge),
+                  child:
+                      Text(text, style: Theme.of(context).textTheme.bodyMedium),
                 ),
               ],
             ),

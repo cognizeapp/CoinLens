@@ -751,6 +751,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageLabel => 'Langue';
 
   @override
+  String get replayTutorial => 'Replay the intro';
+
+  @override
   String get languageSystem => 'Par défaut du système';
 
   @override

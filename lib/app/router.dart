@@ -48,7 +48,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       // The post-onboarding paywall is reachable before sign-in so new users
       // meet the free-trial offer straight away.
       final atPaywall = loc == '/paywall';
+      // Replaying the intro from Profile — never gated.
+      final atTutorial = loc == '/tutorial';
 
+      if (atTutorial) return null;
       if (!onboardingDone) return atOnboarding ? null : '/onboarding';
       if (atOnboarding) return loggedIn ? '/' : '/paywall';
 
@@ -61,6 +64,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/onboarding',
         builder: (_, __) => const OnboardingPage(),
+      ),
+      GoRoute(
+        path: '/tutorial',
+        parentNavigatorKey: _rootKey,
+        builder: (_, __) => const OnboardingPage(replay: true),
       ),
       GoRoute(path: '/sign-in', builder: (_, __) => const SignInPage()),
       GoRoute(path: '/sign-up', builder: (_, __) => const SignUpPage()),

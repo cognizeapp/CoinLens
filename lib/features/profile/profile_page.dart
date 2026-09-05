@@ -144,6 +144,12 @@ class ProfilePage extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right_rounded),
             onTap: () => _pickLanguage(context, ref, locale),
           ),
+          ListTile(
+            leading: const Icon(Icons.slideshow_rounded),
+            title: Text(l.replayTutorial),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push('/tutorial'),
+          ),
 
           _SectionHeader(l.sectionLegal),
           ListTile(

@@ -751,6 +751,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageLabel => 'Taal';
 
   @override
+  String get replayTutorial => 'Replay the intro';
+
+  @override
   String get languageSystem => 'Systeemstandaard';
 
   @override

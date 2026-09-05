@@ -1545,6 +1545,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get languageLabel;
 
+  /// No description provided for @replayTutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the intro'**
+  String get replayTutorial;
+
   /// No description provided for @languageSystem.
   ///
   /// In en, this message translates to:

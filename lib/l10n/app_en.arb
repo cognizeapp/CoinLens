@@ -317,6 +317,7 @@
   "sectionPreferences": "Preferences",
   "currencyLabel": "Currency",
   "languageLabel": "Language",
+  "replayTutorial": "Replay the intro",
   "languageSystem": "System default",
   "sectionLegal": "Legal",
   "privacyPolicy": "Privacy Policy",
