@@ -62,29 +62,25 @@ class AppLocalizationsPt extends AppLocalizations {
   String get onboard1Title => 'Descubra as suas moedas';
 
   @override
-  String get onboard1Body =>
-      'Digitalize qualquer moeda e descubra na hora do que se trata.';
+  String get onboard1Body => 'Digitalize qualquer moeda e descubra na hora do que se trata.';
 
   @override
   String get onboard2Title => 'Descubra quanto vale';
 
   @override
-  String get onboard2Body =>
-      'Obtenha um valor de mercado estimado com base em dados reais.';
+  String get onboard2Body => 'Obtenha um valor de mercado estimado com base em dados reais.';
 
   @override
   String get onboard3Title => 'Desbloqueie a AI Coin Intelligence';
 
   @override
-  String get onboard3Body =>
-      'Descubra a história, a raridade e o potencial de venda das suas moedas.';
+  String get onboard3Body => 'Descubra a história, a raridade e o potencial de venda das suas moedas.';
 
   @override
   String get onboardStart => 'Começar a digitalizar';
 
   @override
-  String get authSubtitle =>
-      'Inicie sessão para sincronizar a sua coleção em todos os dispositivos.';
+  String get authSubtitle => 'Inicie sessão para sincronizar a sua coleção em todos os dispositivos.';
 
   @override
   String get authEmail => 'E-mail';
@@ -126,20 +122,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get authCreateCta => 'Criar conta';
 
   @override
-  String get authResetSent =>
-      'Se existir uma conta para esse e-mail, será enviado um link para redefinir a palavra-passe.';
+  String get authResetSent => 'Se existir uma conta para esse e-mail, será enviado um link para redefinir a palavra-passe.';
 
   @override
-  String get authNoAccountForEmail =>
-      'Não foi encontrada nenhuma conta para esse e-mail.';
+  String get authNoAccountForEmail => 'Não foi encontrada nenhuma conta para esse e-mail.';
 
   @override
-  String get authTerms =>
-      'Ao continuar, aceita os Termos de Serviço e a Política de Privacidade da Coinsights.';
+  String get authTerms => 'Ao continuar, aceita os Termos de Serviço e a Política de Privacidade da Coinsights.';
 
   @override
-  String get authCreateSyncHint =>
-      'Crie uma conta para sincronizar a sua coleção';
+  String get authCreateSyncHint => 'Crie uma conta para sincronizar a sua coleção';
 
   @override
   String get valEmailEmpty => 'Introduza o seu e-mail';
@@ -173,22 +165,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get howItWorksScan => 'Digitalize';
 
   @override
-  String get howItWorksScanBody =>
-      'Fotografe o anverso e o reverso da sua moeda.';
+  String get howItWorksScanBody => 'Fotografe o anverso e o reverso da sua moeda.';
 
   @override
   String get howItWorksIdentify => 'Identifique';
 
   @override
-  String get howItWorksIdentifyBody =>
-      'Comparamo-la com bases de dados numismáticas.';
+  String get howItWorksIdentifyBody => 'Comparamo-la com bases de dados numismáticas.';
 
   @override
   String get howItWorksValue => 'Avalie';
 
   @override
-  String get howItWorksValueBody =>
-      'Veja um intervalo de valor de mercado estimado.';
+  String get howItWorksValueBody => 'Veja um intervalo de valor de mercado estimado.';
 
   @override
   String get mostValuableCoins => 'Moedas mais valiosas';
@@ -254,8 +243,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get uploadFromLibrary => 'Carregar da galeria';
 
   @override
-  String get couldNotOpenImage =>
-      'Não foi possível abrir essa imagem. Verifique as permissões de fotos nas Definições.';
+  String get couldNotOpenImage => 'Não foi possível abrir essa imagem. Verifique as permissões de fotos nas Definições.';
 
   @override
   String tapToRetakeWith(String issue) {
@@ -275,8 +263,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cameraAccessOffTitle => 'O acesso à câmara está desativado';
 
   @override
-  String get cameraAccessOffBody =>
-      'Ative o acesso à câmara para a Coinsights nas Definições do dispositivo e volte para digitalizar. Também pode carregar uma foto.';
+  String get cameraAccessOffBody => 'Ative o acesso à câmara para a Coinsights nas Definições do dispositivo e volte para digitalizar. Também pode carregar uma foto.';
 
   @override
   String get cameraUsePhotoInstead => 'Usar uma foto';
@@ -285,15 +272,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cameraNoneTitle => 'Nenhuma câmara disponível';
 
   @override
-  String get cameraNoneBody =>
-      'Este dispositivo não tem uma câmara utilizável. Carregue uma foto.';
+  String get cameraNoneBody => 'Este dispositivo não tem uma câmara utilizável. Carregue uma foto.';
 
   @override
   String get cameraUploadPhoto => 'Carregar uma foto';
 
   @override
-  String get cameraCaptureFailed =>
-      'Não foi possível tirar a foto. Tente novamente.';
+  String get cameraCaptureFailed => 'Não foi possível tirar a foto. Tente novamente.';
 
   @override
   String get qualityRetakeNeeded => 'É necessário repetir a foto';
@@ -311,57 +296,49 @@ class AppLocalizationsPt extends AppLocalizations {
   String get issueLowResShort => 'Baixa resolução';
 
   @override
-  String get issueLowResFull =>
-      'Esta imagem é demasiado pequena. Use a câmara na qualidade máxima ou escolha uma foto maior.';
+  String get issueLowResFull => 'Esta imagem é demasiado pequena. Use a câmara na qualidade máxima ou escolha uma foto maior.';
 
   @override
   String get issueTooDarkShort => 'Demasiado escura';
 
   @override
-  String get issueTooDarkFull =>
-      'A foto está demasiado escura. Mude para uma luz mais forte e uniforme.';
+  String get issueTooDarkFull => 'A foto está demasiado escura. Mude para uma luz mais forte e uniforme.';
 
   @override
   String get issueTooBrightShort => 'Sobre-exposta';
 
   @override
-  String get issueTooBrightFull =>
-      'A foto está sobre-exposta. Reduza a luz direta ou afaste-se dos brilhos.';
+  String get issueTooBrightFull => 'A foto está sobre-exposta. Reduza a luz direta ou afaste-se dos brilhos.';
 
   @override
   String get issueBlurryShort => 'Desfocada';
 
   @override
-  String get issueBlurryFull =>
-      'A imagem está demasiado desfocada. Segure o telemóvel firme, toque para focar e certifique-se de que a moeda está nítida.';
+  String get issueBlurryFull => 'A imagem está demasiado desfocada. Segure o telemóvel firme, toque para focar e certifique-se de que a moeda está nítida.';
 
   @override
   String get issueGlareShort => 'Reflexos';
 
   @override
-  String get issueGlareFull =>
-      'Há reflexos fortes na moeda. Incline-a ligeiramente ou use uma luz mais suave e indireta.';
+  String get issueGlareFull => 'Há reflexos fortes na moeda. Incline-a ligeiramente ou use uma luz mais suave e indireta.';
 
   @override
   String get issueNoCoinShort => 'Nenhuma moeda detetada';
 
   @override
-  String get issueNoCoinFull =>
-      'Não encontrámos nenhuma moeda. Coloque uma única moeda sobre um fundo liso que ocupe a maior parte do enquadramento.';
+  String get issueNoCoinFull => 'Não encontrámos nenhuma moeda. Coloque uma única moeda sobre um fundo liso que ocupe a maior parte do enquadramento.';
 
   @override
   String get issueCoinSmallShort => 'Moeda demasiado pequena';
 
   @override
-  String get issueCoinSmallFull =>
-      'Aproxime-se para que a moeda ocupe a maior parte do círculo.';
+  String get issueCoinSmallFull => 'Aproxime-se para que a moeda ocupe a maior parte do círculo.';
 
   @override
   String get issueMultipleShort => 'Vários objetos';
 
   @override
-  String get issueMultipleFull =>
-      'Detetámos mais do que um objeto. Digitalize uma moeda de cada vez.';
+  String get issueMultipleFull => 'Detetámos mais do que um objeto. Digitalize uma moeda de cada vez.';
 
   @override
   String get analyzingCoin => 'A analisar a moeda…';
@@ -376,8 +353,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get stageDetectingYear => 'A detetar o ano';
 
   @override
-  String get stageSearchingDatabase =>
-      'A pesquisar na base de dados numismática';
+  String get stageSearchingDatabase => 'A pesquisar na base de dados numismática';
 
   @override
   String get stageCalculatingValue => 'A calcular o valor';
@@ -416,8 +392,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get notConfidentMatch => 'Correspondência incerta';
 
   @override
-  String get notConfidentBody =>
-      'Não conseguimos identificar esta moeda com certeza. Correspondências possíveis:';
+  String get notConfidentBody => 'Não conseguimos identificar esta moeda com certeza. Correspondências possíveis:';
 
   @override
   String get detailCountry => 'País';
@@ -516,8 +491,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get generatingAnalysis => 'A gerar a análise da moeda com IA…';
 
   @override
-  String get aiUnavailable =>
-      'A análise com IA está temporariamente indisponível.';
+  String get aiUnavailable => 'A análise com IA está temporariamente indisponível.';
 
   @override
   String get estimatedSellingPrice => 'Preço de venda estimado';
@@ -570,12 +544,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get qHowMuchList => 'Por quanto devo anunciá-la?';
 
   @override
-  String get paywallHeadline =>
-      'Desbloqueie toda a história por trás de cada moeda';
+  String get paywallHeadline => 'Desbloqueie toda a história por trás de cada moeda';
 
   @override
-  String get paywallSubheadline =>
-      'Descubra a história, a raridade e a melhor forma de vender as suas moedas.';
+  String get paywallSubheadline => 'Descubra a história, a raridade e a melhor forma de vender as suas moedas.';
 
   @override
   String get featAiAnalysis => 'Análise detalhada com IA';
@@ -626,12 +598,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get trial7Days => '7 dias de avaliação gratuita';
 
   @override
-  String get paywallLegal =>
-      'A subscrição renova-se automaticamente até ser cancelada. Pode geri-la ou cancelá-la a qualquer momento na conta da sua loja.';
+  String get paywallLegal => 'A subscrição renova-se automaticamente até ser cancelada. Pode geri-la ou cancelá-la a qualquer momento na conta da sua loja.';
 
   @override
-  String get paywallLoadError =>
-      'Não foi possível carregar as opções de subscrição.';
+  String get paywallLoadError => 'Não foi possível carregar as opções de subscrição.';
 
   @override
   String get restorePurchases => 'Restaurar compras';
@@ -643,8 +613,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get collectionEmpty => 'A sua coleção está vazia';
 
   @override
-  String get collectionEmptyBody =>
-      'Guarde uma moeda digitalizada para adicioná-la aqui.';
+  String get collectionEmptyBody => 'Guarde uma moeda digitalizada para adicioná-la aqui.';
 
   @override
   String get scanACoin => 'Digitalizar uma moeda';
@@ -653,12 +622,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get collectionAddCoin => 'Add a coin';
 
   @override
-  String get collectionEditHintList =>
-      'Swipe a coin left to remove it, or tap + to add one.';
+  String get collectionEditHintList => 'Swipe a coin left to remove it, or tap + to add one.';
 
   @override
-  String get collectionEditHintGrid =>
-      'Long-press a coin to remove it, or tap + to add one.';
+  String get collectionEditHintGrid => 'Long-press a coin to remove it, or tap + to add one.';
 
   @override
   String get collectionManage => 'Edit collection';
@@ -737,12 +704,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get historyEmpty => 'Ainda nada digitalizado';
 
   @override
-  String get historyEmptyBody =>
-      'Digitalize uma moeda para começar o seu histórico.';
+  String get historyEmptyBody => 'Digitalize uma moeda para começar o seu histórico.';
 
   @override
-  String get historyLoadError =>
-      'Não foi possível carregar o histórico de digitalizações.';
+  String get historyLoadError => 'Não foi possível carregar o histórico de digitalizações.';
 
   @override
   String get profileTitle => 'Perfil';
@@ -771,12 +736,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get manageSubscription => 'Gerir subscrição';
 
   @override
-  String get manageSubscriptionBody =>
-      'Abre as definições da App Store / Play Store';
+  String get manageSubscriptionBody => 'Abre as definições da App Store / Play Store';
 
   @override
-  String get manageSubscriptionHint =>
-      'Faça a gestão ou cancele nas definições da conta da sua loja.';
+  String get manageSubscriptionHint => 'Faça a gestão ou cancele nas definições da conta da sua loja.';
 
   @override
   String get sectionPreferences => 'Preferências';
@@ -821,8 +784,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deleteAccountTitle => 'Eliminar a conta?';
 
   @override
-  String get deleteAccountBody =>
-      'Isto elimina permanentemente a sua conta, digitalizações e imagens. Não pode ser anulado.';
+  String get deleteAccountBody => 'Isto elimina permanentemente a sua conta, digitalizações e imagens. Não pode ser anulado.';
 
   @override
   String appVersion(String version) {
@@ -842,15 +804,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get rankKeyDates => 'Datas-chave';
 
   @override
-  String get rankMostValuableSub =>
-      'Os recordes do mundo da numismática. Raridades extremas — mas mostram quanto uma moeda pode valer.';
+  String get rankMostValuableSub => 'Os recordes do mundo da numismática. Raridades extremas — mas mostram quanto uma moeda pode valer.';
 
   @override
   String get rankRarestSub => 'Moedas que quase nunca chegam ao mercado.';
 
   @override
-  String get rankKeyDatesSub =>
-      'Moedas de aparência comum com uma data ou marca de casa da moeda que vale a pena procurar nos trocos.';
+  String get rankKeyDatesSub => 'Moedas de aparência comum com uma data ou marca de casa da moeda que vale a pena procurar nos trocos.';
 
   @override
   String get rankLoadError => 'Não foi possível carregar as classificações.';
@@ -865,8 +825,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get rankNoResults => 'Nenhuma moeda corresponde';
 
   @override
-  String get rankNoResultsBody =>
-      'Tente outro termo ou remova o filtro de país.';
+  String get rankNoResultsBody => 'Tente outro termo ou remova o filtro de país.';
 
   @override
   String get premiumBadge => 'PRO';
@@ -961,12 +920,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sellGuideResaleLabel => 'REALISTIC PRIVATE-SALE RANGE';
 
   @override
-  String get sellGuideResaleNote =>
-      'Our estimate of what a private seller nets — below retail because of buyer premiums, dealer margins and the discount collectors expect on a raw coin.';
+  String get sellGuideResaleNote => 'Our estimate of what a private seller nets — below retail because of buyer premiums, dealer margins and the discount collectors expect on a raw coin.';
 
   @override
-  String get sellGuideDisclaimer =>
-      'Ranges are estimated from our valuation model, not actual sale records. A specialist appraisal is worth it before selling anything valuable.';
+  String get sellGuideDisclaimer => 'Ranges are estimated from our valuation model, not actual sale records. A specialist appraisal is worth it before selling anything valuable.';
 
   @override
   String sellGuideUnlock(int count) {
@@ -974,72 +931,61 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get sellTierHigh =>
-      'At this value, get the coin professionally graded (PCGS/NGC) and consign it to a major auction house — the wider bidder pool usually more than covers the seller fee.';
+  String get sellTierHigh => 'At this value, get the coin professionally graded (PCGS/NGC) and consign it to a major auction house — the wider bidder pool usually more than covers the seller fee.';
 
   @override
-  String get sellTierMid =>
-      'Sharp, well-lit photos of both sides and an honest grade description are what move mid-value coins. Certification is optional but lifts trust for buyers.';
+  String get sellTierMid => 'Sharp, well-lit photos of both sides and an honest grade description are what move mid-value coins. Certification is optional but lifts trust for buyers.';
 
   @override
-  String get sellTierLow =>
-      'Everyday coins sell fastest in bulk lots or to a local dealer. Only pay for grading if a specific date/mint mark is the key-date exception.';
+  String get sellTierLow => 'Everyday coins sell fastest in bulk lots or to a local dealer. Only pay for grading if a specific date/mint mark is the key-date exception.';
 
   @override
   String get sellEbayName => 'eBay';
 
   @override
-  String get sellEbayBlurb =>
-      'Largest buyer pool by far. Expect ~13% final-value fee plus payment processing. Best for anything from a few euros up to mid four figures.';
+  String get sellEbayBlurb => 'Largest buyer pool by far. Expect ~13% final-value fee plus payment processing. Best for anything from a few euros up to mid four figures.';
 
   @override
   String get sellHeritageName => 'Heritage Auctions';
 
   @override
-  String get sellHeritageBlurb =>
-      'The biggest numismatic auction house. Worldwide collector reach for rarities; seller commission is negotiable on higher-value consignments.';
+  String get sellHeritageBlurb => 'The biggest numismatic auction house. Worldwide collector reach for rarities; seller commission is negotiable on higher-value consignments.';
 
   @override
   String get sellStacksName => 'Stack’s Bowers';
 
   @override
-  String get sellStacksBlurb =>
-      'Long-established auction house, strong for US and world coins. Like Heritage, best reserved for genuinely scarce material.';
+  String get sellStacksBlurb => 'Long-established auction house, strong for US and world coins. Like Heritage, best reserved for genuinely scarce material.';
 
   @override
   String get sellCertifiedDealerName => 'Certified coin dealer';
 
   @override
-  String get sellCertifiedDealerBlurb =>
-      'A quick, clean sale at a wholesale (buy) price — typically 60–80% of retail. No fees, no shipping risk, cash in hand.';
+  String get sellCertifiedDealerBlurb => 'A quick, clean sale at a wholesale (buy) price — typically 60–80% of retail. No fees, no shipping risk, cash in hand.';
 
   @override
   String get sellLocalShopName => 'Local coin shop';
 
   @override
-  String get sellLocalShopBlurb =>
-      'Immediate offer, no listing hassle. Prices are lower than online but there is no fee and no chance of a chargeback.';
+  String get sellLocalShopBlurb => 'Immediate offer, no listing hassle. Prices are lower than online but there is no fee and no chance of a chargeback.';
 
   @override
   String get sellForumsName => 'Collector forums';
 
   @override
-  String get sellForumsBlurb =>
-      'Sites like CoinTalk or NGC/PCGS forums have dedicated buy/sell boards. Lower fees than eBay and knowledgeable buyers, but slower.';
+  String get sellForumsBlurb => 'Sites like CoinTalk or NGC/PCGS forums have dedicated buy/sell boards. Lower fees than eBay and knowledgeable buyers, but slower.';
 
   @override
   String get sellCoinShowName => 'Coin show / bourse';
 
   @override
-  String get sellCoinShowBlurb =>
-      'Dozens of dealers in one room means competing offers. Great for selling a group at once; bring a want-list of your own too.';
+  String get sellCoinShowBlurb => 'Dozens of dealers in one room means competing offers. Great for selling a group at once; bring a want-list of your own too.';
 
   @override
   String get sellFacebookName => 'Facebook groups';
 
   @override
-  String get sellFacebookBlurb =>
-      'Active local buy/sell/trade groups for common coins. Meet in a safe public place and use protected payments only.';
+  String get sellFacebookBlurb => 'Active local buy/sell/trade groups for common coins. Meet in a safe public place and use protected payments only.';
 
   @override
   String get typicalRange => 'INTERVALO TÍPICO';
@@ -1059,12 +1005,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get errNetwork =>
-      'Sem ligação à Internet. Verifique a sua rede e tente novamente.';
+  String get errNetwork => 'Sem ligação à Internet. Verifique a sua rede e tente novamente.';
 
   @override
-  String get errServer =>
-      'Algo correu mal do nosso lado. Tente novamente dentro de momentos.';
+  String get errServer => 'Algo correu mal do nosso lado. Tente novamente dentro de momentos.';
 
   @override
   String get errUnknown => 'Erro inesperado. Tente novamente.';
@@ -1076,8 +1020,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get errAuth => 'Falha na autenticação. Tente novamente.';
 
   @override
-  String get errScanNotFound =>
-      'Não foi possível encontrar essa digitalização.';
+  String get errScanNotFound => 'Não foi possível encontrar essa digitalização.';
 
   @override
   String get justNow => 'Agora mesmo';
@@ -1098,8 +1041,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get valueDisclaimer =>
-      'Os valores das moedas são estimativas baseadas nos dados disponíveis e podem variar consoante o estado, a autenticidade e a procura do mercado.';
+  String get valueDisclaimer => 'Os valores das moedas são estimativas baseadas nos dados disponíveis e podem variar consoante o estado, a autenticidade e a procura do mercado.';
 
   @override
   String get confirmCoinLink => 'Correct the coin details';
@@ -1108,8 +1050,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get confirmCoinTitle => 'Confirm what this coin is';
 
   @override
-  String get confirmCoinBody =>
-      'The value is only as accurate as the identification. Set the country, type and year and we recalculate it from verified catalogue data.';
+  String get confirmCoinBody => 'The value is only as accurate as the identification. Set the country, type and year and we recalculate it from verified catalogue data.';
 
   @override
   String get confirmCoinCta => 'Set the coin details';
@@ -1138,8 +1079,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get correctSave => 'Save and recalculate';
 
   @override
-  String get gradingDisclaimer =>
-      'Esta aplicação não fornece autenticação numismática profissional nem aconselhamento financeiro. As estimativas do estado são aproximadas.';
+  String get gradingDisclaimer => 'Esta aplicação não fornece autenticação numismática profissional nem aconselhamento financeiro. As estimativas do estado são aproximadas.';
 
   @override
   String get condPoor => 'Fraco';

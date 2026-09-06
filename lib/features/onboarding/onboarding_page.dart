@@ -358,45 +358,52 @@ class _CtaButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A DecoratedBox (not Ink) draws the gradient — Ink paints on the nearest
+    // Material, which sits *behind* the onboarding backdrop, so an Ink gradient
+    // would be hidden. The Material on top only carries the tap ripple.
     return Semantics(
       button: true,
       label: label,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            gradient: const LinearGradient(
-              colors: [AppColors.goldLight, AppColors.gold],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.gold.withValues(alpha: 0.3),
-                blurRadius: 24,
-                offset: const Offset(0, 10),
-              ),
-            ],
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          gradient: const LinearGradient(
+            colors: [AppColors.goldLight, AppColors.gold],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: AppColors.onGold,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w800,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.gold.withValues(alpha: 0.3),
+              blurRadius: 24,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          child: InkWell(
+            onTap: onPressed,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      color: AppColors.onGold,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                const Icon(Icons.arrow_forward_rounded,
-                    color: AppColors.onGold, size: 20),
-              ],
+                  const SizedBox(width: AppSpacing.sm),
+                  const Icon(Icons.arrow_forward_rounded,
+                      color: AppColors.onGold, size: 20),
+                ],
+              ),
             ),
           ),
         ),
