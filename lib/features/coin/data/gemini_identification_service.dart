@@ -23,9 +23,9 @@ import '../domain/identification_service.dart';
 class GeminiIdentificationService implements IdentificationService {
   GeminiIdentificationService({
     required String apiKey,
-    String model = 'gemini-2.5-flash',
+    String model = 'gemini-3.6-flash',
     http.Client? client,
-    Duration timeout = const Duration(seconds: 25),
+    Duration timeout = const Duration(seconds: 30),
   })  : _apiKey = apiKey,
         _model = model,
         _client = client ?? http.Client(),
@@ -129,13 +129,23 @@ Give 2-4 short "factors" explaining the estimate. Provide up to 3
       }
 
       final decoded = jsonDecode(res.body) as Map<String, dynamic>;
-      final text = (((decoded['candidates'] as List?)?.firstOrNull
+      final parts = (((decoded['candidates'] as List?)?.firstOrNull
               as Map<String, dynamic>?)?['content']
           as Map<String, dynamic>?)?['parts'] as List?;
-      final raw =
-          (text?.firstOrNull as Map<String, dynamic>?)?['text'] as String?;
-      if (raw == null || raw.isEmpty) {
-        return const Result.err(UnknownFailure());
+      String? raw;
+      for (final p in parts ?? const []) {
+        final t = (p as Map<String, dynamic>?)?['text'] as String?;
+        if (t != null && t.trim().isNotEmpty) {
+          raw = t;
+          break;
+        }
+      }
+      if (raw == null) return const Result.err(UnknownFailure());
+      // The model may wrap JSON in a ```json fence despite the instruction.
+      raw = raw.trim();
+      if (raw.startsWith('```')) {
+        raw = raw.replaceFirst(RegExp(r'^```[a-zA-Z]*\s*'), '').trim();
+        if (raw.endsWith('```')) raw = raw.substring(0, raw.length - 3).trim();
       }
 
       onStage?.call(IdentificationStage.calculatingValue);
