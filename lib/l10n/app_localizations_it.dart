@@ -660,7 +660,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sortValueHigh => 'Valore ↓';
 
   @override
-  String get sortRarity => 'Rarità';
+  String get sortRarity => 'Più rare';
 
   @override
   String get filterRarity => 'Rarità';

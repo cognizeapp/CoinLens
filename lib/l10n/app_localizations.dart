@@ -1374,7 +1374,7 @@ abstract class AppLocalizations {
   /// No description provided for @sortRarity.
   ///
   /// In en, this message translates to:
-  /// **'Rarity'**
+  /// **'Rarest'**
   String get sortRarity;
 
   /// No description provided for @filterRarity.
