@@ -7,20 +7,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/config/app_config.dart';
 
-/// Coinsights' real AdMob unit ids (publisher pub-3811419528132275). Ad unit
-/// ids aren't secret — they're embedded in every shipped binary. A --dart-define
+/// Ad unit ids. The shipped defaults are Google's official *test* units —
+/// safe to submit (they show a labelled "Test Ad" and never earn or spend).
+/// Real Coinsights units are supplied per build via --dart-define
 /// (ADMOB_BANNER_IOS / ADMOB_BANNER_ANDROID / ADMOB_INTERSTITIAL_IOS /
-/// ADMOB_INTERSTITIAL_ANDROID) overrides any of them, e.g. to point a debug
-/// build at Google's test units.
-const _bannerAndroid = 'ca-app-pub-3811419528132275/9354603614';
-const _bannerIos = 'ca-app-pub-3811419528132275/3661247639';
-
-/// Google's official *test* interstitial units — shipped as the default until
-/// real Coinsights interstitial units are created in the AdMob console and
-/// passed via --dart-define. Test units are safe to ship (they show a labelled
-/// "Test Ad" and never earn or spend).
+/// ADMOB_INTERSTITIAL_ANDROID) once the AdMob account has approved the app
+/// (which Google only does after the app is live on a store).
+const _bannerAndroidTest = 'ca-app-pub-3940256099942544/6300978111';
+const _bannerIosTest = 'ca-app-pub-3940256099942544/2934735716';
 const _interstitialAndroidTest = 'ca-app-pub-3940256099942544/1033173712';
-const _interstitialIosTest = 'ca-app-pub-3940256099942544/4411468910';
+
+/// Real Coinsights iOS interstitial (AdMob publisher pub-9425660542593371,
+/// same account as the iOS GADApplicationIdentifier). Serves real ads once
+/// AdMob approves the app after launch; until then it "no fills" and the app
+/// simply skips the ad — no harm.
+const _interstitialIosReal = 'ca-app-pub-9425660542593371/1529023831';
 
 /// Show an interstitial after every Nth scan for free users, to offset the
 /// per-scan cost of cloud identification.
@@ -55,11 +56,11 @@ class AdService {
     if (Platform.isIOS) {
       return config.admobBannerIos.isNotEmpty
           ? config.admobBannerIos
-          : _bannerIos;
+          : _bannerIosTest;
     }
     return config.admobBannerAndroid.isNotEmpty
         ? config.admobBannerAndroid
-        : _bannerAndroid;
+        : _bannerAndroidTest;
   }
 
   String get _interstitialUnitId {
@@ -67,7 +68,7 @@ class AdService {
     if (Platform.isIOS) {
       return config.admobInterstitialIos.isNotEmpty
           ? config.admobInterstitialIos
-          : _interstitialIosTest;
+          : _interstitialIosReal;
     }
     return config.admobInterstitialAndroid.isNotEmpty
         ? config.admobInterstitialAndroid
