@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/l10n_extensions.dart';
@@ -202,6 +204,25 @@ class _PaywallPageState extends ConsumerState<PaywallPage> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
+                      const SizedBox(height: 6),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          _LegalLink(
+                            label: l.privacyPolicy,
+                            url: AppConstants.privacyPolicyUrl,
+                          ),
+                          Text(
+                            '  •  ',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          _LegalLink(
+                            label: l.termsOfService,
+                            url: AppConstants.termsOfServiceUrl,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -296,6 +317,32 @@ class _PlanTile extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LegalLink extends StatelessWidget {
+  const _LegalLink({required this.label, required this.url});
+  final String label;
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+      },
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: AppColors.gold,
+              decoration: TextDecoration.underline,
+              decorationColor: AppColors.gold,
+            ),
       ),
     );
   }
