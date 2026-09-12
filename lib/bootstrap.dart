@@ -24,6 +24,7 @@ import 'features/coin/data/pipeline_identification_service.dart';
 import 'features/coin/presentation/coin_providers.dart';
 import 'services/ads/ad_service.dart';
 import 'services/analytics/analytics_service.dart';
+import 'services/analytics/firebase_analytics_service.dart';
 import 'services/preferences/app_preferences.dart';
 import 'services/subscription/mock_subscription_service.dart';
 import 'services/subscription/revenuecat_subscription_service.dart';
@@ -64,7 +65,8 @@ Future<void> bootstrap() async {
     }
   }
 
-  final analytics = MockAnalyticsService(logger);
+  final AnalyticsService analytics =
+      firebaseReady ? FirebaseAnalyticsAdapter() : MockAnalyticsService(logger);
   final AuthRepository authRepository =
       firebaseReady ? FirebaseAuthRepository() : MockAuthRepository(prefs);
   final scanRepository = MockScanRepository();
